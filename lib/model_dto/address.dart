@@ -1,3 +1,6 @@
+import 'package:json_annotation/json_annotation.dart';
+
+@JsonSerializable()
 class Address{
   String _province;
   String _district;
@@ -10,6 +13,10 @@ class Address{
       this._commune,
       this._village
       );
+
+  factory Address.fromJson(Map<String, dynamic> json) => _$AddressFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AddressToJson(this);
 
   String get village => _village;
 
