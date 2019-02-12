@@ -105,6 +105,16 @@ class _LoginState extends State<Login> implements LoginView {
     );
   }
 
+  Widget _lblCopyRight(){
+    return Text(
+      StringRes.copyRight,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: FontSizeRes.small,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,7 +132,8 @@ class _LoginState extends State<Login> implements LoginView {
             SizedBox(height: 8.0),
             _txtPosition(),
             SizedBox(height: 24.0),
-            _btnLogin()
+            _btnLogin(),
+            _lblCopyRight()
           ],
         ),
       ),
