@@ -1,15 +1,19 @@
+
+import 'package:json_annotation/json_annotation.dart';
+part 'remark.g.dart';
+
+@JsonSerializable()
 class Remark{
   String _agentPerformance;
   String _visitedLocation;
   String _systemIssue;
   String _otherIssue;
 
-  Remark(
-      this._agentPerformance,
-      this._visitedLocation,
-      this._systemIssue,
-      this._otherIssue
-      );
+  Remark();
+
+  factory Remark.fromJson(Map<String, dynamic> json) => _$RemarkFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RemarkToJson(this);
 
   String get otherIssue => _otherIssue;
 

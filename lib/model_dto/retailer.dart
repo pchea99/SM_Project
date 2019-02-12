@@ -1,11 +1,17 @@
+
+import 'package:json_annotation/json_annotation.dart';
+part 'retailer.g.dart';
+
+@JsonSerializable()
 class Retailer{
   String _retailerName;
   String _retailerPhone;
 
-  Retailer(
-      this._retailerName,
-      this._retailerPhone
-      );
+  Retailer();
+
+  factory Retailer.fromJson(Map<String, dynamic> json) => _$RetailerFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RetailerToJson(this);
 
   String get retailerPhone => _retailerPhone;
 

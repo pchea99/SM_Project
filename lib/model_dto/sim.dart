@@ -1,3 +1,8 @@
+
+import 'package:json_annotation/json_annotation.dart';
+part 'sim.g.dart';
+
+@JsonSerializable()
 class Sim{
   double _masterSIM;
   double _masterSIMPassword;
@@ -5,13 +10,11 @@ class Sim{
   double _slaveSIM;
   double _slaveSIMPassword;
 
-  Sim(
-      this._masterSIM,
-      this._masterSIMPassword,
-      this._registeredSIM,
-      this._slaveSIM,
-      this._slaveSIMPassword
-      );
+  Sim();
+
+  factory Sim.fromJson(Map<String, dynamic> json) => _$SimFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SimToJson(this);
 
   double get masterSIM => _masterSIM;
 

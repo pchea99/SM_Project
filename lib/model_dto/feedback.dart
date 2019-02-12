@@ -1,6 +1,9 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:sm_app/model_dto/address.dart';
 import 'package:sm_app/model_dto/gps.dart';
+part 'feedback.g.dart';
 
+@JsonSerializable()
 class Feedback{
   String _anotherFeedback;
   String _team;
@@ -20,25 +23,11 @@ class Feedback{
   String _overVisited;
   String _otherIssueRemark;
 
-  Feedback(
-      this._anotherFeedback,
-      this._team,
-      this._date,
-      this._address,
-      this._gps,
-      this._smartCoverageDownload,
-      this._smartCoverageUpload,
-      this._issue,
-      this._brokenPhone,
-      this._slowPhone,
-      this._brokenApp,
-      this._noCoverage,
-      this._unrecognizedSIM,
-      this._weather,
-      this._noPeople,
-      this._overVisited,
-      this._otherIssueRemark
-      );
+  Feedback();
+
+  factory Feedback.fromJson(Map<String, dynamic> json) => _$FeedbackFromJson(json);
+
+  Map<String, dynamic> toJson() => _$FeedbackToJson(this);
 
   String get otherIssueRemark => _otherIssueRemark;
 

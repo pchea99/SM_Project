@@ -1,13 +1,18 @@
+
+import 'package:json_annotation/json_annotation.dart';
+part 'van.g.dart';
+
+@JsonSerializable()
 class Van{
   String _driverName;
   String _driverID;
   String _plaqueNumber;
 
-  Van(
-      this._driverName,
-      this._driverID,
-      this._plaqueNumber
-      );
+  Van();
+
+  factory Van.fromJson(Map<String, dynamic> json) => _$VanFromJson(json);
+
+  Map<String, dynamic> toJson() => _$VanToJson(this);
 
   String get plaqueNumber => _plaqueNumber;
 

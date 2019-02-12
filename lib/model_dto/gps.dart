@@ -1,11 +1,17 @@
+
+import 'package:json_annotation/json_annotation.dart';
+part 'gps.g.dart';
+
+@JsonSerializable()
 class Gps{
  String _latitude;
  String _longtitude;
 
- Gps(
-     this._latitude,
-     this._longtitude
-     );
+ Gps();
+
+ factory Gps.fromJson(Map<String, dynamic> json) => _$GpsFromJson(json);
+
+ Map<String, dynamic> toJson() => _$GpsToJson(this);
 
  String get longtitude => _longtitude;
 

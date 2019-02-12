@@ -1,13 +1,18 @@
+
+import 'package:json_annotation/json_annotation.dart';
+part 'agent.g.dart';
+
+@JsonSerializable()
 class Agent{
   String _agentNo;
   String _agentNameKh;
   String _agentNameEn;
 
-  Agent(
-      this._agentNo,
-      this._agentNameKh,
-      this._agentNameEn
-      );
+  Agent();
+
+  factory Agent.fromJson(Map<String, dynamic> json) => _$AgentFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AgentToJson(this);
 
   String get agentNameEn => _agentNameEn;
 

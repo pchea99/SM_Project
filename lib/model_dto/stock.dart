@@ -1,3 +1,8 @@
+
+import 'package:json_annotation/json_annotation.dart';
+part 'stock.g.dart';
+
+@JsonSerializable()
 class Stock{
   double _simDistribution;
   double _topup;
@@ -19,27 +24,11 @@ class Stock{
   double _totalRemainStock;
   double _remainStockFTWWA;
 
-  Stock(
-      this._simDistribution,
-      this._topup,
-      this._stockInHandBTW,
-      this._stockTopupDTW,
-      this._stockReturnFromAgentToday,
-      this._remainStockFTW,
-      this._initialStockInHandFTL,
-      this._remainStockTLFY,
-      this._simStockReceivedBA,
-      this._stockDeliveredBTA,
-      this._totalStockAllocatedTAA,
-      this._totalStockReturnTLBT,
-      this._remainStockTLFT,
-      this._totalDistribution,
-      this._totalTopup,
-      this._remainStockAgent,
-      this._remainStockTeamLeader,
-      this._totalRemainStock,
-      this._remainStockFTWWA
-      );
+  Stock();
+
+  factory Stock.fromJson(Map<String, dynamic> json) => _$StockFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StockToJson(this);
 
   double get remainStockFTWWA => _remainStockFTWWA;
 
