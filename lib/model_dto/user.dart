@@ -11,12 +11,19 @@ class User{
   String _idNumber;
   String _position;
   String _personalPhone;
+  String _password;
 
   User();
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  String get password => _password;
+
+  set password(String value) {
+    _password = value;
+  }
 
   String get personalPhone => _personalPhone;
 
