@@ -1,15 +1,16 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:sm_app/model_dto/feedback.dart';
-//part 'dailyFeedback.g.dart';
+part 'dailyFeedback.g.dart';
 
-//@JsonSerializable()
+@JsonSerializable()
 class DailyFeedback{
   Feedback _feedback;
 
   DailyFeedback();
 
-//  factory DailyFeedback.fromJson(Map<String, dynamic> json) => _$DailyFeedbackFromJson(json);
+  factory DailyFeedback.fromJson(Map<String, dynamic> json) => _$DailyFeedbackFromJson(json);
 
-//  Map<String, dynamic> toJson() => _$DailyFeedbackToJson(this);
+  Map<String, dynamic> toJson() => _$DailyFeedbackToJson(this);
 
   Feedback get feedback => _feedback;
 

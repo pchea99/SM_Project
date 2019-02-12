@@ -1,8 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sm_app/model_dto/stock.dart';
-//part 'stockControlReportByTeamLeader.g.dart';
+part 'stockControlReportByTeamLeader.g.dart';
 
-//@JsonSerializable()
+@JsonSerializable()
 class StockControlReportByTeamLeader{
   String _team;
   DateTime _date;
@@ -10,9 +10,9 @@ class StockControlReportByTeamLeader{
 
   StockControlReportByTeamLeader();
 
-//  factory StockControlReportByTeamLeader.fromJson(Map<String, dynamic> json) => _$StockControlReportByTeamLeaderFromJson(json);
+  factory StockControlReportByTeamLeader.fromJson(Map<String, dynamic> json) => _$StockControlReportByTeamLeaderFromJson(json);
 
-//  Map<String, dynamic> toJson() => _$StockControlReportByTeamLeaderToJson(this);
+  Map<String, dynamic> toJson() => _$StockControlReportByTeamLeaderToJson(this);
 
   Stock get stock => _stock;
 
