@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sm_app/login/login.dart';
+import 'package:sm_app/menu/menu.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         fontFamily: 'Nunito',
       ),
-      home: Login(),
+      home: Menu(),
     );
   }
 }

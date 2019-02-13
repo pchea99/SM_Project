@@ -13,14 +13,12 @@ class _LoginState extends State<Login> implements LoginView {
   LoginPresenter _loginPresenter;
   User _user;
   String _error = "";
-  Map _focus;
-  FocusNode _myFocusNode;
+  Map<String, FocusNode> _focus;
 
   _LoginState(){
     _loginPresenter = new LoginPresenter(this);
     _user = new User();
     _focus = new Map();
-    _myFocusNode = FocusNode();
   }
 
   Widget _lblTitle(){
@@ -39,7 +37,7 @@ class _LoginState extends State<Login> implements LoginView {
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(8.0),
         ),
         onPressed: _submit,
         padding: EdgeInsets.all(12),
@@ -56,7 +54,7 @@ class _LoginState extends State<Login> implements LoginView {
   }
 
   Widget _txtPosition(){
-    return TextFormField(
+    return TextField(
       keyboardType: TextInputType.text,
       autofocus: false,
       focusNode: _focus['pos'],
@@ -69,16 +67,16 @@ class _LoginState extends State<Login> implements LoginView {
           fontSize: FontSizeRes.normal
         ),
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
-      onSaved: (position){
+      onChanged: (position){
         _user.position = position;
       },
     );
   }
 
   Widget _txtUsername(){
-    return TextFormField(
+    return TextField(
       keyboardType: TextInputType.text,
       autofocus: false,
       focusNode: _focus['un'],
@@ -91,16 +89,16 @@ class _LoginState extends State<Login> implements LoginView {
         ),
         hintText: StringRes.username,
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
-      onSaved: (username){
+      onChanged: (username){
         _user.userNo = username;
       },
     );
   }
 
   Widget _txtPassword(){
-    return TextFormField(
+    return TextField(
       keyboardType: TextInputType.text,
       obscureText: true,
       autofocus: false,
@@ -114,9 +112,9 @@ class _LoginState extends State<Login> implements LoginView {
         ),
         hintText: StringRes.password,
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
-      onSaved: (password){
+      onChanged: (password){
         _user.password = password;
       },
     );
@@ -184,30 +182,49 @@ class _LoginState extends State<Login> implements LoginView {
 
   @override
   void onPassword(String error) {
-    FocusScope.of(context).requestFocus(_myFocusNode);
-    _focus['pwd'] = _myFocusNode;
+    var fpwd = FocusNode();
+    FocusScope.of(context).requestFocus(fpwd);
+    _clearFocus();
+    _focus['pwd'] = fpwd;
     _error = error;
     _onSetSate();
   }
 
   @override
   void onPositionError(String error) {
+    var fpos = FocusNode();
+    FocusScope.of(context).requestFocus(fpos);
     _error = error;
-    _focus['pos'] = true;
+    _clearFocus();
+    _focus['pos'] = fpos;
     _onSetSate();
   }
 
   @override
   void onUserNameError(String error) {
-    FocusScope.of(context).requestFocus(_myFocusNode);
-    _focus['un'] = _myFocusNode;
+    var fun = FocusNode();
+    FocusScope.of(context).requestFocus(fun);
+    _clearFocus();
+    _focus['un'] = fun;
     _error = error;
     _onSetSate();
   }
 
+  void _clearFocus() {
+    if(_focus['un'] != null) {
+      _focus['un'].unfocus();
+    }
+    if(_focus['pos'] != null) {
+      _focus['pos'].unfocus();
+    }
+    if(_focus['pwd'] != null) {
+      _focus['pwd'].unfocus();
+    }
+  }
+
   void _submit() {
     _error = "";
-    _focus.clear();
+    _clearFocus();
     _loginPresenter.doLogin(_user.userNo, _user.password, _user.position);
   }
 
