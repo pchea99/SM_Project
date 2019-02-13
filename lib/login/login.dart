@@ -12,10 +12,15 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> implements LoginView {
   LoginPresenter _loginPresenter;
   User _user;
+  String _error = "";
+  Map _focus;
+  FocusNode _myFocusNode;
 
   _LoginState(){
     _loginPresenter = new LoginPresenter(this);
     _user = new User();
+    _focus = new Map();
+    _myFocusNode = FocusNode();
   }
 
   Widget _lblTitle(){
@@ -54,6 +59,7 @@ class _LoginState extends State<Login> implements LoginView {
     return TextFormField(
       keyboardType: TextInputType.text,
       autofocus: false,
+      focusNode: _focus['pos'],
       style: TextStyle(
           fontSize: FontSizeRes.normal
       ),
@@ -65,6 +71,9 @@ class _LoginState extends State<Login> implements LoginView {
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
+      onSaved: (position){
+        _user.position = position;
+      },
     );
   }
 
@@ -72,6 +81,7 @@ class _LoginState extends State<Login> implements LoginView {
     return TextFormField(
       keyboardType: TextInputType.text,
       autofocus: false,
+      focusNode: _focus['un'],
       style: TextStyle(
           fontSize: FontSizeRes.normal
       ),
@@ -83,6 +93,9 @@ class _LoginState extends State<Login> implements LoginView {
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
+      onSaved: (username){
+        _user.userNo = username;
+      },
     );
   }
 
@@ -91,6 +104,7 @@ class _LoginState extends State<Login> implements LoginView {
       keyboardType: TextInputType.text,
       obscureText: true,
       autofocus: false,
+      focusNode: _focus['pwd'],
       style: TextStyle(
         fontSize: FontSizeRes.normal
       ),
@@ -102,6 +116,9 @@ class _LoginState extends State<Login> implements LoginView {
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
+      onSaved: (password){
+        _user.password = password;
+      },
     );
   }
 
@@ -111,6 +128,19 @@ class _LoginState extends State<Login> implements LoginView {
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: FontSizeRes.small,
+      ),
+    );
+  }
+
+  Widget _lblError(){
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Text(
+        _error,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.red,
+        ),
       ),
     );
   }
@@ -133,7 +163,8 @@ class _LoginState extends State<Login> implements LoginView {
             _txtPosition(),
             SizedBox(height: 24.0),
             _btnLogin(),
-            _lblCopyRight()
+            _lblCopyRight(),
+            _lblError()
           ],
         ),
       ),
@@ -142,7 +173,8 @@ class _LoginState extends State<Login> implements LoginView {
 
   @override
   void onLoginError(String error) {
-    // TODO: implement onLoginError
+    _error = error;
+    _onSetSate();
   }
 
   @override
@@ -152,20 +184,38 @@ class _LoginState extends State<Login> implements LoginView {
 
   @override
   void onPassword(String error) {
-    // TODO: implement onPassword
+    FocusScope.of(context).requestFocus(_myFocusNode);
+    _focus['pwd'] = _myFocusNode;
+    _error = error;
+    _onSetSate();
   }
 
   @override
   void onPositionError(String error) {
-    // TODO: implement onPositionError
+    _error = error;
+    _focus['pos'] = true;
+    _onSetSate();
   }
 
   @override
   void onUserNameError(String error) {
-    // TODO: implement onUserNameError
+    FocusScope.of(context).requestFocus(_myFocusNode);
+    _focus['un'] = _myFocusNode;
+    _error = error;
+    _onSetSate();
   }
 
   void _submit() {
+    _error = "";
+    _focus.clear();
+    _loginPresenter.doLogin(_user.userNo, _user.password, _user.position);
+  }
 
+  void _onSetSate(){
+    if(!mounted){
+      return;
+    }
+
+    setState(() {});
   }
 }
