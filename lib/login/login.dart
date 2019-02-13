@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sm_app/login/mvp-login/login-presenter.dart';
+import 'package:sm_app/login/login-presenter.dart';
 import 'package:sm_app/model_dto/user.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
