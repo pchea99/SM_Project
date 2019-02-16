@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class AppBarUtil extends StatefulWidget {
   final String title;
   final List<Widget> actions;
+  final Widget body;
 
   AppBarUtil({
     this.title,
-    this.actions
+    this.actions,
+    this.body
   });
 
   @override
@@ -17,15 +19,20 @@ class _AppBarState extends State<AppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: widget.title,
-      actions: widget.actions,
-      leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: onPressed
+    return Scaffold(
+      appBar: AppBar(
+        title: widget.title,
+        actions: widget.actions,
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: onPressed
+        ),
+      ),
+      body: Container(
+        child: widget.body,
       ),
     );
   }
@@ -34,3 +41,4 @@ class _AppBarState extends State<AppBar> {
     Navigator.pop(context);
   }
 }
+

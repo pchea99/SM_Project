@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
+import 'package:sm_app/utils/app-bar.dart';
 
 class DailyDistributionTopUp extends StatefulWidget {
   @override
@@ -38,9 +39,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Container()
+    return AppBarUtil(
+      title: StringRes.dailyDistributionTopUp,
     );
   }
 }
