@@ -18,4 +18,6 @@ class StringRes{
   static final String marketAuditReport = "Market Audit Report";
   static final String teamInfo = "Team Info";
   static final String wantLogout = "Are you sure want to logout?";
+  static final String team = "Team";
+  static final String dailyDistributionTopUp = "Daily Distribution & Top Up";
 }
