@@ -17,7 +17,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Smart Project',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue[400],
+        primarySwatch: Colors.blue,
         fontFamily: 'Nunito',
       ),
       home: Login(),
