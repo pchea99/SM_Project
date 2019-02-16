@@ -11,7 +11,7 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
 
-  Widget _lblMenu(){
+  Widget lblMenu(){
     return Padding(
       padding: const EdgeInsets.only(left: 12.0),
       child: Text(
@@ -24,7 +24,7 @@ class _MenuState extends State<Menu> {
     );
   }
 
-  Widget _btnMenu(String title){
+  Widget btnMenu(String title){
     return Padding(
       padding: EdgeInsets.only(top: 16.0),
       child: Container(
@@ -33,7 +33,7 @@ class _MenuState extends State<Menu> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          onPressed: _click,
+          onPressed: click,
           padding: EdgeInsets.all(12),
           color: Colors.grey[300],
           child: Text(
@@ -60,8 +60,8 @@ class _MenuState extends State<Menu> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                _lblMenu(),
-                _buildIconLogout()
+                lblMenu(),
+                buildIconLogout()
               ],
             ),
             Container(
@@ -71,7 +71,7 @@ class _MenuState extends State<Menu> {
                     color: Colors.grey[50]
                 ),
                 child: Column(
-                  children: _buildMenus(),
+                  children: buildMenus(),
                 )
             )
           ],
@@ -80,7 +80,7 @@ class _MenuState extends State<Menu> {
     );
   }
 
-  Expanded _buildIconLogout() {
+  Expanded buildIconLogout() {
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -91,7 +91,7 @@ class _MenuState extends State<Menu> {
               color: Colors.red[200],
             ),
             onPressed: () {
-              _onLogout();
+              onLogout();
             },
           ),
         ],
@@ -99,37 +99,37 @@ class _MenuState extends State<Menu> {
     );
   }
 
-  List<Widget> _buildMenus() {
+  List<Widget> buildMenus() {
     return [
-      _btnMenu(StringRes.distributionTopup),
-      _btnMenu(StringRes.dailyRetailerMapping),
-      _btnMenu(StringRes.dailyFeedback),
-      _btnMenu(StringRes.dailySummary),
-      _btnMenu(StringRes.stockControlHistoryAgent),
-      _btnMenu(StringRes.stockControlReportTeamLeader),
-      _btnMenu(StringRes.routePlan),
-      _btnMenu(StringRes.marketAuditReport),
-      _btnMenu(StringRes.teamInfo),
+      btnMenu(StringRes.distributionTopup),
+      btnMenu(StringRes.dailyRetailerMapping),
+      btnMenu(StringRes.dailyFeedback),
+      btnMenu(StringRes.dailySummary),
+      btnMenu(StringRes.stockControlHistoryAgent),
+      btnMenu(StringRes.stockControlReportTeamLeader),
+      btnMenu(StringRes.routePlan),
+      btnMenu(StringRes.marketAuditReport),
+      btnMenu(StringRes.teamInfo),
     ];
   }
 
-  void _click() {
+  void click() {
   }
 
-  void _onLogout() {
+  void onLogout() {
     SweetAlert.show(context,
         subtitle: StringRes.wantLogout,
         style: SweetAlertStyle.confirm,
         showCancelButton: true,
         onPress: (bool isConfirm) {
           if (isConfirm) {
-            _navigateTo();
+            navigateTo();
             return false;
           }
         });
   }
 
-  Future _navigateTo() {
+  Future navigateTo() {
     Navigator.pop(context);
     return Navigator.push(
         context,

@@ -9,7 +9,7 @@ class DailyDistributionTopUp extends StatefulWidget {
 
 class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
-  Widget _txtPosition(){
+  Widget txtPosition(){
     return TextField(
       keyboardType: TextInputType.text,
       autofocus: false,
@@ -30,7 +30,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     );
   }
 
-  Widget _lblTeam(){
+  Widget lblTeam(){
     return Text(
       StringRes.team
     );

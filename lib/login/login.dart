@@ -10,18 +10,18 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> implements LoginView {
-  LoginPresenter _loginPresenter;
-  User _user;
-  String _error = "";
-  Map<String, FocusNode> _focus;
+  LoginPresenter loginPresenter;
+  User user;
+  String errorMsg = "";
+  Map<String, FocusNode> focus;
 
   _LoginState(){
-    _loginPresenter = new LoginPresenter(this);
-    _user = new User();
-    _focus = new Map();
+    loginPresenter = new LoginPresenter(this);
+    user = new User();
+    focus = new Map();
   }
 
-  Widget _lblTitle(){
+  Widget lblTitle(){
     return Text(
       StringRes.login,
       style: TextStyle(
@@ -32,14 +32,14 @@ class _LoginState extends State<Login> implements LoginView {
     );
   }
 
-  Widget _btnLogin(){
+  Widget btnLogin(){
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
-        onPressed: _submit,
+        onPressed: submit,
         padding: EdgeInsets.all(12),
         color: Colors.teal,
         child: Text(
@@ -53,11 +53,11 @@ class _LoginState extends State<Login> implements LoginView {
     );
   }
 
-  Widget _txtPosition(){
+  Widget txtPosition(){
     return TextField(
       keyboardType: TextInputType.text,
       autofocus: false,
-      focusNode: _focus['pos'],
+      focusNode: focus['pos'],
       style: TextStyle(
           fontSize: FontSizeRes.normal
       ),
@@ -70,16 +70,16 @@ class _LoginState extends State<Login> implements LoginView {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
       onChanged: (position){
-        _user.position = position;
+        user.position = position;
       },
     );
   }
 
-  Widget _txtUsername(){
+  Widget txtUsername(){
     return TextField(
       keyboardType: TextInputType.text,
       autofocus: false,
-      focusNode: _focus['un'],
+      focusNode: focus['un'],
       style: TextStyle(
           fontSize: FontSizeRes.normal
       ),
@@ -92,17 +92,17 @@ class _LoginState extends State<Login> implements LoginView {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
       onChanged: (username){
-        _user.userNo = username;
+        user.userNo = username;
       },
     );
   }
 
-  Widget _txtPassword(){
+  Widget txtPassword(){
     return TextField(
       keyboardType: TextInputType.text,
       obscureText: true,
       autofocus: false,
-      focusNode: _focus['pwd'],
+      focusNode: focus['pwd'],
       style: TextStyle(
         fontSize: FontSizeRes.normal
       ),
@@ -115,12 +115,12 @@ class _LoginState extends State<Login> implements LoginView {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
       onChanged: (password){
-        _user.password = password;
+        user.password = password;
       },
     );
   }
 
-  Widget _lblCopyRight(){
+  Widget lblCopyRight(){
     return Text(
       StringRes.copyRight,
       textAlign: TextAlign.center,
@@ -130,11 +130,11 @@ class _LoginState extends State<Login> implements LoginView {
     );
   }
 
-  Widget _lblError(){
+  Widget lblError(){
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Text(
-        _error,
+        errorMsg,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.red,
@@ -152,17 +152,17 @@ class _LoginState extends State<Login> implements LoginView {
           shrinkWrap: true,
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
-            _lblTitle(),
+            lblTitle(),
             SizedBox(height: 48.0),
-            _txtUsername(),
+            txtUsername(),
             SizedBox(height: 8.0),
-            _txtPassword(),
+            txtPassword(),
             SizedBox(height: 8.0),
-            _txtPosition(),
+            txtPosition(),
             SizedBox(height: 24.0),
-            _btnLogin(),
-            _lblCopyRight(),
-            _lblError()
+            btnLogin(),
+            lblCopyRight(),
+            lblError()
           ],
         ),
       ),
@@ -171,8 +171,8 @@ class _LoginState extends State<Login> implements LoginView {
 
   @override
   void onLoginError(String error) {
-    _error = error;
-    _onSetSate();
+    errorMsg = error;
+    onSetSate();
   }
 
   @override
@@ -184,51 +184,51 @@ class _LoginState extends State<Login> implements LoginView {
   void onPassword(String error) {
     var fpwd = FocusNode();
     FocusScope.of(context).requestFocus(fpwd);
-    _clearFocus();
-    _focus['pwd'] = fpwd;
-    _error = error;
-    _onSetSate();
+    clearFocus();
+    focus['pwd'] = fpwd;
+    errorMsg = error;
+    onSetSate();
   }
 
   @override
   void onPositionError(String error) {
     var fpos = FocusNode();
     FocusScope.of(context).requestFocus(fpos);
-    _error = error;
-    _clearFocus();
-    _focus['pos'] = fpos;
-    _onSetSate();
+    errorMsg = error;
+    clearFocus();
+    focus['pos'] = fpos;
+    onSetSate();
   }
 
   @override
   void onUserNameError(String error) {
     var fun = FocusNode();
     FocusScope.of(context).requestFocus(fun);
-    _clearFocus();
-    _focus['un'] = fun;
-    _error = error;
-    _onSetSate();
+    clearFocus();
+    focus['un'] = fun;
+    errorMsg = error;
+    onSetSate();
   }
 
-  void _clearFocus() {
-    if(_focus['un'] != null) {
-      _focus['un'].unfocus();
+  void clearFocus() {
+    if(focus['un'] != null) {
+      focus['un'].unfocus();
     }
-    if(_focus['pos'] != null) {
-      _focus['pos'].unfocus();
+    if(focus['pos'] != null) {
+      focus['pos'].unfocus();
     }
-    if(_focus['pwd'] != null) {
-      _focus['pwd'].unfocus();
+    if(focus['pwd'] != null) {
+      focus['pwd'].unfocus();
     }
   }
 
-  void _submit() {
-    _error = "";
-    _clearFocus();
-    _loginPresenter.doLogin(_user.userNo, _user.password, _user.position);
+  void submit() {
+    errorMsg = "";
+    clearFocus();
+    loginPresenter.doLogin(user.userNo, user.password, user.position);
   }
 
-  void _onSetSate(){
+  void onSetSate(){
     if(!mounted){
       return;
     }
