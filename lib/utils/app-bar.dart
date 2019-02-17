@@ -3,25 +3,30 @@ import 'package:flutter/material.dart';
 class AppBarUtil extends StatefulWidget {
   final String title;
   final List<Widget> actions;
-  final Widget body;
+  final Widget layout;
 
   AppBarUtil({
     this.title,
     this.actions,
-    this.body
+    this.layout
   });
 
   @override
   _AppBarState createState() => _AppBarState();
 }
 
-class _AppBarState extends State<AppBar> {
+class _AppBarState extends State<AppBarUtil> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: widget.title,
+        title: Text(
+          widget.title,
+          style: TextStyle(
+            color: Colors.white
+          ),
+        ),
         actions: widget.actions,
         leading: IconButton(
             icon: Icon(
@@ -32,7 +37,7 @@ class _AppBarState extends State<AppBar> {
         ),
       ),
       body: Container(
-        child: widget.body,
+        child: widget.layout,
       ),
     );
   }
