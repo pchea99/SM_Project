@@ -37,7 +37,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   @override
   Widget build(BuildContext context) {
     return AppBarUtil(
-      title: StringRes.dailyDistributionTopUp,
+      title: StringRes.distributionTopup,
       actions: <Widget>[
         ButtonSave.buttonSave(_onSave)
       ],

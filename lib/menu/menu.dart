@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sm_app/daily-distribution-topup/daily-distribution-topup.dart';
 import 'package:sm_app/login/login.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
+import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sweetalert/sweetalert.dart';
 
 class Menu extends StatefulWidget {
@@ -11,7 +13,19 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
 
-  Widget lblMenu(){
+  List<String> _menus = [
+    StringRes.distributionTopup,
+    StringRes.dailyRetailerMapping,
+    StringRes.dailyFeedback,
+    StringRes.dailySummary,
+    StringRes.stockControlHistoryAgent,
+    StringRes.stockControlReportTeamLeader,
+    StringRes.routePlan,
+    StringRes.marketAuditReport,
+    StringRes.teamInfo,
+  ];
+
+  Widget _lblMenu(){
     return Padding(
       padding: const EdgeInsets.only(left: 12.0),
       child: Text(
@@ -24,7 +38,7 @@ class _MenuState extends State<Menu> {
     );
   }
 
-  Widget btnMenu(String title){
+  Widget _btnMenu(String title){
     return Padding(
       padding: EdgeInsets.only(top: 16.0),
       child: Container(
@@ -33,12 +47,13 @@ class _MenuState extends State<Menu> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          onPressed: click,
+          onPressed: (){
+            _click(title);
+          },
           padding: EdgeInsets.all(12),
           color: Colors.grey[300],
           child: Text(
               title,
-              //textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.blueGrey,
                   fontSize: FontSizeRes.button
@@ -60,8 +75,8 @@ class _MenuState extends State<Menu> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                lblMenu(),
-                buildIconLogout()
+                _lblMenu(),
+                _buildIconLogout()
               ],
             ),
             Container(
@@ -71,7 +86,16 @@ class _MenuState extends State<Menu> {
                     color: Colors.grey[50]
                 ),
                 child: Column(
-                  children: buildMenus(),
+                  children: _menus.map((menu)=>
+                    Card(
+                      child: ListTile(
+                        title: Text(menu),
+                        onTap: (){
+                          _click(menu);
+                        },
+                      ),
+                    )
+                  ).toList(),
                 )
             )
           ],
@@ -80,7 +104,7 @@ class _MenuState extends State<Menu> {
     );
   }
 
-  Expanded buildIconLogout() {
+  Expanded _buildIconLogout() {
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -91,7 +115,7 @@ class _MenuState extends State<Menu> {
               color: Colors.red[200],
             ),
             onPressed: () {
-              onLogout();
+              _onLogout();
             },
           ),
         ],
@@ -99,41 +123,42 @@ class _MenuState extends State<Menu> {
     );
   }
 
-  List<Widget> buildMenus() {
+  List<Widget> _buildMenus() {
     return [
-      btnMenu(StringRes.distributionTopup),
-      btnMenu(StringRes.dailyRetailerMapping),
-      btnMenu(StringRes.dailyFeedback),
-      btnMenu(StringRes.dailySummary),
-      btnMenu(StringRes.stockControlHistoryAgent),
-      btnMenu(StringRes.stockControlReportTeamLeader),
-      btnMenu(StringRes.routePlan),
-      btnMenu(StringRes.marketAuditReport),
-      btnMenu(StringRes.teamInfo),
+      _btnMenu(StringRes.distributionTopup),
+      _btnMenu(StringRes.dailyRetailerMapping),
+      _btnMenu(StringRes.dailyFeedback),
+      _btnMenu(StringRes.dailySummary),
+      _btnMenu(StringRes.stockControlHistoryAgent),
+      _btnMenu(StringRes.stockControlReportTeamLeader),
+      _btnMenu(StringRes.routePlan),
+      _btnMenu(StringRes.marketAuditReport),
+      _btnMenu(StringRes.teamInfo),
     ];
   }
 
-  void click() {
+  void _click(String title) {
+    if(title == StringRes.distributionTopup){
+      _navigateTo(DailyDistributionTopUp());
+    }
   }
 
-  void onLogout() {
+  void _onLogout() {
     SweetAlert.show(context,
         subtitle: StringRes.wantLogout,
         style: SweetAlertStyle.confirm,
         showCancelButton: true,
         onPress: (bool isConfirm) {
           if (isConfirm) {
-            navigateTo();
+            Navigator.pop(context);
+            _navigateTo(Login());
             return false;
           }
         });
   }
 
-  Future navigateTo() {
-    Navigator.pop(context);
-    return Navigator.push(
-        context,
-        MaterialPageRoute(builder: (BuildContext context) => Login()));
+  void _navigateTo(Widget route) {
+    NavigateTo.navigateTo(context: context, route: route);
   }
 }
 

@@ -19,7 +19,6 @@ class StringRes{
   static final String teamInfo = "Team Info";
   static final String wantLogout = "Are you sure want to logout?";
   static final String team = "Team";
-  static final String dailyDistributionTopUp = "Daily Distribution & Top Up";
   static final String date = "Date";
   static final String agentNo = "Agent No";
   static final String agentName = "Agent Name";
