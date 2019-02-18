@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sm_app/daily-distribution-topup/daily-distribution-topup.dart';
+import 'package:sm_app/daily-retailer-mapping/daily-retailer-mapping.dart';
 import 'package:sm_app/login/login.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
@@ -75,6 +76,8 @@ class _MenuState extends State<Menu> {
   void _click(String title) {
     if(title == StringRes.distributionTopup){
       _navigateTo(DailyDistributionTopUp());
+    }else if(title == StringRes.dailyRetailerMapping){
+      _navigateTo(DailyRetailerMapping());
     }
   }
 

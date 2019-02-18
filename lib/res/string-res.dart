@@ -30,4 +30,7 @@ class StringRes{
   static final String remainingStock = "Remaining stock for tomorrow work with Agent";
   static final String remark ="Remark";
   static final String save = "Save";
+  static final String selectRetailer = "Select another retailer";
+  static final String yes = 'Yes';
+  static final String no = 'No';
 }
