@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
+import 'package:sm_app/utils/container-form.dart';
+import 'package:sm_app/utils/input-field.dart';
 
 class DailyDistributionTopUp extends StatefulWidget {
   @override
@@ -10,48 +12,17 @@ class DailyDistributionTopUp extends StatefulWidget {
 
 class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
-  Widget txtPosition(){
-    return TextField(
-      keyboardType: TextInputType.text,
-      autofocus: false,
-      style: TextStyle(
-          fontSize: FontSizeRes.normal
-      ),
-      /*decoration: InputDecoration(
-        hintText: StringRes.position,
-        hintStyle: TextStyle(
-            fontSize: FontSizeRes.normal
-        ),
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
-      ),*/
-      onChanged: (_){
-
-      },
-    );
-  }
-
-  Widget lblTeam(){
-    return Text(
-      StringRes.team,
-      style: TextStyle(
-        fontSize: FontSizeRes.normal
-      ),
-    );
-  }
-
-  Widget rowContain(){
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.blueGrey[50]),
-        borderRadius: BorderRadius.all(Radius.circular(8.0))
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: buildTextField(),
-      ),
-    );
-  }
+  TextEditingController _controllerTeam;
+  TextEditingController _controllerDate;
+  TextEditingController _controllerAgentNo;
+  TextEditingController _controllerAgentName;
+  TextEditingController _controllerSIMDistribution;
+  TextEditingController _controllerTopUp;
+  TextEditingController _controllerStockInHand;
+  TextEditingController _controllerStockTopUp;
+  TextEditingController _controllerStockTeamLeader;
+  TextEditingController _controllerRemainStock;
+  TextEditingController _controllerRemark;
 
   @override
   Widget build(BuildContext context) {
@@ -59,31 +30,63 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       title: StringRes.dailyDistributionTopUp,
       layout: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            rowContain(),
-          ],
-        ),
+        child: SingleChildScrollView(
+          child: _buildForm(),
+        )
       ),
     );
   }
 
-  TextField buildTextField() {
-    return TextField(
-            style: TextStyle(
-              fontSize: FontSizeRes.normal
-            ),
-            decoration: InputDecoration(
-              labelText: "Details",
-              labelStyle: TextStyle(
-                fontSize: FontSizeRes.normal
-              ),
-              contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-            ),
-          );
+  Widget _buildForm(){
+    return ContainerForm.buildContainForm(
+      Column(
+        children: <Widget>[
+          InputField.buildTextField(
+            controller: _controllerTeam,
+            label: StringRes.team
+          ),
+          InputField.buildTextField(
+              controller: _controllerDate,
+              label: StringRes.date
+          ),
+          InputField.buildTextField(
+              controller: _controllerAgentNo,
+              label: StringRes.agentNo
+          ),
+          InputField.buildTextField(
+              controller: _controllerAgentName,
+              label: StringRes.agentName
+          ),
+          InputField.buildTextField(
+              controller: _controllerSIMDistribution,
+              label: StringRes.simDistribution
+          ),
+          InputField.buildTextField(
+              controller: _controllerTopUp,
+              label: StringRes.topUp
+          ),
+          InputField.buildTextField(
+              controller: _controllerStockInHand,
+              label: StringRes.stockInHandBTW
+          ),
+          InputField.buildTextField(
+              controller: _controllerStockTopUp,
+              label: StringRes.stockTopUpDTW
+          ),
+          InputField.buildTextField(
+              controller: _controllerStockTeamLeader,
+              label: StringRes.stockTeamLeaderTBFAT
+          ),
+          InputField.buildTextField(
+              controller: _controllerRemainStock,
+              label: StringRes.remainingStock
+          ),
+          InputField.buildTextField(
+              controller: _controllerRemark,
+              label: StringRes.remark
+          ),
+        ],
+      )
+    );
   }
 }

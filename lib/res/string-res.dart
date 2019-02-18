@@ -20,4 +20,14 @@ class StringRes{
   static final String wantLogout = "Are you sure want to logout?";
   static final String team = "Team";
   static final String dailyDistributionTopUp = "Daily Distribution & Top Up";
+  static final String date = "Date";
+  static final String agentNo = "Agent No";
+  static final String agentName = "Agent Name";
+  static final String simDistribution = "SIM Distribution";
+  static final String topUp = "Top Up";
+  static final String stockInHandBTW = "Stock in hand before today work";
+  static final String stockTopUpDTW = "Stock top up during today work";
+  static final String stockTeamLeaderTBFAT = "Stock Team Leader taking back from Agent today";
+  static final String remainingStock = "Remaining stock for tomorrow work with Agent";
+  static final String remark ="Remark";
 }
