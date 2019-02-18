@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
+import 'package:date_format/date_format.dart';
 
 class DailyDistributionTopUp extends StatefulWidget {
   @override
@@ -24,6 +24,15 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   TextEditingController _controllerStockTeamLeader;
   TextEditingController _controllerRemainStock;
   TextEditingController _controllerRemark;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _controllerDate = new TextEditingController(
+      text: formatDate(new DateTime.now(), [yyyy, '-', mm, '-', dd])
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +56,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         children: <Widget>[
           InputField.buildTextField(
             controller: _controllerTeam,
-            label: StringRes.team
+            label: StringRes.team,
           ),
           InputField.buildTextField(
               controller: _controllerDate,
@@ -63,11 +72,13 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
           ),
           InputField.buildTextField(
               controller: _controllerSIMDistribution,
-              label: StringRes.simDistribution
+              label: StringRes.simDistribution,
+              isEnable: true
           ),
           InputField.buildTextField(
               controller: _controllerTopUp,
-              label: StringRes.topUp
+              label: StringRes.topUp,
+              isEnable: true
           ),
           InputField.buildTextField(
               controller: _controllerStockInHand,
@@ -75,11 +86,13 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
           ),
           InputField.buildTextField(
               controller: _controllerStockTopUp,
-              label: StringRes.stockTopUpDTW
+              label: StringRes.stockTopUpDTW,
+              isEnable: true
           ),
           InputField.buildTextField(
               controller: _controllerStockTeamLeader,
-              label: StringRes.stockTeamLeaderTBFAT
+              label: StringRes.stockTeamLeaderTBFAT,
+              isEnable: true
           ),
           InputField.buildTextField(
               controller: _controllerRemainStock,
@@ -87,7 +100,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
           ),
           InputField.buildTextField(
               controller: _controllerRemark,
-              label: StringRes.remark
+              label: StringRes.remark,
+              isEnable: true
           ),
         ],
       )

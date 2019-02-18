@@ -21,6 +21,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   json_annotation: ^2.0.0
   sweetalert: ^0.0.1
+  date_format: ^1.0.6
 
 dev_dependencies:
   flutter_test:

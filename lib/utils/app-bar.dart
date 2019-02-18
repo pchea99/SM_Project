@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sm_app/res/font-size-res.dart';
 
 class AppBarUtil extends StatefulWidget {
   final String title;
@@ -24,7 +25,8 @@ class _AppBarState extends State<AppBarUtil> {
         title: Text(
           widget.title,
           style: TextStyle(
-            color: Colors.white
+            color: Colors.white,
+            fontSize: FontSizeRes.title
           ),
         ),
         actions: widget.actions,
