@@ -30,4 +30,5 @@ class StringRes{
   static final String stockTeamLeaderTBFAT = "Stock Team Leader taking back from Agent today";
   static final String remainingStock = "Remaining stock for tomorrow work with Agent";
   static final String remark ="Remark";
+  static final String save = "Save";
 }

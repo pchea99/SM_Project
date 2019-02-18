@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
+import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
 
@@ -28,6 +29,9 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   Widget build(BuildContext context) {
     return AppBarUtil(
       title: StringRes.dailyDistributionTopUp,
+      actions: <Widget>[
+        ButtonSave.buttonSave(_onSave)
+      ],
       layout: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
@@ -88,5 +92,9 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ],
       )
     );
+  }
+
+  void _onSave(){
+
   }
 }

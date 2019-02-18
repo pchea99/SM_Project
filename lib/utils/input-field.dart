@@ -5,10 +5,12 @@ class InputField{
   static Widget buildTextField({
     TextEditingController controller,
     String label,
+    bool isEnable
   }) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
       child: TextField(
+        enabled: isEnable == null ? false : isEnable,
         style: TextStyle(
             fontSize: FontSizeRes.normal
         ),
