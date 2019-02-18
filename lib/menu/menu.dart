@@ -29,6 +29,7 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           StringRes.menu,
           style: TextStyle(
@@ -40,7 +41,7 @@ class _MenuState extends State<Menu> {
           _buildIconLogout()
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       body: Container(
         padding: const EdgeInsets.only(top: 6.0),
         child: ListView(
@@ -59,23 +60,15 @@ class _MenuState extends State<Menu> {
       ),
     );
   }
-
-  Expanded _buildIconLogout() {
-    return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.exit_to_app,
-              color: Colors.red[200],
-            ),
-            onPressed: () {
-              _onLogout();
-            },
-          ),
-        ],
+  Widget _buildIconLogout() {
+    return IconButton(
+      icon: Icon(
+        Icons.exit_to_app,
+        color: Colors.red[200],
       ),
+      onPressed: () {
+        _onLogout();
+      },
     );
   }
 
@@ -99,7 +92,7 @@ class _MenuState extends State<Menu> {
         });
   }
 
-  void _navigateTo(Widget route) {
+  void _navigateTo(Widget route) async {
     NavigateTo.navigateTo(context: context, route: route);
   }
 }

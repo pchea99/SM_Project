@@ -43,5 +43,5 @@ class DailyDistributionTopUp{
   @override
   String toString() {
     return 'DailyDistributionTopUp{_team: $_team, _date: $_date, _agent: $_agent, _stock: $_stock}';
-  }
+    }
 }
