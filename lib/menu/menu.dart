@@ -25,80 +25,36 @@ class _MenuState extends State<Menu> {
     StringRes.teamInfo,
   ];
 
-  Widget _lblMenu(){
-    return Padding(
-      padding: const EdgeInsets.only(left: 12.0),
-      child: Text(
-        StringRes.menu,
-        style: TextStyle(
-          color: Colors.blueGrey,
-          fontSize: FontSizeRes.title,
-        ),
-      ),
-    );
-  }
-
-  Widget _btnMenu(String title){
-    return Padding(
-      padding: EdgeInsets.only(top: 16.0),
-      child: Container(
-        width: 345.0,
-        child: FlatButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          onPressed: (){
-            _click(title);
-          },
-          padding: EdgeInsets.all(12),
-          color: Colors.grey[300],
-          child: Text(
-              title,
-              style: TextStyle(
-                  color: Colors.blueGrey,
-                  fontSize: FontSizeRes.button
-              )
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          StringRes.menu,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: FontSizeRes.title
+          ),
+        ),
+        actions: <Widget>[
+          _buildIconLogout()
+        ],
+      ),
       backgroundColor: Colors.white,
       body: Container(
         padding: const EdgeInsets.only(top: 6.0),
         child: ListView(
           shrinkWrap: true,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                _lblMenu(),
-                _buildIconLogout()
-              ],
-            ),
-            Container(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                decoration: new BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                    color: Colors.grey[50]
+          children: _menus.map((menu)=>
+              Card(
+                child: ListTile(
+                  title: Text(menu),
+                  onTap: (){
+                    _click(menu);
+                  },
                 ),
-                child: Column(
-                  children: _menus.map((menu)=>
-                    Card(
-                      child: ListTile(
-                        title: Text(menu),
-                        onTap: (){
-                          _click(menu);
-                        },
-                      ),
-                    )
-                  ).toList(),
-                )
-            )
-          ],
+              )
+          ).toList(),
         ),
       ),
     );
@@ -121,20 +77,6 @@ class _MenuState extends State<Menu> {
         ],
       ),
     );
-  }
-
-  List<Widget> _buildMenus() {
-    return [
-      _btnMenu(StringRes.distributionTopup),
-      _btnMenu(StringRes.dailyRetailerMapping),
-      _btnMenu(StringRes.dailyFeedback),
-      _btnMenu(StringRes.dailySummary),
-      _btnMenu(StringRes.stockControlHistoryAgent),
-      _btnMenu(StringRes.stockControlReportTeamLeader),
-      _btnMenu(StringRes.routePlan),
-      _btnMenu(StringRes.marketAuditReport),
-      _btnMenu(StringRes.teamInfo),
-    ];
   }
 
   void _click(String title) {
