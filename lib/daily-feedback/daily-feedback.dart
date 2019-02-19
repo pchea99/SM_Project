@@ -51,14 +51,14 @@ class _DailyFeedbackState extends State<DailyFeedback> {
     _radioValueOverVisited = 0;
 
     _controllerDate = new TextEditingController(
-        text: formatDate(new DateTime.now(), [yyyy, '-', mm, '-', dd])
+        text: formatDate(new DateTime.now(), [dd, '-', mm, '-', yyyy])
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return AppBarUtil(
-        title: StringRes.dailyRetailerMapping,
+        title: StringRes.dailyFeedback,
         actions: <Widget>[
           ButtonSave.buttonSave(_onSave)
         ],
@@ -106,14 +106,6 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                       isEnable: true
                   ),
                   InputField.buildTextField(
-                      controller: _controllerStockInHand,
-                      label: StringRes.latitude
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerStockTopUp,
-                      label: StringRes.longtitude,
-                  ),
-                  InputField.buildTextField(
                       controller: _controllerStockTeamLeader,
                       label: StringRes.smartCoverageDownload,
                       isEnable: true
@@ -122,6 +114,14 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                       controller: _controllerRemainStock,
                       label: StringRes.smartCoverageUpload,
                       isEnable: true
+                  ),
+                  InputField.buildTextField(
+                      controller: _controllerStockInHand,
+                      label: StringRes.latitude
+                  ),
+                  InputField.buildTextField(
+                    controller: _controllerStockTopUp,
+                    label: StringRes.longtitude,
                   ),
                   SelectBox.selectBox(
                       radioValue: _radioValueIssue,

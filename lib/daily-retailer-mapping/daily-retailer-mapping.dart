@@ -30,7 +30,7 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
     super.initState();
     _radioValue = 0;
     _controllerDate = new TextEditingController(
-        text: formatDate(new DateTime.now(), [yyyy, '-', mm, '-', dd])
+        text: formatDate(new DateTime.now(), [dd, '-', mm, '-', yyyy])
     );
   }
 
