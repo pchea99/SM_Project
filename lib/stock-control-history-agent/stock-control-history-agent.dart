@@ -99,11 +99,6 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
                 controller: _controllerRemainStock,
                 label: StringRes.remainingStock
             ),
-            InputField.buildTextField(
-                controller: _controllerRemark,
-                label: StringRes.remark,
-                isEnable: true
-            ),
           ],
         )
     );

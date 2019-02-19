@@ -6,6 +6,7 @@ import 'package:sm_app/daily-summary/daily-summary.dart';
 import 'package:sm_app/login/login.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
+import 'package:sm_app/stock-control-history-agent/stock-control-history-agent.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sweetalert/sweetalert.dart';
@@ -95,6 +96,9 @@ class _MenuState extends State<Menu> {
       _navigateTo(DailyFeedback());
     }else if(title == StringRes.dailySummary){
       _navigateTo(DailySummary());
+    }
+    else if(title == StringRes.stockControlHistoryAgent){
+      _navigateTo(StockControlHistoryByAgent());
     }
   }
 

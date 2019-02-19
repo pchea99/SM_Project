@@ -38,7 +38,7 @@ class _DailySummaryState extends State<DailySummary> {
   @override
   Widget build(BuildContext context) {
     return AppBarUtil(
-      title: StringRes.distributionTopup,
+      title: StringRes.dailySummary,
       actions: <Widget>[
         ButtonSave.buttonSave(_onSave)
       ],
@@ -64,9 +64,9 @@ class _DailySummaryState extends State<DailySummary> {
                 label: StringRes.date,
                 isEnable: true
             ),
-            SelectValue.selectView(
-                label: StringRes.province,
-                callback: null
+            InputField.buildTextField(
+                controller: _controllerAgentName,
+                label: StringRes.province
             ),
             InputField.buildTextField(
                 controller: _controllerAgentName,
@@ -78,6 +78,7 @@ class _DailySummaryState extends State<DailySummary> {
             ),
             InputNumber.buildTextField(
                 controller: _controllerTopUp,
+                label: StringRes.totalTopUp
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockInHand,
