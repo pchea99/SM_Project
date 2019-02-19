@@ -5,6 +5,7 @@ import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
+import 'package:sm_app/utils/input-phone.dart';
 import 'package:sm_app/utils/select-box.dart';
 import 'package:sm_app/utils/select-value.dart';
 
@@ -89,7 +90,7 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
                       label: StringRes.retailerName,
                       isEnable: true
                   ),
-                  InputField.buildTextField(
+                  InputPhone.buildTextField(
                       controller: _controllerRetailerPhone,
                       label: StringRes.retailerPhone,
                       isEnable: true

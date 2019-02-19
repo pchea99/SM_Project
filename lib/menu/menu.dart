@@ -32,7 +32,6 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: Text(
           StringRes.menu,
           style: TextStyle(
