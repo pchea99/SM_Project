@@ -6,6 +6,7 @@ import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
+import 'package:sm_app/utils/select-box.dart';
 import 'package:sm_app/utils/select-value.dart';
 import 'package:sm_app/utils/string-util.dart';
 
@@ -24,9 +25,12 @@ class _RoutePlanState extends State<RoutePlan> {
   TextEditingController _controllerStockInHand;
   TextEditingController _controllerStockTopUp;
 
+  int _radioValue;
+
   @override
   void initState() {
     super.initState();
+    _radioValue = 0;
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.formatDate())
     );
@@ -35,7 +39,7 @@ class _RoutePlanState extends State<RoutePlan> {
   @override
   Widget build(BuildContext context) {
     return AppBarUtil(
-      title: StringRes.distributionTopup,
+      title: StringRes.routePlan,
       actions: <Widget>[
         ButtonSave.buttonSave(_onSave)
       ],
@@ -76,9 +80,10 @@ class _RoutePlanState extends State<RoutePlan> {
                 controller: _controllerStockInHand,
                 label: StringRes.plannedVillage
             ),
-            InputNumber.buildTextField(
-                controller: _controllerStockTopUp,
-                label: StringRes.actualVisitPlan,
+            SelectBox.selectBox(
+                radioValue: _radioValue,
+                onChanged: _handleRadioValueChange,
+                label: StringRes.actualVisitPlan
             ),
           ],
         )
@@ -86,6 +91,10 @@ class _RoutePlanState extends State<RoutePlan> {
   }
 
   void _onSave() {
+
+  }
+
+  void _handleRadioValueChange(int value) {
 
   }
 }
