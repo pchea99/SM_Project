@@ -4,9 +4,12 @@ import 'package:sm_app/daily-feedback/daily-feedback.dart';
 import 'package:sm_app/daily-retailer-mapping/daily-retailer-mapping.dart';
 import 'package:sm_app/daily-summary/daily-summary.dart';
 import 'package:sm_app/login/login.dart';
+import 'package:sm_app/market-audit-report/market-audit-report.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
+import 'package:sm_app/route-plan/route-plan.dart';
 import 'package:sm_app/stock-control-history-agent/stock-control-history-agent.dart';
+import 'package:sm_app/stock-control-report-by-team-leader/stock-control-report-team-leader.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sweetalert/sweetalert.dart';
@@ -96,9 +99,14 @@ class _MenuState extends State<Menu> {
       _navigateTo(DailyFeedback());
     }else if(title == StringRes.dailySummary){
       _navigateTo(DailySummary());
-    }
-    else if(title == StringRes.stockControlHistoryAgent){
+    }else if(title == StringRes.stockControlHistoryAgent){
       _navigateTo(StockControlHistoryByAgent());
+    }else if(title == StringRes.stockControlReportTeamLeader){
+      _navigateTo(StockControlReportByTeamLeader());
+    }else if(title == StringRes.routePlan){
+      _navigateTo(RoutePlan());
+    }else if(title == StringRes.marketAuditReport){
+      _navigateTo(MarketAuditReport());
     }
   }
 

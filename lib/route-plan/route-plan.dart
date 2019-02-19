@@ -23,9 +23,6 @@ class _RoutePlanState extends State<RoutePlan> {
   TextEditingController _controllerTopUp;
   TextEditingController _controllerStockInHand;
   TextEditingController _controllerStockTopUp;
-  TextEditingController _controllerStockTeamLeader;
-  TextEditingController _controllerRemainStock;
-  TextEditingController _controllerRemark;
 
   @override
   void initState() {
@@ -63,46 +60,25 @@ class _RoutePlanState extends State<RoutePlan> {
                 controller: _controllerDate,
                 label: StringRes.date
             ),
-            SelectValue.selectView(
-                label: StringRes.agentNo,
-                callback: null
-            ),
             InputField.buildTextField(
                 controller: _controllerAgentName,
-                label: StringRes.agentName
+                label: StringRes.plannedProvince
             ),
             InputNumber.buildTextField(
                 controller: _controllerSIMDistribution,
-                label: StringRes.simDistribution,
-                isEnable: true
+                label: StringRes.plannedDistrict,
             ),
             InputNumber.buildTextField(
                 controller: _controllerTopUp,
-                label: StringRes.topUp,
-                isEnable: true
+                label: StringRes.plannedCommune,
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockInHand,
-                label: StringRes.stockInHandBTW
+                label: StringRes.plannedVillage
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockTopUp,
-                label: StringRes.stockTopUpDTW,
-                isEnable: true
-            ),
-            InputNumber.buildTextField(
-                controller: _controllerStockTeamLeader,
-                label: StringRes.stockTeamLeaderTBFAT,
-                isEnable: true
-            ),
-            InputNumber.buildTextField(
-                controller: _controllerRemainStock,
-                label: StringRes.remainingStock
-            ),
-            InputField.buildTextField(
-                controller: _controllerRemark,
-                label: StringRes.remark,
-                isEnable: true
+                label: StringRes.actualVisitPlan,
             ),
           ],
         )

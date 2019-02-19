@@ -63,45 +63,24 @@ class _MarketAuditReportState extends State<MarketAuditReport> {
                 controller: _controllerDate,
                 label: StringRes.date
             ),
-            SelectValue.selectView(
-                label: StringRes.agentNo,
-                callback: null
-            ),
             InputField.buildTextField(
-                controller: _controllerAgentName,
-                label: StringRes.agentName
-            ),
-            InputNumber.buildTextField(
                 controller: _controllerSIMDistribution,
-                label: StringRes.simDistribution,
+                label: StringRes.remarkAgent,
                 isEnable: true
-            ),
-            InputNumber.buildTextField(
-                controller: _controllerTopUp,
-                label: StringRes.topUp,
-                isEnable: true
-            ),
-            InputNumber.buildTextField(
-                controller: _controllerStockInHand,
-                label: StringRes.stockInHandBTW
-            ),
-            InputNumber.buildTextField(
-                controller: _controllerStockTopUp,
-                label: StringRes.stockTopUpDTW,
-                isEnable: true
-            ),
-            InputNumber.buildTextField(
-                controller: _controllerStockTeamLeader,
-                label: StringRes.stockTeamLeaderTBFAT,
-                isEnable: true
-            ),
-            InputNumber.buildTextField(
-                controller: _controllerRemainStock,
-                label: StringRes.remainingStock
             ),
             InputField.buildTextField(
-                controller: _controllerRemark,
-                label: StringRes.remark,
+                controller: _controllerTopUp,
+                label: StringRes.remarkVisit,
+                isEnable: true
+            ),
+            InputField.buildTextField(
+                controller: _controllerStockInHand,
+                label: StringRes.remarkSystem,
+                isEnable: true
+            ),
+            InputField.buildTextField(
+                controller: _controllerStockTopUp,
+                label: StringRes.otherIssue,
                 isEnable: true
             ),
           ],

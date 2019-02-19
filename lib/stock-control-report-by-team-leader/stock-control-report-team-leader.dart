@@ -63,46 +63,35 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
                 controller: _controllerDate,
                 label: StringRes.date
             ),
-            SelectValue.selectView(
-                label: StringRes.agentNo,
-                callback: null
+            InputField.buildTextField(
+                controller: _controllerAgentName,
+                label: StringRes.initialStock
             ),
             InputField.buildTextField(
                 controller: _controllerAgentName,
-                label: StringRes.agentName
+                label: StringRes.remainingStockTeamLeadYesterday
             ),
             InputNumber.buildTextField(
                 controller: _controllerSIMDistribution,
-                label: StringRes.simDistribution,
+                label: StringRes.simStockReceivedAssistant,
                 isEnable: true
             ),
             InputNumber.buildTextField(
                 controller: _controllerTopUp,
-                label: StringRes.topUp,
+                label: StringRes.stockDeliveryBackAssistant,
                 isEnable: true
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockInHand,
-                label: StringRes.stockInHandBTW
+                label: StringRes.totalStockAllocate
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockTopUp,
-                label: StringRes.stockTopUpDTW,
-                isEnable: true
+                label: StringRes.totalStockTeamLeadTakingBackToday,
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockTeamLeader,
-                label: StringRes.stockTeamLeaderTBFAT,
-                isEnable: true
-            ),
-            InputNumber.buildTextField(
-                controller: _controllerRemainStock,
-                label: StringRes.remainingStock
-            ),
-            InputField.buildTextField(
-                controller: _controllerRemark,
-                label: StringRes.remark,
-                isEnable: true
+                label: StringRes.remainingStockTeamLeaderToday,
             ),
           ],
         )

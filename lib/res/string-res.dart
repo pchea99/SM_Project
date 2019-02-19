@@ -59,4 +59,20 @@ class StringRes{
   static final String remainingStockAgent = "Remaining stocks at Agent's";
   static final String remainStockTeamLeader = "Remaining stocks at Team Leader's";
   static final String totalRemainingStock = "Total Remaining stocks";
+  static final String initialStock = "Initial stocks in hand for Team Leader";
+  static final String remainingStockTeamLeadYesterday = "Remaining stocks at Team Leader's from yesterday";
+  static final String simStockReceivedAssistant = "SIM Stock received by Assisant";
+  static final String stockDeliveryBackAssistant = "Stock delivered back to Assistant";
+  static final String totalStockAllocate = "Total stocks allocated to all agent";
+  static final String totalStockTeamLeadTakingBackToday = "Total Stock Team Leader taking back today";
+  static final String remainingStockTeamLeaderToday = "Remaining Stock at Team Leader's for today";
+  static final String plannedProvince = "Planned province";
+  static final String plannedDistrict = "Planned district";
+  static final String plannedCommune = "Planned commune";
+  static final String plannedVillage = "Planned village";
+  static final String actualVisitPlan = "Actual visit vs Plan";
+  static final String remarkAgent = "Remark on Agent performance";
+  static final String remarkVisit = "Remark on Visited location";
+  static final String remarkSystem = "Remark on System issues";
+  static final String otherIssue = "Other issues";
 }
