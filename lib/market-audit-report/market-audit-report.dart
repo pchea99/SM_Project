@@ -38,7 +38,7 @@ class _MarketAuditReportState extends State<MarketAuditReport> {
   @override
   Widget build(BuildContext context) {
     return AppBarUtil(
-      title: StringRes.distributionTopup,
+      title: StringRes.marketAuditReport,
       actions: <Widget>[
         ButtonSave.buttonSave(_onSave)
       ],

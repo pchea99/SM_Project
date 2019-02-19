@@ -38,7 +38,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
   @override
   Widget build(BuildContext context) {
     return AppBarUtil(
-      title: StringRes.distributionTopup,
+      title: StringRes.stockControlReportTeamLeader,
       actions: <Widget>[
         ButtonSave.buttonSave(_onSave)
       ],

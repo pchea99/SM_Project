@@ -38,7 +38,7 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
   @override
   Widget build(BuildContext context) {
     return AppBarUtil(
-      title: StringRes.distributionTopup,
+      title: StringRes.stockControlHistoryAgent,
       actions: <Widget>[
         ButtonSave.buttonSave(_onSave)
       ],
@@ -74,12 +74,10 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
             InputNumber.buildTextField(
                 controller: _controllerSIMDistribution,
                 label: StringRes.simDistribution,
-                isEnable: true
             ),
             InputNumber.buildTextField(
                 controller: _controllerTopUp,
                 label: StringRes.topUp,
-                isEnable: true
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockInHand,
@@ -88,12 +86,10 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
             InputNumber.buildTextField(
                 controller: _controllerStockTopUp,
                 label: StringRes.stockTopUpDTW,
-                isEnable: true
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockTeamLeader,
                 label: StringRes.stockTeamLeaderTBFAT,
-                isEnable: true
             ),
             InputNumber.buildTextField(
                 controller: _controllerRemainStock,

@@ -27,7 +27,8 @@ class StringRes{
   static final String stockInHandBTW = "Stock in hand before today work";
   static final String stockTopUpDTW = "Stock top up during today work";
   static final String stockTeamLeaderTBFAT = "Stock Team Leader taking back from Agent today";
-  static final String remainingStock = "Remaining stock for tomorrow work with Agent";
+  /*stock for tomorrow work with Agent*/
+  static final String remainingStock = "Remaining stock for tomorrow work Agent";
   static final String remark ="Remark";
   static final String save = "Save";
   static final String anotherRetailer = "Another retailer";
