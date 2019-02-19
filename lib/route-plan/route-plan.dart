@@ -80,10 +80,13 @@ class _RoutePlanState extends State<RoutePlan> {
                 controller: _controllerStockInHand,
                 label: StringRes.plannedVillage
             ),
-            SelectBox.selectBox(
-                radioValue: _radioValue,
-                onChanged: _handleRadioValueChange,
-                label: StringRes.actualVisitPlan
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: SelectBox.selectBox(
+                  radioValue: _radioValue,
+                  onChanged: _handleRadioValueChange,
+                  label: StringRes.actualVisitPlan
+              ),
             ),
           ],
         )
@@ -95,6 +98,9 @@ class _RoutePlanState extends State<RoutePlan> {
   }
 
   void _handleRadioValueChange(int value) {
+    _radioValue = value;
+    setState(() {
 
+    });
   }
 }
