@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sm_app/res/font-size-res.dart';
 
-class SelectList{
-  static Widget selectList({String label, String value, VoidCallback callback}){
+class SelectValue{
+  static Widget selectView({String label, String value, VoidCallback callback}){
     return InkWell(
       onTap: callback,
       child: Container(

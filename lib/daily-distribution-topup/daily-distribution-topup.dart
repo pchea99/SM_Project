@@ -62,7 +62,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
               controller: _controllerDate,
               label: StringRes.date
           ),
-          SelectList.selectList(
+          SelectValue.selectView(
            label: StringRes.agentNo,
            callback: _onSelectAgentNo
           ),

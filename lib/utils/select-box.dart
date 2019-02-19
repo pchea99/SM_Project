@@ -23,7 +23,7 @@ class SelectBox{
           ),
           child: Row(
             children: <Widget>[
-              Text(label),
+              Expanded(child: Text(label)),
               new Radio(
                 value: 0,
                 groupValue: radioValue,

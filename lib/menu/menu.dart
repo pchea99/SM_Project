@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sm_app/daily-distribution-topup/daily-distribution-topup.dart';
+import 'package:sm_app/daily-feedback/daily-feedback.dart';
 import 'package:sm_app/daily-retailer-mapping/daily-retailer-mapping.dart';
 import 'package:sm_app/login/login.dart';
 import 'package:sm_app/res/font-size-res.dart';
@@ -90,6 +91,8 @@ class _MenuState extends State<Menu> {
       _navigateTo(DailyDistributionTopUp());
     }else if(title == StringRes.dailyRetailerMapping){
       _navigateTo(DailyRetailerMapping());
+    }else if(title == StringRes.dailyFeedback){
+      _navigateTo(DailyFeedback());
     }
   }
 

@@ -30,7 +30,26 @@ class StringRes{
   static final String remainingStock = "Remaining stock for tomorrow work with Agent";
   static final String remark ="Remark";
   static final String save = "Save";
-  static final String selectRetailer = "Select another retailer";
+  static final String selectRetailer = "Another retailer";
   static final String yes = 'Yes';
   static final String no = 'No';
+  static final String anotherFeedback ="Another Feedback?";
+  static final String province = "Province";
+  static final String district = "District";
+  static final String commune = "Commune";
+  static final String village = "Village";
+  static final String latitude = "Latitude";
+  static final String longtitude = "Longtitude";
+  static final String smartCoverageDownload = "Smart Coverage - Download";
+  static final String smartCoverageUpload = "Smart Coverage - Upload";
+  static final String issue = "Issues";
+  static final String brokenPhone = "Broken Phone";
+  static final String slowPhone = "Slow Phone";
+  static final String brokenApp = "Broken App";
+  static final String noCoverage = "No Coverage";
+  static final String unrecognizedSIM = "Unrecognized SIM";
+  static final String weather = "Weather";
+  static final String noPeople = "No people";
+  static final String overVisited = "Over visited";
+  static final String otherIssueRemark = "Other Issues/Remark";
 }
