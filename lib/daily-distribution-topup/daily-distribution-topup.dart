@@ -7,6 +7,7 @@ import 'package:sm_app/utils/input-field.dart';
 import 'package:date_format/date_format.dart';
 import 'package:sm_app/utils/input-number.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/string-util.dart';
 
 class DailyDistributionTopUp extends StatefulWidget {
   @override
@@ -31,7 +32,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   void initState() {
     super.initState();
     _controllerDate = new TextEditingController(
-      text: formatDate(new DateTime.now(), [dd, '-', mm, '-', yyyy])
+      text: formatDate(new DateTime.now(), StringUtil.formatDate())
     );
   }
 

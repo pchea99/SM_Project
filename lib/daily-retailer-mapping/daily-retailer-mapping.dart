@@ -8,6 +8,7 @@ import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-phone.dart';
 import 'package:sm_app/utils/select-box.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/string-util.dart';
 
 class DailyRetailerMapping extends StatefulWidget {
   @override
@@ -31,7 +32,7 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
     super.initState();
     _radioValue = 0;
     _controllerDate = new TextEditingController(
-        text: formatDate(new DateTime.now(), [dd, '-', mm, '-', yyyy])
+        text: formatDate(new DateTime.now(), StringUtil.formatDate())
     );
   }
 

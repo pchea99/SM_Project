@@ -1,5 +1,7 @@
+import 'package:date_format/date_format.dart';
+
 class StringUtil{
-  static String formatDate(){
-    return 'yyyy-mm-dd';
+  static List<String> formatDate(){
+    return [DD, ', ', MM,' ',dd, ', ', yyyy];
   }
 }

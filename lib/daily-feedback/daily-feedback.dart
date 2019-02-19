@@ -7,6 +7,7 @@ import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/select-box.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/string-util.dart';
 
 class DailyFeedback extends StatefulWidget {
   @override
@@ -51,7 +52,7 @@ class _DailyFeedbackState extends State<DailyFeedback> {
     _radioValueOverVisited = 0;
 
     _controllerDate = new TextEditingController(
-        text: formatDate(new DateTime.now(), [dd, '-', mm, '-', yyyy])
+        text: formatDate(new DateTime.now(), StringUtil.formatDate())
     );
   }
 
