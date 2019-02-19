@@ -4,6 +4,7 @@ import 'package:sm_app/daily-retailer-mapping/daily-retailer-mapping.dart';
 import 'package:sm_app/login/login.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
+import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sweetalert/sweetalert.dart';
 
@@ -42,18 +43,29 @@ class _MenuState extends State<Menu> {
           _buildIconLogout()
         ],
       ),
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.white,
       body: Container(
         padding: const EdgeInsets.only(top: 6.0),
         child: ListView(
           shrinkWrap: true,
           children: _menus.map((menu)=>
-              Card(
+              Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                            color: Colors.grey[100]
+                        )
+                    )
+                ),
                 child: ListTile(
                   title: Text(menu),
                   onTap: (){
                     _click(menu);
                   },
+                  trailing: Icon(
+                    Icons.navigate_next,
+                    color: Colors.grey,
+                  ),
                 ),
               )
           ).toList(),

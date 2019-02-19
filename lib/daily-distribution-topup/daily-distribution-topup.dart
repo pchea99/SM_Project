@@ -5,6 +5,7 @@ import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:date_format/date_format.dart';
+import 'package:sm_app/utils/select-value.dart';
 
 class DailyDistributionTopUp extends StatefulWidget {
   @override
@@ -24,7 +25,6 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   TextEditingController _controllerStockTeamLeader;
   TextEditingController _controllerRemainStock;
   TextEditingController _controllerRemark;
-
 
   @override
   void initState() {
@@ -62,9 +62,9 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
               controller: _controllerDate,
               label: StringRes.date
           ),
-          InputField.buildTextField(
-              controller: _controllerAgentNo,
-              label: StringRes.agentNo
+          SelectList.selectList(
+           label: StringRes.agentNo,
+           callback: _onSelectAgentNo
           ),
           InputField.buildTextField(
               controller: _controllerAgentName,
@@ -109,6 +109,10 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   }
 
   void _onSave(){
+
+  }
+
+  void _onSelectAgentNo() {
 
   }
 }
