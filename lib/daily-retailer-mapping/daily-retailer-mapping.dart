@@ -2,9 +2,11 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
+import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/select-box.dart';
+import 'package:sm_app/utils/select-value.dart';
 
 class DailyRetailerMapping extends StatefulWidget {
   @override
@@ -15,15 +17,13 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
   int _radioValue;
   TextEditingController _controllerTeam;
   TextEditingController _controllerDate;
-  TextEditingController _controllerAgentNo;
-  TextEditingController _controllerAgentName;
-  TextEditingController _controllerSIMDistribution;
-  TextEditingController _controllerTopUp;
-  TextEditingController _controllerStockInHand;
-  TextEditingController _controllerStockTopUp;
-  TextEditingController _controllerStockTeamLeader;
-  TextEditingController _controllerRemainStock;
-  TextEditingController _controllerRemark;
+  TextEditingController _controllerDistrict;
+  TextEditingController _controllerCommune;
+  TextEditingController _controllerVillage;
+  TextEditingController _controllerRetailerName;
+  TextEditingController _controllerRetailerPhone;
+  TextEditingController _controllerLatitude;
+  TextEditingController _controllerLongtitude;
 
   @override
   void initState() {
@@ -37,17 +37,25 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
   @override
   Widget build(BuildContext context) {
     return AppBarUtil(
-      title: StringRes.dailyRetailerMapping,
-      layout: SingleChildScrollView(
+        title: StringRes.dailyRetailerMapping,
+        actions: <Widget>[
+          ButtonSave.buttonSave(_onSave)
+        ],
+        layout: _buildForm()
+    );
+  }
+
+  SingleChildScrollView _buildForm() {
+    return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ContainerForm.buildContainForm(
               Column(
                 children: <Widget>[
                   SelectBox.selectBox(
-                    radioValue: _radioValue,
-                    onChanged: _handleRadioValueChange,
-                    label: StringRes.selectRetailer
+                      radioValue: _radioValue,
+                      onChanged: _handleRadioValueChange,
+                      label: StringRes.anotherRetailer
                   ),
                   InputField.buildTextField(
                     controller: _controllerTeam,
@@ -57,58 +65,68 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
                       controller: _controllerDate,
                       label: StringRes.date
                   ),
-                  InputField.buildTextField(
-                      controller: _controllerAgentNo,
-                      label: StringRes.agentNo
+                  SelectValue.selectView(
+                      label: StringRes.province,
+                      callback: _onSelectProvince
                   ),
                   InputField.buildTextField(
-                      controller: _controllerAgentName,
-                      label: StringRes.agentName
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerSIMDistribution,
-                      label: StringRes.simDistribution,
+                      controller: _controllerDistrict,
+                      label: StringRes.district,
                       isEnable: true
                   ),
                   InputField.buildTextField(
-                      controller: _controllerTopUp,
-                      label: StringRes.topUp,
+                      controller: _controllerCommune,
+                      label: StringRes.commune,
                       isEnable: true
                   ),
                   InputField.buildTextField(
-                      controller: _controllerStockInHand,
-                      label: StringRes.stockInHandBTW
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerStockTopUp,
-                      label: StringRes.stockTopUpDTW,
+                      controller: _controllerVillage,
+                      label: StringRes.village,
                       isEnable: true
                   ),
                   InputField.buildTextField(
-                      controller: _controllerStockTeamLeader,
-                      label: StringRes.stockTeamLeaderTBFAT,
+                      controller: _controllerRetailerName,
+                      label: StringRes.retailerName,
                       isEnable: true
                   ),
                   InputField.buildTextField(
-                      controller: _controllerRemainStock,
-                      label: StringRes.remainingStock
+                      controller: _controllerRetailerPhone,
+                      label: StringRes.retailerPhone,
+                      isEnable: true
                   ),
                   InputField.buildTextField(
-                      controller: _controllerRemark,
-                      label: StringRes.remark,
-                      isEnable: true
+                    controller: _controllerLatitude,
+                    label: StringRes.latitude,
+                  ),
+                  InputField.buildTextField(
+                      controller: _controllerLongtitude,
+                      label: StringRes.longtitude
                   ),
                 ],
               )
           ),
         ),
-      )
-    );
+      );
   }
 
   void _handleRadioValueChange(int value) {
-    setState(() {
-      _radioValue = value;
-    });
+    _radioValue = value;
+    _onSetState();
+  }
+
+  void _onSelectProvince() {
+
+  }
+
+  void _onSetState(){
+    if(!mounted){
+      return;
+    }
+
+    setState(() {});
+  }
+
+  void _onSave() {
+
   }
 }

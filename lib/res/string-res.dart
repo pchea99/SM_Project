@@ -30,7 +30,7 @@ class StringRes{
   static final String remainingStock = "Remaining stock for tomorrow work with Agent";
   static final String remark ="Remark";
   static final String save = "Save";
-  static final String selectRetailer = "Another retailer";
+  static final String anotherRetailer = "Another retailer";
   static final String yes = 'Yes';
   static final String no = 'No';
   static final String anotherFeedback ="Another Feedback?";
@@ -52,4 +52,6 @@ class StringRes{
   static final String noPeople = "No people";
   static final String overVisited = "Over visited";
   static final String otherIssueRemark = "Other Issues/Remark";
+  static final String retailerName = "Retailer's Name";
+  static final String retailerPhone = "Retailer's Phone number";
 }
