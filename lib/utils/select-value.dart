@@ -7,7 +7,7 @@ class SelectValue{
       onTap: callback,
       child: Container(
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.blueGrey[100]),
+            border: Border.all(color: Colors.black45),
             borderRadius: BorderRadius.all(Radius.circular(8.0))
         ),
         child: Padding(

@@ -15,7 +15,6 @@ class DailyDistributionTopUp extends StatefulWidget {
 }
 
 class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
-
   TextEditingController _controllerTeam;
   TextEditingController _controllerDate;
   TextEditingController _controllerAgentNo;

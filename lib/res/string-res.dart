@@ -54,4 +54,9 @@ class StringRes{
   static final String otherIssueRemark = "Other Issues/Remark";
   static final String retailerName = "Retailer's Name";
   static final String retailerPhone = "Retailer's Phone number";
+  static final String totalDistribution = "Total distribution";
+  static final String totalTopUp = "Total top up";
+  static final String remainingStockAgent = "Remaining stocks at Agent's";
+  static final String remainStockTeamLeader = "Remaining stocks at Team Leader's";
+  static final String totalRemainingStock = "Total Remaining stocks";
 }
