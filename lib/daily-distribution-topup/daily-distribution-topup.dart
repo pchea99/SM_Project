@@ -31,7 +31,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   void initState() {
     super.initState();
     _controllerDate = new TextEditingController(
-      text: formatDate(new DateTime.now(), StringUtil.formatDate())
+      text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
   }
 

@@ -4,6 +4,7 @@ import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
+import 'package:sm_app/utils/date-picker.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
 import 'package:sm_app/utils/select-box.dart';
@@ -32,7 +33,7 @@ class _RoutePlanState extends State<RoutePlan> {
     super.initState();
     _radioValue = 0;
     _controllerDate = new TextEditingController(
-        text: formatDate(new DateTime.now(), StringUtil.formatDate())
+        text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
   }
 
@@ -53,9 +54,11 @@ class _RoutePlanState extends State<RoutePlan> {
     return ContainerForm.buildContainForm(
         Column(
           children: <Widget>[
-            InputField.buildTextField(
-                controller: _controllerDate,
-                label: StringRes.date
+            DatePicker.datePicker(onSelectedDate),
+            SelectBox.selectBox(
+                radioValue: _radioValue,
+                onChanged: _handleRadioValueChange,
+                label: StringRes.actualVisitPlan
             ),
             InputField.buildTextField(
               controller: _controllerTeam,
@@ -77,14 +80,6 @@ class _RoutePlanState extends State<RoutePlan> {
                 controller: _controllerStockInHand,
                 label: StringRes.plannedVillage
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: SelectBox.selectBox(
-                  radioValue: _radioValue,
-                  onChanged: _handleRadioValueChange,
-                  label: StringRes.actualVisitPlan
-              ),
-            ),
           ],
         )
     );
@@ -99,5 +94,9 @@ class _RoutePlanState extends State<RoutePlan> {
     setState(() {
 
     });
+  }
+
+  void onSelectedDate(value) {
+
   }
 }

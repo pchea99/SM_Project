@@ -52,7 +52,7 @@ class _DailyFeedbackState extends State<DailyFeedback> {
     _radioValueOverVisited = 0;
 
     _controllerDate = new TextEditingController(
-        text: formatDate(new DateTime.now(), StringUtil.formatDate())
+        text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
   }
 

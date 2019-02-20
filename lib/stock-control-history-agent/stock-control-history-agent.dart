@@ -4,6 +4,7 @@ import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
+import 'package:sm_app/utils/date-picker.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
 import 'package:sm_app/utils/select-value.dart';
@@ -31,7 +32,7 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
   void initState() {
     super.initState();
     _controllerDate = new TextEditingController(
-        text: formatDate(new DateTime.now(), StringUtil.formatDate())
+        text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
   }
 
@@ -59,10 +60,7 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
                   callback: null
               ),
             ),
-            InputField.buildTextField(
-                controller: _controllerDate,
-                label: StringRes.date
-            ),
+            DatePicker.datePicker(onSelectedDate),
             InputField.buildTextField(
               controller: _controllerTeam,
               label: StringRes.team,
@@ -101,6 +99,10 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
   }
 
   void _onSave() {
+
+  }
+
+  void onSelectedDate(value) {
 
   }
 }

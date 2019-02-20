@@ -4,6 +4,7 @@ import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
+import 'package:sm_app/utils/date-picker.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
 import 'package:sm_app/utils/select-value.dart';
@@ -31,7 +32,7 @@ class _DailySummaryState extends State<DailySummary> {
   void initState() {
     super.initState();
     _controllerDate = new TextEditingController(
-        text: formatDate(new DateTime.now(), StringUtil.formatDate())
+        text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
   }
 
@@ -52,11 +53,7 @@ class _DailySummaryState extends State<DailySummary> {
     return ContainerForm.buildContainForm(
         Column(
           children: <Widget>[
-            InputField.buildTextField(
-                controller: _controllerDate,
-                label: StringRes.date,
-                isEnable: true
-            ),
+            DatePicker.datePicker(onSelectedDate),
             InputField.buildTextField(
               controller: _controllerTeam,
               label: StringRes.team,
@@ -91,6 +88,10 @@ class _DailySummaryState extends State<DailySummary> {
   }
 
   void _onSave() {
+
+  }
+
+  void onSelectedDate(value) {
 
   }
 }
