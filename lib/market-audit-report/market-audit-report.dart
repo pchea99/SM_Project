@@ -42,11 +42,8 @@ class _MarketAuditReportState extends State<MarketAuditReport> {
       actions: <Widget>[
         ButtonSave.buttonSave(_onSave)
       ],
-      layout: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: _buildForm(),
-          )
+      layout: SingleChildScrollView(
+        child: _buildForm(),
       ),
     );
   }

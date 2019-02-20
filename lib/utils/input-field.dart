@@ -8,7 +8,7 @@ class InputField{
     bool isEnable
   }) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: TextField(
         controller: controller,
         enabled: isEnable == null ? false : isEnable,

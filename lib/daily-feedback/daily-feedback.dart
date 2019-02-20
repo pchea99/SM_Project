@@ -69,114 +69,114 @@ class _DailyFeedbackState extends State<DailyFeedback> {
 
   SingleChildScrollView _buildForm() {
     return SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ContainerForm.buildContainForm(
-              Column(
-                children: <Widget>[
-                  SelectBox.selectBox(
-                      radioValue: _radioValueFeedback,
-                      onChanged: _handleRadioFeedbackValueChange,
-                      label: StringRes.anotherFeedback
-                  ),
-                  InputField.buildTextField(
-                    controller: _controllerTeam,
-                    label: StringRes.team,
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerDate,
-                      label: StringRes.date
-                  ),
-                  SelectValue.selectView(
+        child: ContainerForm.buildContainForm(
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: SelectValue.selectView(
                       label: StringRes.province,
                       callback: _onSelectProvince
                   ),
-                  InputField.buildTextField(
-                      controller: _controllerAgentName,
-                      label: StringRes.district,
-                      isEnable: true
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerSIMDistribution,
-                      label: StringRes.commune,
-                      isEnable: true
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerTopUp,
-                      label: StringRes.village,
-                      isEnable: true
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerStockTeamLeader,
-                      label: StringRes.smartCoverageDownload,
-                      isEnable: true
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerRemainStock,
-                      label: StringRes.smartCoverageUpload,
-                      isEnable: true
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerStockInHand,
-                      label: StringRes.latitude
-                  ),
-                  InputField.buildTextField(
-                    controller: _controllerStockTopUp,
-                    label: StringRes.longtitude,
-                  ),
-                  SelectBox.selectBox(
-                      radioValue: _radioValueIssue,
-                      onChanged: _handleRadioIssueValueChange,
-                      label: StringRes.issue
-                  ),
-                  SelectBox.selectBox(
-                      radioValue: _radioValueBrokenPhone,
-                      onChanged: _handleRadioBrokenPhoneValueChange,
-                      label: StringRes.brokenPhone
-                  ),
-                  SelectBox.selectBox(
-                      radioValue: _radioValueSlowPhone,
-                      onChanged: _handleRadioSlowPhoneValueChange,
-                      label: StringRes.slowPhone
-                  ),
-                  SelectBox.selectBox(
-                      radioValue: _radioValueBrokenApp,
-                      onChanged: _handleRadioBrokenAppValueChange,
-                      label: StringRes.brokenApp
-                  ),
-                  SelectBox.selectBox(
-                      radioValue: _radioValueNoCoverage,
-                      onChanged: _handleRadioNoCoverageValueChange,
-                      label: StringRes.noCoverage
-                  ),
-                  SelectBox.selectBox(
-                      radioValue: _radioValueUnrecognizeSIM,
-                      onChanged: _handleRadioUnrecognizeSIMValueChange,
-                      label: StringRes.unrecognizedSIM
-                  ),
-                  SelectBox.selectBox(
-                      radioValue: _radioValueWeather,
-                      onChanged: _handleRadioWeatherValueChange,
-                      label: StringRes.weather
-                  ),
-                  SelectBox.selectBox(
-                      radioValue: _radioValueNoPeople,
-                      onChanged: _handleRadioNoPeopleValueChange,
-                      label: StringRes.noPeople
-                  ),
-                  SelectBox.selectBox(
-                      radioValue: _radioValueOverVisited,
-                      onChanged: _handleRadioOverVisitValueChange,
-                      label: StringRes.overVisited
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerRemark,
-                      label: StringRes.otherIssueRemark,
-                      isEnable: true
-                  ),
-                ],
-              )
-          ),
+                ),
+                InputField.buildTextField(
+                  controller: _controllerTeam,
+                  label: StringRes.team,
+                ),
+                InputField.buildTextField(
+                    controller: _controllerDate,
+                    label: StringRes.date
+                ),
+                InputField.buildTextField(
+                    controller: _controllerAgentName,
+                    label: StringRes.district,
+                    isEnable: true
+                ),
+                InputField.buildTextField(
+                    controller: _controllerSIMDistribution,
+                    label: StringRes.commune,
+                    isEnable: true
+                ),
+                InputField.buildTextField(
+                    controller: _controllerTopUp,
+                    label: StringRes.village,
+                    isEnable: true
+                ),
+                InputField.buildTextField(
+                    controller: _controllerStockTeamLeader,
+                    label: StringRes.smartCoverageDownload,
+                    isEnable: true
+                ),
+                InputField.buildTextField(
+                    controller: _controllerRemainStock,
+                    label: StringRes.smartCoverageUpload,
+                    isEnable: true
+                ),
+                InputField.buildTextField(
+                    controller: _controllerRemark,
+                    label: StringRes.otherIssueRemark,
+                    isEnable: true
+                ),
+                SelectBox.selectBox(
+                    radioValue: _radioValueFeedback,
+                    onChanged: _handleRadioFeedbackValueChange,
+                    label: StringRes.anotherFeedback
+                ),
+                SelectBox.selectBox(
+                    radioValue: _radioValueIssue,
+                    onChanged: _handleRadioIssueValueChange,
+                    label: StringRes.issue
+                ),
+                SelectBox.selectBox(
+                    radioValue: _radioValueBrokenPhone,
+                    onChanged: _handleRadioBrokenPhoneValueChange,
+                    label: StringRes.brokenPhone
+                ),
+                SelectBox.selectBox(
+                    radioValue: _radioValueSlowPhone,
+                    onChanged: _handleRadioSlowPhoneValueChange,
+                    label: StringRes.slowPhone
+                ),
+                SelectBox.selectBox(
+                    radioValue: _radioValueBrokenApp,
+                    onChanged: _handleRadioBrokenAppValueChange,
+                    label: StringRes.brokenApp
+                ),
+                SelectBox.selectBox(
+                    radioValue: _radioValueNoCoverage,
+                    onChanged: _handleRadioNoCoverageValueChange,
+                    label: StringRes.noCoverage
+                ),
+                SelectBox.selectBox(
+                    radioValue: _radioValueUnrecognizeSIM,
+                    onChanged: _handleRadioUnrecognizeSIMValueChange,
+                    label: StringRes.unrecognizedSIM
+                ),
+                SelectBox.selectBox(
+                    radioValue: _radioValueWeather,
+                    onChanged: _handleRadioWeatherValueChange,
+                    label: StringRes.weather
+                ),
+                SelectBox.selectBox(
+                    radioValue: _radioValueNoPeople,
+                    onChanged: _handleRadioNoPeopleValueChange,
+                    label: StringRes.noPeople
+                ),
+                SelectBox.selectBox(
+                    radioValue: _radioValueOverVisited,
+                    onChanged: _handleRadioOverVisitValueChange,
+                    label: StringRes.overVisited
+                ),
+                InputField.buildTextField(
+                    controller: _controllerStockInHand,
+                    label: StringRes.latitude
+                ),
+                InputField.buildTextField(
+                  controller: _controllerStockTopUp,
+                  label: StringRes.longtitude,
+                ),
+              ],
+            )
         ),
       );
   }

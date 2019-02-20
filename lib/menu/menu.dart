@@ -10,6 +10,7 @@ import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/route-plan/route-plan.dart';
 import 'package:sm_app/stock-control-history-agent/stock-control-history-agent.dart';
 import 'package:sm_app/stock-control-report-by-team-leader/stock-control-report-team-leader.dart';
+import 'package:sm_app/team-info/team-info.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sweetalert/sweetalert.dart';
@@ -107,6 +108,8 @@ class _MenuState extends State<Menu> {
       _navigateTo(RoutePlan());
     }else if(title == StringRes.marketAuditReport){
       _navigateTo(MarketAuditReport());
+    }else if(title == StringRes.teamInfo){
+      _navigateTo(TeamInfo());
     }
   }
 

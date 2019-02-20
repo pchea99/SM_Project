@@ -42,11 +42,8 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
       actions: <Widget>[
         ButtonSave.buttonSave(_onSave)
       ],
-      layout: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: _buildForm(),
-          )
+      layout: SingleChildScrollView(
+        child: _buildForm(),
       ),
     );
   }
@@ -55,17 +52,20 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
     return ContainerForm.buildContainForm(
         Column(
           children: <Widget>[
-            InputField.buildTextField(
-              controller: _controllerTeam,
-              label: StringRes.team,
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: SelectValue.selectView(
+                  label: StringRes.agentNo,
+                  callback: null
+              ),
             ),
             InputField.buildTextField(
                 controller: _controllerDate,
                 label: StringRes.date
             ),
-            SelectValue.selectView(
-                label: StringRes.agentNo,
-                callback: null
+            InputField.buildTextField(
+              controller: _controllerTeam,
+              label: StringRes.team,
             ),
             InputField.buildTextField(
                 controller: _controllerAgentName,

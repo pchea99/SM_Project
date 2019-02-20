@@ -27,7 +27,6 @@ class StringRes{
   static final String stockInHandBTW = "Stock in hand before today work";
   static final String stockTopUpDTW = "Stock top up during today work";
   static final String stockTeamLeaderTBFAT = "Stock Team Leader taking back from Agent today";
-  /*stock for tomorrow work with Agent*/
   static final String remainingStock = "Remaining stock for tomorrow work Agent";
   static final String remark ="Remark";
   static final String save = "Save";
@@ -76,4 +75,18 @@ class StringRes{
   static final String remarkVisit = "Remark on Visited location";
   static final String remarkSystem = "Remark on System issues";
   static final String otherIssue = "Other issues";
+  static final String sex = "Sex";
+  static final String projectLeadName = "Project Lead Name";
+  static final String teamLeadName = "Team Lead Name";
+  static final String vanDriverName = "Van Driver's Name";
+  static final String vanDriverID = "Van Driver's ID";
+  static final String vanPlaqueNumber = "Van Plaque Number";
+  static final String idNumber = "ID Number";
+  static final String entryDate = "Entry Date";
+  static final String personalPhone = "Personal Phone";
+  static final String masterSIM = "Master SIM";
+  static final String masterSIMPassword = "Master SIM password";
+  static final String registeredSIM = "Registered SIM";
+  static final String slaveSIM = "Slave SIM";
+  static final String slaveSIMPassword = "Slave SIM Password";
 }

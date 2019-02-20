@@ -42,11 +42,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       actions: <Widget>[
         ButtonSave.buttonSave(_onSave)
       ],
-      layout: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: _buildForm(),
-        )
+      layout: SingleChildScrollView(
+        child: _buildForm(),
       ),
     );
   }
@@ -55,6 +52,13 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     return ContainerForm.buildContainForm(
       Column(
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: SelectValue.selectView(
+                label: StringRes.agentNo,
+                callback: _onSelectAgentNo
+            ),
+          ),
           InputField.buildTextField(
             controller: _controllerTeam,
             label: StringRes.team,
@@ -62,10 +66,6 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
           InputField.buildTextField(
               controller: _controllerDate,
               label: StringRes.date
-          ),
-          SelectValue.selectView(
-           label: StringRes.agentNo,
-           callback: _onSelectAgentNo
           ),
           InputField.buildTextField(
               controller: _controllerAgentName,

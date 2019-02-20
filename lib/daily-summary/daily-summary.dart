@@ -42,11 +42,8 @@ class _DailySummaryState extends State<DailySummary> {
       actions: <Widget>[
         ButtonSave.buttonSave(_onSave)
       ],
-      layout: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: _buildForm(),
-          )
+      layout: SingleChildScrollView(
+        child: _buildForm(),
       ),
     );
   }
@@ -56,13 +53,13 @@ class _DailySummaryState extends State<DailySummary> {
         Column(
           children: <Widget>[
             InputField.buildTextField(
-              controller: _controllerTeam,
-              label: StringRes.team,
-            ),
-            InputField.buildTextField(
                 controller: _controllerDate,
                 label: StringRes.date,
                 isEnable: true
+            ),
+            InputField.buildTextField(
+              controller: _controllerTeam,
+              label: StringRes.team,
             ),
             InputField.buildTextField(
                 controller: _controllerAgentName,

@@ -49,64 +49,64 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
 
   SingleChildScrollView _buildForm() {
     return SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ContainerForm.buildContainForm(
-              Column(
-                children: <Widget>[
-                  SelectBox.selectBox(
-                      radioValue: _radioValue,
-                      onChanged: _handleRadioValueChange,
-                      label: StringRes.anotherRetailer
-                  ),
-                  InputField.buildTextField(
-                    controller: _controllerTeam,
-                    label: StringRes.team,
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerDate,
-                      label: StringRes.date
-                  ),
-                  SelectValue.selectView(
+        child: ContainerForm.buildContainForm(
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: SelectValue.selectView(
                       label: StringRes.province,
                       callback: _onSelectProvince
                   ),
-                  InputField.buildTextField(
-                      controller: _controllerDistrict,
-                      label: StringRes.district,
-                      isEnable: true
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerCommune,
-                      label: StringRes.commune,
-                      isEnable: true
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerVillage,
-                      label: StringRes.village,
-                      isEnable: true
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerRetailerName,
-                      label: StringRes.retailerName,
-                      isEnable: true
-                  ),
-                  InputPhone.buildTextField(
-                      controller: _controllerRetailerPhone,
-                      label: StringRes.retailerPhone,
-                      isEnable: true
-                  ),
-                  InputField.buildTextField(
-                    controller: _controllerLatitude,
-                    label: StringRes.latitude,
-                  ),
-                  InputField.buildTextField(
-                      controller: _controllerLongtitude,
-                      label: StringRes.longtitude
-                  ),
-                ],
-              )
-          ),
+                ),
+                SelectBox.selectBox(
+                    radioValue: _radioValue,
+                    onChanged: _handleRadioValueChange,
+                    label: StringRes.anotherRetailer
+                ),
+                InputField.buildTextField(
+                  controller: _controllerTeam,
+                  label: StringRes.team,
+                ),
+                InputField.buildTextField(
+                    controller: _controllerDate,
+                    label: StringRes.date
+                ),
+                InputField.buildTextField(
+                    controller: _controllerDistrict,
+                    label: StringRes.district,
+                    isEnable: true
+                ),
+                InputField.buildTextField(
+                    controller: _controllerCommune,
+                    label: StringRes.commune,
+                    isEnable: true
+                ),
+                InputField.buildTextField(
+                    controller: _controllerVillage,
+                    label: StringRes.village,
+                    isEnable: true
+                ),
+                InputField.buildTextField(
+                    controller: _controllerRetailerName,
+                    label: StringRes.retailerName,
+                    isEnable: true
+                ),
+                InputPhone.buildTextField(
+                    controller: _controllerRetailerPhone,
+                    label: StringRes.retailerPhone,
+                    isEnable: true
+                ),
+                InputField.buildTextField(
+                  controller: _controllerLatitude,
+                  label: StringRes.latitude,
+                ),
+                InputField.buildTextField(
+                    controller: _controllerLongtitude,
+                    label: StringRes.longtitude
+                ),
+              ],
+            )
         ),
       );
   }

@@ -38,15 +38,12 @@ class _TeamInfoState extends State<TeamInfo> {
   @override
   Widget build(BuildContext context) {
     return AppBarUtil(
-      title: StringRes.distributionTopup,
+      title: StringRes.teamInfo,
       actions: <Widget>[
         ButtonSave.buttonSave(_onSave)
       ],
-      layout: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: _buildForm(),
-          )
+      layout: SingleChildScrollView(
+        child: _buildForm(),
       ),
     );
   }
@@ -55,6 +52,25 @@ class _TeamInfoState extends State<TeamInfo> {
     return ContainerForm.buildContainForm(
         Column(
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: SelectValue.selectView(
+                  label: StringRes.agentNo,
+                  callback: null
+              ),
+            ),
+            InputField.buildTextField(
+                controller: _controllerAgentName,
+                label: StringRes.agentName+" (Eng)"
+            ),
+            InputField.buildTextField(
+                controller: _controllerAgentName,
+                label: StringRes.agentName+" (Khmer)"
+            ),
+            InputField.buildTextField(
+              controller: _controllerTeam,
+              label: StringRes.sex,
+            ),
             InputField.buildTextField(
               controller: _controllerTeam,
               label: StringRes.team,
@@ -63,46 +79,61 @@ class _TeamInfoState extends State<TeamInfo> {
                 controller: _controllerDate,
                 label: StringRes.date
             ),
-            SelectValue.selectView(
-                label: StringRes.agentNo,
-                callback: null
-            ),
-            InputField.buildTextField(
-                controller: _controllerAgentName,
-                label: StringRes.agentName
-            ),
             InputNumber.buildTextField(
                 controller: _controllerSIMDistribution,
-                label: StringRes.simDistribution,
-                isEnable: true
+                label: StringRes.projectLeadName,
             ),
             InputNumber.buildTextField(
                 controller: _controllerTopUp,
-                label: StringRes.topUp,
-                isEnable: true
+                label: StringRes.teamLeadName,
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockInHand,
-                label: StringRes.stockInHandBTW
+                label: StringRes.vanDriverName
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockTopUp,
-                label: StringRes.stockTopUpDTW,
-                isEnable: true
+                label: StringRes.vanDriverID,
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockTeamLeader,
-                label: StringRes.stockTeamLeaderTBFAT,
-                isEnable: true
+                label: StringRes.vanPlaqueNumber,
             ),
             InputNumber.buildTextField(
                 controller: _controllerRemainStock,
-                label: StringRes.remainingStock
+                label: StringRes.position
             ),
             InputField.buildTextField(
                 controller: _controllerRemark,
-                label: StringRes.remark,
-                isEnable: true
+                label: StringRes.idNumber,
+            ),
+            InputField.buildTextField(
+              controller: _controllerRemark,
+              label: StringRes.entryDate,
+            ),
+            InputField.buildTextField(
+              controller: _controllerRemark,
+              label: StringRes.personalPhone,
+            ),
+            InputField.buildTextField(
+              controller: _controllerRemark,
+              label: StringRes.masterSIM,
+            ),
+            InputField.buildTextField(
+              controller: _controllerRemark,
+              label: StringRes.masterSIMPassword,
+            ),
+            InputField.buildTextField(
+              controller: _controllerRemark,
+              label: StringRes.registeredSIM,
+            ),
+            InputField.buildTextField(
+              controller: _controllerRemark,
+              label: StringRes.slaveSIM,
+            ),
+            InputField.buildTextField(
+              controller: _controllerRemark,
+              label: StringRes.slaveSIMPassword,
             ),
           ],
         )
