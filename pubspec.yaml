@@ -23,6 +23,8 @@ dependencies:
   sweetalert: ^0.0.1
   date_format: ^1.0.6
   datetime_picker_formfield: ^0.1.8
+  geolocator: ^3.0.0
+  permission_handler: ^2.2.0
 
 dev_dependencies:
   flutter_test:

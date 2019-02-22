@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sm_app/daily-distribution-topup/daily-distribution-topup.dart';
 import 'package:sm_app/daily-feedback/daily-feedback.dart';
 import 'package:sm_app/daily-retailer-mapping/daily-retailer-mapping.dart';
@@ -13,6 +16,8 @@ import 'package:sm_app/stock-control-report-by-team-leader/stock-control-report-
 import 'package:sm_app/team-info/team-info.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sweetalert/sweetalert.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Menu extends StatefulWidget {
   @override
@@ -35,6 +40,16 @@ class _MenuState extends State<Menu> {
   @override
   void initState() {
     super.initState();
+    _getLoc();
+  }
+
+  void _getLoc() async {
+   /* Geolocator geolocator = Geolocator()..forceAndroidLocationManager = true;
+    GeolocationStatus geolocationStatus  = await geolocator.checkGeolocationPermissionStatus();*/
+    Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.location]);
+    print("ooooo1 $permissions");
+    //Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    //print("oooooo $position");
   }
 
   @override
