@@ -11,7 +11,6 @@ import 'package:sm_app/route-plan/route-plan.dart';
 import 'package:sm_app/stock-control-history-agent/stock-control-history-agent.dart';
 import 'package:sm_app/stock-control-report-by-team-leader/stock-control-report-team-leader.dart';
 import 'package:sm_app/team-info/team-info.dart';
-import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sweetalert/sweetalert.dart';
 
@@ -21,7 +20,6 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-
   List<String> _menus = [
     StringRes.distributionTopup,
     StringRes.dailyRetailerMapping,
@@ -33,6 +31,11 @@ class _MenuState extends State<Menu> {
     StringRes.marketAuditReport,
     StringRes.teamInfo,
   ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,5 +133,17 @@ class _MenuState extends State<Menu> {
   void _navigateTo(Widget route) async {
     NavigateTo.navigateTo(context: context, route: route);
   }
+
+  /*Future<Position> locateUser() async {
+    return Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((location) {
+      if (location != null) {
+        print("Location: ${location.latitude},${location.longitude}");
+        locationRepository.store(location);
+      }
+      return location;
+    });
+  }*/
 }
 
