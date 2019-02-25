@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sm_app/daily-distribution-topup/daily-distribution-topup.dart';
@@ -38,6 +40,20 @@ class _MenuState extends State<Menu> {
   @override
   void initState() {
     super.initState();
+
+    _test();
+  }
+
+  void _test() {
+    print('oooo');
+    FirebaseDatabase.instance.reference().child('user').child("kkk@gmail-com").set({
+      'id': 123,
+      'first_name': 'kkk'
+    }).then((_){
+      print("oooo: success");
+    }).catchError((onError){
+      print("ooooo: ${onError}");
+    });
   }
 
   @override
