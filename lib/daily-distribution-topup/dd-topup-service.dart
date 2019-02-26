@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:sm_app/model_dao/dailyDistributionTopUp.dart';
+import 'package:sm_app/model_dao/dailyDistributionTopUpDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 
 class DDTopUPService{
-  Future insertDDTopUp(DailyDistributionTopUp data){
+  static Future insertDDTopUp(DailyDistributionTopUpDAO data){
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.dailyDistributionDB)

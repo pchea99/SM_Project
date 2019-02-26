@@ -6,9 +6,9 @@ part 'stock.g.dart';
 class Stock{
   double _simDistribution;
   double _topup;
-  double _stockInHandBTW;
-  double _stockTopupDTW;
-  double _stockReturnFromAgentToday;
+  double _stockInHandBeforetodayWork;
+  double _stockTopUpDuringTodayWork;
+  double _stockTeamLeaderTakingBackFromByAgent;
   double _remainStockFTW;
   double _initialStockInHandFTL;
   double _remainStockTLFY;
@@ -22,7 +22,7 @@ class Stock{
   double _remainStockAgent;
   double _remainStockTeamLeader;
   double _totalRemainStock;
-  double _remainStockFTWWA;
+  double _remainingStockForTomorrowWorkByAgent;
   double _topUpAmount;
 
   Stock();
@@ -37,10 +37,10 @@ class Stock{
 
   Map<String, dynamic> toJson() => _$StockToJson(this);
 
-  double get remainStockFTWWA => _remainStockFTWWA;
+  double get remainStockFTWWA => _remainingStockForTomorrowWorkByAgent;
 
   set remainStockFTWWA(double value) {
-    _remainStockFTWWA = value;
+    _remainingStockForTomorrowWorkByAgent = value;
   }
 
   double get totalRemainStock => _totalRemainStock;
@@ -115,28 +115,28 @@ class Stock{
     _initialStockInHandFTL = value;
   }
 
-  double get remainStockFTW => _remainStockFTW;
+  double get remainStockForTomorrowWorkAgent => _remainStockFTW;
 
-  set remainStockFTW(double value) {
+  set remainStockForTomorrowWorkAgent(double value) {
     _remainStockFTW = value;
   }
 
-  double get stockReturnFromAgentToday => _stockReturnFromAgentToday;
+  double get stockReturnFromAgentToday => _stockTeamLeaderTakingBackFromByAgent;
 
   set stockReturnFromAgentToday(double value) {
-    _stockReturnFromAgentToday = value;
+    _stockTeamLeaderTakingBackFromByAgent = value;
   }
 
-  double get stockTopUpDuringTodayWork => _stockTopupDTW;
+  double get stockTopUpDuringTodayWork => _stockTopUpDuringTodayWork;
 
   set stockTopUpDuringTodayWork(double value) {
-    _stockTopupDTW = value;
+    _stockTopUpDuringTodayWork = value;
   }
 
-  double get stockInHandBeforeTodayWork => _stockInHandBTW;
+  double get stockInHandBeforeTodayWork => _stockInHandBeforetodayWork;
 
   set stockInHandBeforeTodayWork(double value) {
-    _stockInHandBTW = value;
+    _stockInHandBeforetodayWork = value;
   }
 
   double get topup => _topup;
@@ -153,7 +153,7 @@ class Stock{
 
   @override
   String toString() {
-    return 'Stock{_simDistribution: $_simDistribution, _topup: $_topup, _stockInHandBTW: $_stockInHandBTW, _stockTopupDTW: $_stockTopupDTW, _stockReturnFromAgentToday: $_stockReturnFromAgentToday, _remainStockFTW: $_remainStockFTW, _initialStockInHandFTL: $_initialStockInHandFTL, _remainStockTLFY: $_remainStockTLFY, _simStockReceivedBA: $_simStockReceivedBA, _stockDeliveredBTA: $_stockDeliveredBTA, _totalStockAllocatedTAA: $_totalStockAllocatedTAA, _totalStockReturnTLBT: $_totalStockReturnTLBT, _remainStockTLFT: $_remainStockTLFT, _totalDistribution: $_totalDistribution, _totalTopup: $_totalTopup, _remainStockAgent: $_remainStockAgent, _remainStockTeamLeader: $_remainStockTeamLeader, _totalRemainStock: $_totalRemainStock, _remainStockFTWWA: $_remainStockFTWWA}';
+    return 'Stock{_simDistribution: $_simDistribution, _topup: $_topup, _stockInHandBTW: $_stockInHandBeforetodayWork, _stockTopupDTW: $_stockTopUpDuringTodayWork, _stockReturnFromAgentToday: $_stockTeamLeaderTakingBackFromByAgent, _remainStockFTW: $_remainStockFTW, _initialStockInHandFTL: $_initialStockInHandFTL, _remainStockTLFY: $_remainStockTLFY, _simStockReceivedBA: $_simStockReceivedBA, _stockDeliveredBTA: $_stockDeliveredBTA, _totalStockAllocatedTAA: $_totalStockAllocatedTAA, _totalStockReturnTLBT: $_totalStockReturnTLBT, _remainStockTLFT: $_remainStockTLFT, _totalDistribution: $_totalDistribution, _totalTopup: $_totalTopup, _remainStockAgent: $_remainStockAgent, _remainStockTeamLeader: $_remainStockTeamLeader, _totalRemainStock: $_totalRemainStock, _remainStockFTWWA: $_remainingStockForTomorrowWorkByAgent}';
   }
 
 

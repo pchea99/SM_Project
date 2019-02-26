@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'dailyDistributionTopUp.dart';
+part of 'dailyDistributionTopUpDAO.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-DailyDistributionTopUp _$DailyDistributionTopUpFromJson(Map<String, dynamic> json) {
-  return DailyDistributionTopUp()
+DailyDistributionTopUpDAO _$DailyDistributionTopUpFromJson(Map<String, dynamic> json) {
+  return DailyDistributionTopUpDAO()
     ..stock = json['stock'] == null
         ? null
         : Stock.fromJson(json['stock'] as Map<String, dynamic>)
@@ -21,7 +21,7 @@ DailyDistributionTopUp _$DailyDistributionTopUpFromJson(Map<String, dynamic> jso
   ;
 }
 
-Map<String, dynamic> _$DailyDistributionTopUpToJson(DailyDistributionTopUp instance)
+Map<String, dynamic> _$DailyDistributionTopUpToJson(DailyDistributionTopUpDAO instance)
   => <String, dynamic>{
       'agent_name': instance.agent.agentNameEn,
       'agent_no': instance.agent.agentNo,

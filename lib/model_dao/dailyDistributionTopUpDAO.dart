@@ -4,16 +4,17 @@ import 'package:sm_app/model_dto/stock.dart';
 part 'dailyDistributionTopUp.g.dart';
 
 @JsonSerializable()
-class DailyDistributionTopUp{
+class DailyDistributionTopUpDAO{
   String _team;
   DateTime _date;
   String _remark;
   Agent _agent;
   Stock _stock;
 
-  DailyDistributionTopUp();
+  DailyDistributionTopUpDAO();
 
-  factory DailyDistributionTopUp.fromJson(Map<String, dynamic> json) => _$DailyDistributionTopUpFromJson(json);
+  factory DailyDistributionTopUpDAO.fromJson(Map<String, dynamic> json)
+          => _$DailyDistributionTopUpFromJson(json);
 
   Map<String, dynamic> toJson() => _$DailyDistributionTopUpToJson(this);
 

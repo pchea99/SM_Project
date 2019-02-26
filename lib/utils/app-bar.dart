@@ -5,11 +5,13 @@ class AppBarUtil extends StatefulWidget {
   final String title;
   final List<Widget> actions;
   final Widget layout;
+  final scaffoldKey;
 
   AppBarUtil({
     this.title,
     this.actions,
-    this.layout
+    this.layout,
+    this.scaffoldKey
   });
 
   @override
@@ -21,6 +23,7 @@ class _AppBarState extends State<AppBarUtil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: widget.scaffoldKey,
       appBar: AppBar(
         title: Text(
           widget.title,

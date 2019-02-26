@@ -24,6 +24,7 @@ class StringRes{
   static final String agentName = "Agent Name";
   static final String simDistribution = "SIM Distribution";
   static final String topUp = "Top Up";
+  static final String topUpAmount = "Top Up In \$";
   static final String stockInHandBTW = "Stock in hand before today work";
   static final String stockTopUpDTW = "Stock top up during today work";
   static final String stockTeamLeaderTBFAT = "Stock Team Leader taking back from Agent today";
