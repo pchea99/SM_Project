@@ -10,8 +10,8 @@ Stock _$StockFromJson(Map<String, dynamic> json) {
   return Stock()
     ..remainStockFTWWA = (json['remainStockFTWWA'] as num)?.toDouble()
     ..totalRemainStock = (json['totalRemainStock'] as num)?.toDouble()
-    ..remainStockTeamLeader = (json['remainStockTeamLeader'] as num)?.toDouble()
-    ..remainStockAgent = (json['remainStockAgent'] as num)?.toDouble()
+    ..stockTeamLeaderTakingBackFromByAgent = (json['remainStockTeamLeader'] as num)?.toDouble()
+    ..remainingStockForTomorrowWorkByAgent = (json['remainStockAgent'] as num)?.toDouble()
     ..totalTopup = (json['totalTopup'] as num)?.toDouble()
     ..totalDistribution = (json['totalDistribution'] as num)?.toDouble()
     ..remainStockTLFT = (json['remainStockTLFT'] as num)?.toDouble()
@@ -25,17 +25,18 @@ Stock _$StockFromJson(Map<String, dynamic> json) {
     ..remainStockFTW = (json['remainStockFTW'] as num)?.toDouble()
     ..stockReturnFromAgentToday =
         (json['stockReturnFromAgentToday'] as num)?.toDouble()
-    ..stockTopupDTW = (json['stockTopupDTW'] as num)?.toDouble()
-    ..stockInHandBTW = (json['stockInHandBTW'] as num)?.toDouble()
+    ..stockTopUpDuringTodayWork = (json['stockTopupDTW'] as num)?.toDouble()
+    ..stockInHandBeforeTodayWork = (json['stockInHandBTW'] as num)?.toDouble()
     ..topup = (json['topup'] as num)?.toDouble()
+    ..topUpAmount = (json['daily_top_up_amount'] as num)?.toDouble()
     ..simDistribution = (json['simDistribution'] as num)?.toDouble();
 }
 
 Map<String, dynamic> _$StockToJson(Stock instance) => <String, dynamic>{
       'remainStockFTWWA': instance.remainStockFTWWA,
       'totalRemainStock': instance.totalRemainStock,
-      'remainStockTeamLeader': instance.remainStockTeamLeader,
-      'remainStockAgent': instance.remainStockAgent,
+      'remainStockTeamLeader': instance.stockTeamLeaderTakingBackFromByAgent,
+      'remainStockAgent': instance.remainingStockForTomorrowWorkByAgent,
       'totalTopup': instance.totalTopup,
       'totalDistribution': instance.totalDistribution,
       'remainStockTLFT': instance.remainStockTLFT,
@@ -47,8 +48,9 @@ Map<String, dynamic> _$StockToJson(Stock instance) => <String, dynamic>{
       'initialStockInHandFTL': instance.initialStockInHandFTL,
       'remainStockFTW': instance.remainStockFTW,
       'stockReturnFromAgentToday': instance.stockReturnFromAgentToday,
-      'stockTopupDTW': instance.stockTopupDTW,
-      'stockInHandBTW': instance.stockInHandBTW,
+      'stockTopupDTW': instance.stockTopUpDuringTodayWork,
+      'stockInHandBTW': instance.stockInHandBeforeTodayWork,
       'topup': instance.topup,
-      'simDistribution': instance.simDistribution
+      'simDistribution': instance.simDistribution,
+      'daily_top_up_amount': instance.topUpAmount
     };

@@ -23,8 +23,15 @@ class Stock{
   double _remainStockTeamLeader;
   double _totalRemainStock;
   double _remainStockFTWWA;
+  double _topUpAmount;
 
   Stock();
+
+  double get topUpAmount => _topUpAmount;
+
+  set topUpAmount(double value) {
+    _topUpAmount = value;
+  }
 
   factory Stock.fromJson(Map<String, dynamic> json) => _$StockFromJson(json);
 
@@ -42,15 +49,15 @@ class Stock{
     _totalRemainStock = value;
   }
 
-  double get remainStockTeamLeader => _remainStockTeamLeader;
+  double get stockTeamLeaderTakingBackFromByAgent => _remainStockTeamLeader;
 
-  set remainStockTeamLeader(double value) {
+  set stockTeamLeaderTakingBackFromByAgent(double value) {
     _remainStockTeamLeader = value;
   }
 
-  double get remainStockAgent => _remainStockAgent;
+  double get remainingStockForTomorrowWorkByAgent => _remainStockAgent;
 
-  set remainStockAgent(double value) {
+  set remainingStockForTomorrowWorkByAgent(double value) {
     _remainStockAgent = value;
   }
 
@@ -120,15 +127,15 @@ class Stock{
     _stockReturnFromAgentToday = value;
   }
 
-  double get stockTopupDTW => _stockTopupDTW;
+  double get stockTopUpDuringTodayWork => _stockTopupDTW;
 
-  set stockTopupDTW(double value) {
+  set stockTopUpDuringTodayWork(double value) {
     _stockTopupDTW = value;
   }
 
-  double get stockInHandBTW => _stockInHandBTW;
+  double get stockInHandBeforeTodayWork => _stockInHandBTW;
 
-  set stockInHandBTW(double value) {
+  set stockInHandBeforeTodayWork(double value) {
     _stockInHandBTW = value;
   }
 

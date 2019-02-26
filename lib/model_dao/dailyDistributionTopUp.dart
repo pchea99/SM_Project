@@ -7,6 +7,7 @@ part 'dailyDistributionTopUp.g.dart';
 class DailyDistributionTopUp{
   String _team;
   DateTime _date;
+  String _remark;
   Agent _agent;
   Stock _stock;
 
@@ -15,6 +16,12 @@ class DailyDistributionTopUp{
   factory DailyDistributionTopUp.fromJson(Map<String, dynamic> json) => _$DailyDistributionTopUpFromJson(json);
 
   Map<String, dynamic> toJson() => _$DailyDistributionTopUpToJson(this);
+
+  String get remark => _remark;
+
+  set remark(String value) {
+    _remark = value;
+  }
 
   Stock get stock => _stock;
 
