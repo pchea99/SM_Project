@@ -10,7 +10,7 @@ class Agent{
 
   Agent();
 
-  factory Agent.fromJson(Map<String, dynamic> json) => _$AgentFromJson(json);
+  factory Agent.fromJson(Map json) => _$AgentFromJson(json);
 
   Map<String, dynamic> toJson() => _$AgentToJson(this);
 

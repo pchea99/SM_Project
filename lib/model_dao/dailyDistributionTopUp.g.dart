@@ -6,7 +6,7 @@ part of 'dailyDistributionTopUpDAO.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DailyDistributionTopUpDAO _$DailyDistributionTopUpFromJson(Map<String, dynamic> json) {
+DailyDistributionTopUpDAO _$DailyDistributionTopUpFromJson(Map json) {
   return DailyDistributionTopUpDAO()
     ..stock = json['stock'] == null
         ? null

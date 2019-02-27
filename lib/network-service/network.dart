@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:sm_app/model_dto/agent.dart';
 
 class NetworkService{
   static final String dailyDistributionDB = "daily_distribution";
@@ -13,13 +14,17 @@ class NetworkService{
   static final DatabaseReference db = FirebaseDatabase.instance.reference();
 
   static Future getAgent(){
-    var completer = new Completer<String>();
+    var completer = new Completer<List>();
     NetworkService.db.reference()
         .child(NetworkService.teamInfoDB).once().then((snaphot){
-          print("ooooo ${snaphot}");
-//          completer.complete("success");
+          List agents = [];
+          snaphot.value.forEach((key, value){
+            Agent agent = Agent.fromJson(value);
+            agents.add(agent);
+          });
+          completer.complete(agents);
         }).catchError((err){
-          completer.complete("failed");
+          completer.completeError(err);
         });
 
     return completer.future;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sm_app/daily-distribution-topup/dd-topup-service.dart';
+import 'package:sm_app/list-view/list-view.dart';
 import 'package:sm_app/model_dao/dailyDistributionTopUpDAO.dart';
+import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
@@ -85,6 +87,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
             padding: const EdgeInsets.only(top: 8.0),
             child: SelectValue.selectView(
                 label: StringRes.agentNo,
+                value: _txtAgentNo,
                 callback: _onTabAgentNo
             ),
           ),
@@ -162,7 +165,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
   void _saveToDB() {
     SpinnerDialog.onSpinner(context);
-    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+//    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
 
     DailyDistributionTopUpDAO data = new DailyDistributionTopUpDAO()
       ..team = _txtAgentNo
@@ -197,7 +200,12 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   }
 
   void _onTabAgentNo() async {
-    _txtAgentNo = await NavigateTo.navigateTo(context: context, );
+    var callback = await NavigateTo.navigateTo(context: context, route: ListViewAgent());
+    if(callback != null){
+      _txtAgentNo = callback.agentNo;
+      _controllerAgentName.text = callback.agentNameEn;
+      _onSetState();
+    }
   }
 
   void _onSetState(){

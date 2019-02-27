@@ -10,4 +10,12 @@ class SpinnerDialog{
       },
     );
   }
+
+  static Widget onLoading(BuildContext context) {
+    return Container(
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
 }

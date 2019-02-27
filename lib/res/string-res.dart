@@ -93,4 +93,5 @@ class StringRes{
   static final String simDistriutionRequired = "SIM Distribution is required!";
   static final String topupRequired = "Top Up is required!";
   static final String topUPAmtRequired = "Top UP in \$ is required!";
+  static final String listAgent = "List of Agent";
 }

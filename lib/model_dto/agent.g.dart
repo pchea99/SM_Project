@@ -6,15 +6,15 @@ part of 'agent.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Agent _$AgentFromJson(Map<String, dynamic> json) {
+Agent _$AgentFromJson(Map json) {
   return Agent()
-    ..agentNameEn = json['agentNameEn'] as String
-    ..agentNameKh = json['agentNameKh'] as String
-    ..agentNo = json['agentNo'] as String;
+    ..agentNameEn = json['agent_name_en'] as String
+    ..agentNameKh = json['agent_name_kh'] as String
+    ..agentNo = json['agent_no'] as String;
 }
 
 Map<String, dynamic> _$AgentToJson(Agent instance) => <String, dynamic>{
-      'agentNameEn': instance.agentNameEn,
-      'agentNameKh': instance.agentNameKh,
-      'agentNo': instance.agentNo
+      'agent_name_en': instance.agentNameEn,
+      'agent_name_kh': instance.agentNameKh,
+      'agent_no': instance.agentNo
     };
