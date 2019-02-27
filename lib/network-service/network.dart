@@ -14,10 +14,10 @@ class NetworkService{
   static final DatabaseReference db = FirebaseDatabase.instance.reference();
 
   static Future getAgent(){
-    var completer = new Completer<List>();
+    var completer = new Completer<List<Agent>>();
     NetworkService.db.reference()
         .child(NetworkService.teamInfoDB).once().then((snaphot){
-          List agents = [];
+          List<Agent> agents = [];
           snaphot.value.forEach((key, value){
             Agent agent = Agent.fromJson(value);
             agents.add(agent);
@@ -26,6 +26,23 @@ class NetworkService{
         }).catchError((err){
           completer.completeError(err);
         });
+
+    return completer.future;
+  }
+
+  static Future getStock(){
+    var completer = new Completer<List>();
+    NetworkService.db.reference()
+        .child(NetworkService.teamInfoDB).once().then((snaphot){
+      List agents = [];
+      snaphot.value.forEach((key, value){
+        Agent agent = Agent.fromJson(value);
+        agents.add(agent);
+      });
+      completer.complete(agents);
+    }).catchError((err){
+      completer.completeError(err);
+    });
 
     return completer.future;
   }

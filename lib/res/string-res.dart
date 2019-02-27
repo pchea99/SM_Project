@@ -94,4 +94,11 @@ class StringRes{
   static final String topupRequired = "Top Up is required!";
   static final String topUPAmtRequired = "Top UP in \$ is required!";
   static final String listAgent = "List of Agent";
+  static final String listProvince = "List of Province";
+  static final String provinceRequired = "Provice is required!";
+  static final String districtRequired = "District is required!";
+  static final String communeRequired = "Commune is required!";
+  static final String villageRequired = "Village is required!";
+  static final String retailerNameRequired = "Retailer's Name is required!";
+  static final String retailerPhoneRequired = "Retailer's Phone is required!";
 }

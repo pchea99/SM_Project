@@ -1,13 +1,20 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sm_app/daily-retailer-mapping/dr-mapping-service.dart';
+import 'package:sm_app/list-view/list-view-province.dart';
+import 'package:sm_app/model_dao/dailyRetailerMappingDAO.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-phone.dart';
+import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/select-box.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/snackbar.dart';
+import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
 
 class DailyRetailerMapping extends StatefulWidget {
@@ -16,7 +23,7 @@ class DailyRetailerMapping extends StatefulWidget {
 }
 
 class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
-  int _radioValue;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController _controllerTeam;
   TextEditingController _controllerDate;
   TextEditingController _controllerDistrict;
@@ -27,18 +34,32 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
   TextEditingController _controllerLatitude;
   TextEditingController _controllerLongtitude;
 
+  String _txtProvince;
+  int _radioValue;
+  String _date;
+
   @override
   void initState() {
     super.initState();
     _radioValue = 0;
+    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
+    _controllerTeam = new TextEditingController();
+    _controllerDistrict = new TextEditingController();
+    _controllerCommune = new TextEditingController();
+    _controllerVillage = new TextEditingController();
+    _controllerRetailerName = new TextEditingController();
+    _controllerRetailerPhone = new TextEditingController();
+    _controllerLatitude = new TextEditingController();
+    _controllerLongtitude = new TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
     return AppBarUtil(
+      scaffoldKey: _scaffoldKey,
         title: StringRes.dailyRetailerMapping,
         actions: <Widget>[
           ButtonSave.buttonSave(_onSave)
@@ -56,6 +77,7 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: SelectValue.selectView(
                       label: StringRes.province,
+                      value: _txtProvince,
                       callback: _onSelectProvince
                   ),
                 ),
@@ -116,7 +138,12 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
     _onSetState();
   }
 
-  void _onSelectProvince() {
+  void _onSelectProvince() async {
+    var callback = await NavigateTo.navigateTo(context: context, route: ListViewProvince());
+    if(callback != null){
+      _txtProvince = callback;
+      _onSetState();
+    }
 
   }
 
@@ -129,6 +156,56 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
   }
 
   void _onSave() {
+    if(_txtProvince == null || _txtProvince.isEmpty){
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.provinceRequired);
+      return;
+    }
+    if(_controllerDistrict.text == null || _controllerDistrict.text.isEmpty){
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.districtRequired);
+      return;
+    }
+    if(_controllerCommune.text == null || _controllerCommune.text.isEmpty){
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.communeRequired);
+      return;
+    }
+    if(_controllerVillage.text == null || _controllerVillage.text.isEmpty){
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.villageRequired);
+      return;
+    }
+    if(_controllerRetailerName.text == null || _controllerRetailerName.text.isEmpty){
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.retailerNameRequired);
+      return;
+    }
+    if(_controllerRetailerPhone.text == null || _controllerRetailerPhone.text.isEmpty){
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.retailerPhoneRequired);
+      return;
+    }
 
+    _saveToDB();
+  }
+
+  void _saveToDB() {
+    SpinnerDialog.onSpinner(context);
+//    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+
+    DailyRetailerMappingDAO data = new DailyRetailerMappingDAO()
+      ..teamNo = _controllerTeam.text
+      ..date = _date
+      ..anotherRetailer = _radioValue == 0 ? 'yes' : 'no'
+      ..address.province = _txtProvince
+      ..address.district = _controllerDistrict.text
+      ..address.commune = _controllerCommune.text
+      ..address.village = _controllerVillage.text
+      ..latitude = _controllerLatitude.text
+      ..longtitude = _controllerLongtitude.text
+      ..retailerName = _controllerRetailerName.text
+      ..retailerPhone = _controllerRetailerPhone.text
+    ;
+
+    DRMappingService.insertDRMapping(data).then((value){
+      Navigator.pop(context);
+    }).catchError((err){
+      Navigator.pop(context);
+    });
   }
 }
