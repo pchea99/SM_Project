@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 
 class NetworkService{
@@ -9,4 +11,17 @@ class NetworkService{
   static final String teamInfoDB = "team_info";
 
   static final DatabaseReference db = FirebaseDatabase.instance.reference();
+
+  static Future getAgent(){
+    var completer = new Completer<String>();
+    NetworkService.db.reference()
+        .child(NetworkService.teamInfoDB).once().then((snaphot){
+          print("ooooo ${snaphot}");
+//          completer.complete("success");
+        }).catchError((err){
+          completer.complete("failed");
+        });
+
+    return completer.future;
+  }
 }

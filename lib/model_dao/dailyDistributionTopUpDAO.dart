@@ -6,12 +6,15 @@ part 'dailyDistributionTopUp.g.dart';
 @JsonSerializable()
 class DailyDistributionTopUpDAO{
   String _team;
-  DateTime _date;
+  String _date;
   String _remark;
   Agent _agent;
   Stock _stock;
 
-  DailyDistributionTopUpDAO();
+  DailyDistributionTopUpDAO(){
+    agent = new Agent();
+    stock = new Stock();
+  }
 
   factory DailyDistributionTopUpDAO.fromJson(Map<String, dynamic> json)
           => _$DailyDistributionTopUpFromJson(json);
@@ -36,9 +39,9 @@ class DailyDistributionTopUpDAO{
     _agent = value;
   }
 
-  DateTime get date => _date;
+  String get date => _date;
 
-  set date(DateTime value) {
+  set date(String value) {
     _date = value;
   }
 

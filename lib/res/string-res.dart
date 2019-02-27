@@ -90,4 +90,7 @@ class StringRes{
   static final String registeredSIM = "Registered SIM";
   static final String slaveSIM = "Slave SIM";
   static final String slaveSIMPassword = "Slave SIM Password";
+  static final String simDistriutionRequired = "SIM Distribution is required!";
+  static final String topupRequired = "Top Up is required!";
+  static final String topUPAmtRequired = "Top UP in \$ is required!";
 }

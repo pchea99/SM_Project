@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sm_app/daily-distribution-topup/dd-topup-service.dart';
 import 'package:sm_app/model_dao/dailyDistributionTopUpDAO.dart';
-import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
@@ -15,7 +15,6 @@ import 'package:sm_app/utils/select-value.dart';
 import 'package:sm_app/utils/snackbar.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 class DailyDistributionTopUp extends StatefulWidget {
   @override
@@ -37,6 +36,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String _txtAgentNo;
+  String _date;
 
   @override
   void initState() {
@@ -44,6 +44,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     _controllerDate = new TextEditingController(
       text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
+    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
     _controllerTeam = new TextEditingController();
     _controllerAgentName = new TextEditingController();
     _controllerSIMDistribution = new TextEditingController()..addListener((){
@@ -110,7 +111,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
               isEnable: true
           ),
           InputNumber.buildTextField(
-              controller: _controllerTopUp,
+              controller: _controllerTopUpAmount,
               label: StringRes.topUpAmount,
               isEnable: true
           ),
@@ -144,14 +145,16 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
   void _onSave(){
     if(_controllerSIMDistribution.text == null || _controllerSIMDistribution.text.isEmpty){
-      SnackBarUtil.showInSnackBar(_scaffoldKey, "SIM Distribution is required!");
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.simDistriutionRequired);
       return;
     }
     if(_controllerTopUp.text == null || _controllerTopUp.text.isEmpty){
-
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.topupRequired);
+      return;
     }
     if(_controllerTopUpAmount.text == null || _controllerTopUpAmount.text.isEmpty){
-
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.topUPAmtRequired);
+      return;
     }
 
     _saveToDB();
@@ -159,10 +162,12 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
   void _saveToDB() {
     SpinnerDialog.onSpinner(context);
+    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+
     DailyDistributionTopUpDAO data = new DailyDistributionTopUpDAO()
       ..team = _txtAgentNo
       ..agent.agentNo = _controllerAgentName.text
-      ..date = DateTime.parse(_controllerDate.text)
+      ..date = _date
       ..agent.agentNameEn = _controllerAgentName.text
       ..stock.simDistribution = SafeValue.getSafeDouble(_controllerSIMDistribution.text)
       ..stock.topup = SafeValue.getSafeDouble(_controllerTopUp.text)
@@ -183,10 +188,10 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
   _remainStock(){
     double remain = 0.0;
-    remain = (SafeValue.getSafeDouble(_controllerStockInHand.text) +
-        SafeValue.getSafeDouble(_controllerStockTopUp.text)) -
-        (SafeValue.getSafeDouble(_controllerSIMDistribution.text) +
-            SafeValue.getSafeDouble(_controllerStockTeamLeader.text));
+    remain = SafeValue.getSafeDouble(_controllerStockInHand.text) +
+        SafeValue.getSafeDouble(_controllerStockTopUp.text) -
+        SafeValue.getSafeDouble(_controllerSIMDistribution.text) -
+            SafeValue.getSafeDouble(_controllerStockTeamLeader.text);
     _controllerRemainStock.text = remain.toString();
     _onSetState();
   }
