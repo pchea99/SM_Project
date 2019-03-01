@@ -7,17 +7,17 @@ part 'feedback.g.dart';
 class Feedback{
   String _anotherFeedback;
   String _team;
-  DateTime _date;
+  String _date;
   Address _address;
   Gps _gps;
   double _smartCoverageDownload;
   double _smartCoverageUpload;
   String _issue;
-  double _brokenPhone;
-  double _slowPhone;
-  double _brokenApp;
+  String _brokenPhone;
+  String _slowPhone;
+  String _brokenApp;
   String _noCoverage;
-  double _unrecognizedSIM;
+  String _unrecognizedSIM;
   String _weather;
   String _noPeople;
   String _overVisited;
@@ -53,9 +53,9 @@ class Feedback{
     _weather = value;
   }
 
-  double get unrecognizedSIM => _unrecognizedSIM;
+  String get unrecognizedSIM => _unrecognizedSIM;
 
-  set unrecognizedSIM(double value) {
+  set unrecognizedSIM(String value) {
     _unrecognizedSIM = value;
   }
 
@@ -65,21 +65,21 @@ class Feedback{
     _noCoverage = value;
   }
 
-  double get brokenApp => _brokenApp;
+  String get brokenApp => _brokenApp;
 
-  set brokenApp(double value) {
+  set brokenApp(String value) {
     _brokenApp = value;
   }
 
-  double get slowPhone => _slowPhone;
+  String get slowPhone => _slowPhone;
 
-  set slowPhone(double value) {
+  set slowPhone(String value) {
     _slowPhone = value;
   }
 
-  double get brokenPhone => _brokenPhone;
+  String get brokenPhone => _brokenPhone;
 
-  set brokenPhone(double value) {
+  set brokenPhone(String value) {
     _brokenPhone = value;
   }
 
@@ -113,9 +113,9 @@ class Feedback{
     _address = value;
   }
 
-  DateTime get date => _date;
+  String get date => _date;
 
-  set date(DateTime value) {
+  set date(String value) {
     _date = value;
   }
 

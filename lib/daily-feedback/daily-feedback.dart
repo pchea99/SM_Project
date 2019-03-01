@@ -1,12 +1,17 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:sm_app/daily-feedback/daily-feedback-service.dart';
+import 'package:sm_app/list-view/list-view-province.dart';
+import 'package:sm_app/model_dao/dailyFeedbackDAO.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
+import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/select-box.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
 
 class DailyFeedback extends StatefulWidget {
@@ -26,16 +31,19 @@ class _DailyFeedbackState extends State<DailyFeedback> {
   int _radioValueNoPeople;
   int _radioValueOverVisited;
 
-  TextEditingController _controllerTeam;
+  TextEditingController _controllerTeamNo;
   TextEditingController _controllerDate;
-  TextEditingController _controllerAgentName;
-  TextEditingController _controllerSIMDistribution;
-  TextEditingController _controllerTopUp;
-  TextEditingController _controllerStockInHand;
-  TextEditingController _controllerStockTopUp;
-  TextEditingController _controllerStockTeamLeader;
-  TextEditingController _controllerRemainStock;
-  TextEditingController _controllerRemark;
+  TextEditingController _controllerDistrict;
+  TextEditingController _controllerCommune;
+  TextEditingController _controllerVillage;
+  TextEditingController _controllerSmartDownload;
+  TextEditingController _controllerSmartUpload;
+  TextEditingController _controllerAnotherIssue;
+  TextEditingController _controllerLatitude;
+  TextEditingController _controllerLongtitude;
+
+  String _txtProvince;
+  String _date;
 
   @override
   void initState() {
@@ -75,12 +83,13 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: SelectValue.selectView(
-                      label: StringRes.province,
-                      callback: _onSelectProvince
+                    label: StringRes.province,
+                    callback: _onSelectProvince,
+                    value: _txtProvince,
                   ),
                 ),
                 InputField.buildTextField(
-                  controller: _controllerTeam,
+                  controller: _controllerTeamNo,
                   label: StringRes.team,
                 ),
                 InputField.buildTextField(
@@ -88,32 +97,32 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                     label: StringRes.date
                 ),
                 InputField.buildTextField(
-                    controller: _controllerAgentName,
+                    controller: _controllerDistrict,
                     label: StringRes.district,
                     isEnable: true
                 ),
                 InputField.buildTextField(
-                    controller: _controllerSIMDistribution,
+                    controller: _controllerCommune,
                     label: StringRes.commune,
                     isEnable: true
                 ),
                 InputField.buildTextField(
-                    controller: _controllerTopUp,
+                    controller: _controllerVillage,
                     label: StringRes.village,
                     isEnable: true
                 ),
                 InputField.buildTextField(
-                    controller: _controllerStockTeamLeader,
+                    controller: _controllerAnotherIssue,
                     label: StringRes.smartCoverageDownload,
                     isEnable: true
                 ),
                 InputField.buildTextField(
-                    controller: _controllerRemainStock,
+                    controller: _controllerAnotherFeedback,
                     label: StringRes.smartCoverageUpload,
                     isEnable: true
                 ),
                 InputField.buildTextField(
-                    controller: _controllerRemark,
+                    controller: _controllerIssue,
                     label: StringRes.otherIssueRemark,
                     isEnable: true
                 ),
@@ -168,11 +177,11 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                     label: StringRes.overVisited
                 ),
                 InputField.buildTextField(
-                    controller: _controllerStockInHand,
+                    controller: _controllerSmartDownload,
                     label: StringRes.latitude
                 ),
                 InputField.buildTextField(
-                  controller: _controllerStockTopUp,
+                  controller: _controllerSmartUpload,
                   label: StringRes.longtitude,
                 ),
               ],
@@ -181,8 +190,12 @@ class _DailyFeedbackState extends State<DailyFeedback> {
       );
   }
 
-  void _onSelectProvince() {
-
+  void _onSelectProvince() async {
+    var callback = await NavigateTo.navigateTo(context: context, route: ListViewProvince());
+    if(callback != null){
+      _txtProvince = callback;
+      _onSetState();
+    }
   }
   void _handleRadioFeedbackValueChange(int value) {
     _radioValueFeedback = value;
@@ -243,6 +256,37 @@ class _DailyFeedbackState extends State<DailyFeedback> {
   }
 
   void _onSave() {
+    SpinnerDialog.onSpinner(context);
+//    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
 
+    DailyFeedbackDAO data = new DailyFeedbackDAO()
+      ..feedback.address.province = _txtProvince
+      ..feedback.team = _controllerTeamNo.text
+      ..feedback.date = _date
+      ..feedback.address.district = _controllerDistrict.text
+      ..feedback.address.commune = _controllerCommune.text
+      ..feedback.address.village = _controllerVillage.text
+      ..feedback.smartCoverageDownload = double.parse(_controllerSmartDownload.text)
+      ..feedback.smartCoverageUpload = double.parse(_controllerSmartUpload.text)
+      ..feedback.anotherFeedback = _controllerAnotherIssue.text
+      ..feedback.issue = _radioValueIssue == 0 ? 'yes' : 'no'
+      ..feedback.anotherFeedback = _radioValueFeedback == 0 ? 'yes' : 'no'
+      ..feedback.brokenPhone = _radioValueBrokenPhone == 0 ? 'yes' : 'no'
+      ..feedback.slowPhone = _radioValueSlowPhone == 0 ? 'yes' : 'no'
+      ..feedback.brokenApp = _radioValueBrokenApp == 0 ? 'yes' : 'no'
+      ..feedback.noCoverage = _radioValueNoCoverage == 0 ? 'yes' : 'no'
+      ..feedback.unrecognizedSIM = _radioValueUnrecognizeSIM == 0 ? 'yes' : 'no'
+      ..feedback.weather = _radioValueWeather == 0 ? 'yes' : 'no'
+      ..feedback.noPeople = _radioValueNoPeople == 0 ? 'yes' : 'no'
+      ..feedback.overVisited = _radioValueOverVisited == 0 ? 'yes' : 'no'
+      ..feedback.gps.latitude = _controllerLatitude.text
+      ..feedback.gps.longtitude = _controllerLongtitude.text
+    ;
+
+    DailyFeedbackService.insertDailyFeedback(data).then((value){
+      Navigator.pop(context);
+    }).catchError((err){
+      Navigator.pop(context);
+    });
   }
 }

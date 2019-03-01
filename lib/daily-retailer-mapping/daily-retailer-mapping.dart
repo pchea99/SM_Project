@@ -144,7 +144,6 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
       _txtProvince = callback;
       _onSetState();
     }
-
   }
 
   void _onSetState(){

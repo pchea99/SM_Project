@@ -12,11 +12,11 @@ Feedback _$FeedbackFromJson(Map<String, dynamic> json) {
     ..overVisited = json['overVisited'] as String
     ..noPeople = json['noPeople'] as String
     ..weather = json['weather'] as String
-    ..unrecognizedSIM = (json['unrecognizedSIM'] as num)?.toDouble()
+    ..unrecognizedSIM = json['unrecognizedSIM'] as String
     ..noCoverage = json['noCoverage'] as String
-    ..brokenApp = (json['brokenApp'] as num)?.toDouble()
-    ..slowPhone = (json['slowPhone'] as num)?.toDouble()
-    ..brokenPhone = (json['brokenPhone'] as num)?.toDouble()
+    ..brokenApp = json['brokenApp'] as String
+    ..slowPhone = json['slowPhone'] as String
+    ..brokenPhone = json['brokenPhone'] as String
     ..issue = json['issue'] as String
     ..smartCoverageUpload = (json['smartCoverageUpload'] as num)?.toDouble()
     ..smartCoverageDownload = (json['smartCoverageDownload'] as num)?.toDouble()
@@ -27,7 +27,7 @@ Feedback _$FeedbackFromJson(Map<String, dynamic> json) {
         ? null
         : Address.fromJson(json['address'] as Map<String, dynamic>)
     ..date =
-        json['date'] == null ? null : DateTime.parse(json['date'] as String)
+        json['date'] == null ? null : json['date'] as String
     ..team = json['team'] as String
     ..anotherFeedback = json['anotherFeedback'] as String;
 }
@@ -47,7 +47,7 @@ Map<String, dynamic> _$FeedbackToJson(Feedback instance) => <String, dynamic>{
       'smartCoverageDownload': instance.smartCoverageDownload,
       'gps': instance.gps,
       'address': instance.address,
-      'date': instance.date?.toIso8601String(),
+      'date': instance.date,
       'team': instance.team,
       'anotherFeedback': instance.anotherFeedback
     };
