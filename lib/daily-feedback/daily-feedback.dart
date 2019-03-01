@@ -11,6 +11,7 @@ import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/select-box.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/snackbar.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
 
@@ -20,6 +21,7 @@ class DailyFeedback extends StatefulWidget {
 }
 
 class _DailyFeedbackState extends State<DailyFeedback> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _radioValueFeedback;
   int _radioValueIssue;
   int _radioValueBrokenPhone;
@@ -67,6 +69,7 @@ class _DailyFeedbackState extends State<DailyFeedback> {
   @override
   Widget build(BuildContext context) {
     return AppBarUtil(
+      scaffoldKey: _scaffoldKey,
         title: StringRes.dailyFeedback,
         actions: <Widget>[
           ButtonSave.buttonSave(_onSave)
@@ -117,12 +120,12 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                     isEnable: true
                 ),
                 InputField.buildTextField(
-                    controller: _controllerAnotherFeedback,
+                    controller: _controllerSmartUpload,
                     label: StringRes.smartCoverageUpload,
                     isEnable: true
                 ),
                 InputField.buildTextField(
-                    controller: _controllerIssue,
+                    controller: _controllerAnotherIssue,
                     label: StringRes.otherIssueRemark,
                     isEnable: true
                 ),
@@ -256,8 +259,29 @@ class _DailyFeedbackState extends State<DailyFeedback> {
   }
 
   void _onSave() {
+    if(_txtProvince == null || _txtProvince.isEmpty){
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.provinceRequired);
+      return;
+    }
+    if(_controllerDistrict.text == null || _controllerDistrict.text.isEmpty){
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.districtRequired);
+      return;
+    }
+    if(_controllerCommune.text == null || _controllerCommune.text.isEmpty){
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.communeRequired);
+      return;
+    }
+    if(_controllerVillage.text == null || _controllerVillage.text.isEmpty){
+      SnackBarUtil.showInSnackBar(_scaffoldKey, StringRes.villageRequired);
+      return;
+    }
+
+    _saveToDB();
+  }
+
+  void _saveToDB() {
     SpinnerDialog.onSpinner(context);
-//    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+    //    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
 
     DailyFeedbackDAO data = new DailyFeedbackDAO()
       ..feedback.address.province = _txtProvince
