@@ -10,8 +10,8 @@ class Feedback{
   String _date;
   Address _address;
   Gps _gps;
-  double _smartCoverageDownload;
-  double _smartCoverageUpload;
+  String _smartCoverageDownload;
+  String _smartCoverageUpload;
   String _issue;
   String _brokenPhone;
   String _slowPhone;
@@ -23,7 +23,10 @@ class Feedback{
   String _overVisited;
   String _otherIssueRemark;
 
-  Feedback();
+  Feedback(){
+    gps = new Gps();
+    address = new Address();
+  }
 
   factory Feedback.fromJson(Map<String, dynamic> json) => _$FeedbackFromJson(json);
 
@@ -89,15 +92,15 @@ class Feedback{
     _issue = value;
   }
 
-  double get smartCoverageUpload => _smartCoverageUpload;
+  String get smartCoverageUpload => _smartCoverageUpload;
 
-  set smartCoverageUpload(double value) {
+  set smartCoverageUpload(String value) {
     _smartCoverageUpload = value;
   }
 
-  double get smartCoverageDownload => _smartCoverageDownload;
+  String get smartCoverageDownload => _smartCoverageDownload;
 
-  set smartCoverageDownload(double value) {
+  set smartCoverageDownload(String value) {
     _smartCoverageDownload = value;
   }
 

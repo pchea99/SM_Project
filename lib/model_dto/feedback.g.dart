@@ -18,8 +18,8 @@ Feedback _$FeedbackFromJson(Map<String, dynamic> json) {
     ..slowPhone = json['slowPhone'] as String
     ..brokenPhone = json['brokenPhone'] as String
     ..issue = json['issue'] as String
-    ..smartCoverageUpload = (json['smartCoverageUpload'] as num)?.toDouble()
-    ..smartCoverageDownload = (json['smartCoverageDownload'] as num)?.toDouble()
+    ..smartCoverageUpload = json['smartCoverageUpload'] as String
+    ..smartCoverageDownload = json['smartCoverageDownload'] as String
     ..gps = json['gps'] == null
         ? null
         : Gps.fromJson(json['gps'] as Map<String, dynamic>)

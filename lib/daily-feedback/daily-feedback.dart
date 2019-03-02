@@ -1,5 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sm_app/daily-feedback/daily-feedback-service.dart';
 import 'package:sm_app/list-view/list-view-province.dart';
 import 'package:sm_app/model_dao/dailyFeedbackDAO.dart';
@@ -61,9 +62,20 @@ class _DailyFeedbackState extends State<DailyFeedback> {
     _radioValueNoPeople = 0;
     _radioValueOverVisited = 0;
 
+    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
+    _controllerTeamNo = new TextEditingController();
+    _controllerAnotherIssue = new TextEditingController();
+    _controllerSmartDownload = new TextEditingController();
+    _controllerSmartUpload = new TextEditingController();
+    _controllerDistrict = new TextEditingController();
+    _controllerCommune = new TextEditingController();
+    _controllerVillage = new TextEditingController();
+    _controllerLatitude = new TextEditingController();
+    _controllerLongtitude = new TextEditingController();
   }
 
   @override
@@ -115,7 +127,7 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                     isEnable: true
                 ),
                 InputField.buildTextField(
-                    controller: _controllerAnotherIssue,
+                    controller: _controllerSmartDownload,
                     label: StringRes.smartCoverageDownload,
                     isEnable: true
                 ),
@@ -180,11 +192,11 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                     label: StringRes.overVisited
                 ),
                 InputField.buildTextField(
-                    controller: _controllerSmartDownload,
+                    controller: _controllerLatitude,
                     label: StringRes.latitude
                 ),
                 InputField.buildTextField(
-                  controller: _controllerSmartUpload,
+                  controller: _controllerLongtitude,
                   label: StringRes.longtitude,
                 ),
               ],
@@ -281,7 +293,7 @@ class _DailyFeedbackState extends State<DailyFeedback> {
 
   void _saveToDB() {
     SpinnerDialog.onSpinner(context);
-    //    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
 
     DailyFeedbackDAO data = new DailyFeedbackDAO()
       ..feedback.address.province = _txtProvince
@@ -290,8 +302,8 @@ class _DailyFeedbackState extends State<DailyFeedback> {
       ..feedback.address.district = _controllerDistrict.text
       ..feedback.address.commune = _controllerCommune.text
       ..feedback.address.village = _controllerVillage.text
-      ..feedback.smartCoverageDownload = double.parse(_controllerSmartDownload.text)
-      ..feedback.smartCoverageUpload = double.parse(_controllerSmartUpload.text)
+      ..feedback.smartCoverageDownload = _controllerSmartDownload.text
+      ..feedback.smartCoverageUpload = _controllerSmartUpload.text
       ..feedback.anotherFeedback = _controllerAnotherIssue.text
       ..feedback.issue = _radioValueIssue == 0 ? 'yes' : 'no'
       ..feedback.anotherFeedback = _radioValueFeedback == 0 ? 'yes' : 'no'
@@ -306,6 +318,8 @@ class _DailyFeedbackState extends State<DailyFeedback> {
       ..feedback.gps.latitude = _controllerLatitude.text
       ..feedback.gps.longtitude = _controllerLongtitude.text
     ;
+
+    print("ooooo $data");
 
     DailyFeedbackService.insertDailyFeedback(data).then((value){
       Navigator.pop(context);

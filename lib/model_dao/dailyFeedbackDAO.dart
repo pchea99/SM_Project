@@ -6,7 +6,9 @@ part 'dailyFeedback.g.dart';
 class DailyFeedbackDAO{
   Feedback _feedback;
 
-  DailyFeedbackDAO();
+  DailyFeedbackDAO(){
+    feedback = new Feedback();
+  }
 
   factory DailyFeedbackDAO.fromJson(Map<String, dynamic> json) => _$DailyFeedbackFromJson(json);
 
