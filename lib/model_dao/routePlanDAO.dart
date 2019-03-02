@@ -3,17 +3,27 @@ import 'package:sm_app/model_dto/address.dart';
 part 'routePlan.g.dart';
 
 @JsonSerializable()
-class RoutePlan{
+class RoutePlanDAO{
   String _team;
-  DateTime _date;
+  String _date;
   String _actualVisitVs_Plan;
   Address _address;
 
-  RoutePlan();
+  RoutePlanDAO(){
+    address = new Address();
+  }
 
-  factory RoutePlan.fromJson(Map<String, dynamic> json) => _$RoutePlanFromJson(json);
+  factory RoutePlanDAO.fromJson(Map<String, dynamic> json) => _$RoutePlanFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RoutePlanToJson(this);
+  Map toJson() => {
+    'actual_visit_vs_plan': actualVisitVs_Plan,
+    'date': date,
+    'planned_commune': address.commune,
+    'planned_district': address.district,
+    'planned_province': address.province,
+    'planned_village': address.village,
+    'team_no': team
+  };
 
   Address get address => _address;
 
@@ -27,9 +37,9 @@ class RoutePlan{
     _actualVisitVs_Plan = value;
   }
 
-  DateTime get date => _date;
+  String get date => _date;
 
-  set date(DateTime value) {
+  set date(String value) {
     _date = value;
   }
 

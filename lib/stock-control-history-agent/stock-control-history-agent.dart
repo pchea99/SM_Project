@@ -40,9 +40,6 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
   Widget build(BuildContext context) {
     return AppBarUtil(
       title: StringRes.stockControlHistoryAgent,
-      actions: <Widget>[
-        ButtonSave.buttonSave(_onSave)
-      ],
       layout: SingleChildScrollView(
         child: _buildForm(),
       ),

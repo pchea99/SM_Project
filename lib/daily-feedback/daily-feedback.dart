@@ -319,8 +319,6 @@ class _DailyFeedbackState extends State<DailyFeedback> {
       ..feedback.gps.longtitude = _controllerLongtitude.text
     ;
 
-    print("ooooo $data");
-
     DailyFeedbackService.insertDailyFeedback(data).then((value){
       Navigator.pop(context);
     }).catchError((err){

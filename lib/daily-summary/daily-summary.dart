@@ -40,9 +40,6 @@ class _DailySummaryState extends State<DailySummary> {
   Widget build(BuildContext context) {
     return AppBarUtil(
       title: StringRes.dailySummary,
-      actions: <Widget>[
-        ButtonSave.buttonSave(_onSave)
-      ],
       layout: SingleChildScrollView(
         child: _buildForm(),
       ),

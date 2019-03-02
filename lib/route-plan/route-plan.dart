@@ -1,6 +1,9 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sm_app/model_dao/routePlanDAO.dart';
 import 'package:sm_app/res/string-res.dart';
+import 'package:sm_app/route-plan/route-plan-service.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
@@ -8,7 +11,7 @@ import 'package:sm_app/utils/date-picker.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
 import 'package:sm_app/utils/select-box.dart';
-import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
 
 class RoutePlan extends StatefulWidget {
@@ -17,24 +20,25 @@ class RoutePlan extends StatefulWidget {
 }
 
 class _RoutePlanState extends State<RoutePlan> {
-  TextEditingController _controllerTeam;
-  TextEditingController _controllerDate;
-  TextEditingController _controllerAgentNo;
-  TextEditingController _controllerAgentName;
-  TextEditingController _controllerSIMDistribution;
-  TextEditingController _controllerTopUp;
-  TextEditingController _controllerStockInHand;
-  TextEditingController _controllerStockTopUp;
+  TextEditingController _controllerTeamNo;
+  TextEditingController _controllerPlannedProvince;
+  TextEditingController _controllerPlannedDistrict;
+  TextEditingController _controllerPlannedCommune;
+  TextEditingController _controllerPlannedVillage;
 
   int _radioValue;
+  String _date;
 
   @override
   void initState() {
     super.initState();
     _radioValue = 0;
-    _controllerDate = new TextEditingController(
-        text: formatDate(new DateTime.now(), StringUtil.dateFormats())
-    );
+    _controllerTeamNo = new TextEditingController();
+    _controllerPlannedProvince = new TextEditingController();
+    _controllerPlannedDistrict = new TextEditingController();
+    _controllerPlannedCommune = new TextEditingController();
+    _controllerPlannedVillage = new TextEditingController();
+    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
   }
 
   @override
@@ -61,23 +65,23 @@ class _RoutePlanState extends State<RoutePlan> {
                 label: StringRes.actualVisitPlan
             ),
             InputField.buildTextField(
-              controller: _controllerTeam,
+              controller: _controllerTeamNo,
               label: StringRes.team,
             ),
             InputField.buildTextField(
-                controller: _controllerAgentName,
+                controller: _controllerPlannedProvince,
                 label: StringRes.plannedProvince
             ),
             InputNumber.buildTextField(
-                controller: _controllerSIMDistribution,
+                controller: _controllerPlannedDistrict,
                 label: StringRes.plannedDistrict,
             ),
             InputNumber.buildTextField(
-                controller: _controllerTopUp,
+                controller: _controllerPlannedCommune,
                 label: StringRes.plannedCommune,
             ),
             InputNumber.buildTextField(
-                controller: _controllerStockInHand,
+                controller: _controllerPlannedVillage,
                 label: StringRes.plannedVillage
             ),
           ],
@@ -86,7 +90,23 @@ class _RoutePlanState extends State<RoutePlan> {
   }
 
   void _onSave() {
+    SpinnerDialog.onSpinner(context);
 
+    RoutePlanDAO data = new RoutePlanDAO()
+      ..team = _controllerTeamNo.text
+      ..date = _date
+      ..address.province = _controllerPlannedProvince.text
+      ..address.district = _controllerPlannedDistrict.text
+      ..address.commune = _controllerPlannedCommune.text
+      ..address.village = _controllerPlannedVillage.text
+      ..actualVisitVs_Plan = _radioValue == 0 ? 'yes' : 'no'
+    ;
+
+    RoutePlanService.insertRoutePlan(data).then((value){
+      Navigator.pop(context);
+    }).catchError((err){
+      Navigator.pop(context);
+    });
   }
 
   void _handleRadioValueChange(int value) {
@@ -97,6 +117,7 @@ class _RoutePlanState extends State<RoutePlan> {
   }
 
   void onSelectedDate(value) {
-
+    _date = DateFormat('dd-MM-yyyy').format(value.toLocal())
+        +" "+DateFormat('hh:mm:ss').add_j().format(DateTime.now());
   }
 }

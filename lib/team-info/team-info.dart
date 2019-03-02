@@ -39,9 +39,6 @@ class _TeamInfoState extends State<TeamInfo> {
   Widget build(BuildContext context) {
     return AppBarUtil(
       title: StringRes.teamInfo,
-      actions: <Widget>[
-        ButtonSave.buttonSave(_onSave)
-      ],
       layout: SingleChildScrollView(
         child: _buildForm(),
       ),
