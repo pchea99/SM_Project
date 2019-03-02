@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'marketAuditReport.dart';
+part of 'marketAuditReportDAO.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MarketAuditReport _$MarketAuditReportFromJson(Map<String, dynamic> json) {
-  return MarketAuditReport()
+MarketAuditReportDAO _$MarketAuditReportFromJson(Map<String, dynamic> json) {
+  return MarketAuditReportDAO()
     ..remark = json['remark'] == null
         ? null
         : Remark.fromJson(json['remark'] as Map<String, dynamic>)
     ..date =
-        json['date'] == null ? null : DateTime.parse(json['date'] as String)
+        json['date'] == null ? null : json['date'] as String
     ..team = json['team'] as String;
 }
 
-Map<String, dynamic> _$MarketAuditReportToJson(MarketAuditReport instance) =>
+Map<String, dynamic> _$MarketAuditReportToJson(MarketAuditReportDAO instance) =>
     <String, dynamic>{
       'remark': instance.remark,
-      'date': instance.date?.toIso8601String(),
+      'date': instance.date,
       'team': instance.team
     };
