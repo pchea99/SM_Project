@@ -10,6 +10,8 @@ import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 
+User sharedUser;
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -103,7 +105,7 @@ class _LoginState extends State<Login> implements LoginView {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
       onChanged: (username){
-        _user.userNo = username;
+        _user.firstName = username;
       },
     );
   }
@@ -190,13 +192,16 @@ class _LoginState extends State<Login> implements LoginView {
   @override
   void onLoginSuccess(String msg) {
     SpinnerDialog.onSpinner(context);
-    LoginService.getUserLogin(_user.userNo+"-"+_user.password).then((userDB) async {
+    LoginService.getUserLogin(_user.firstName.trim().toLowerCase().replaceAll(" ", '')
+        +"-"+_user.password).then((userDB) async {
       if(userDB.position == _user.position && userDB.password == _user.password){
+        sharedUser = userDB;
         await NavigateTo.navigateTo(context: context, route: Menu());
         exit(0);
       }
       Navigator.pop(context);
     }).catchError((err){
+      print("err: $err");
       Navigator.pop(context);
     });
   }
@@ -246,7 +251,7 @@ class _LoginState extends State<Login> implements LoginView {
   void submit() {
     _errorMsg = "";
     clearFocus();
-    _loginPresenter.doLogin(_user.userNo, _user.password, _user.position);
+    _loginPresenter.doLogin(_user.firstName, _user.password, _user.position);
   }
 
   void onSetSate(){

@@ -27,11 +27,7 @@ class LoginPresenter {
     }
 
     if (!isError) {
-      if (username == "admin" && password == "123") {
-        _view.onLoginSuccess("Login Successful!");
-      } else {
-        _view.onLoginError("Login Failed!");
-      }
+      _view.onLoginSuccess("Login Successful!");
     }
   }
 }

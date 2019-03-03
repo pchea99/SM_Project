@@ -5,6 +5,10 @@ import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 
 class ListViewAgent extends StatefulWidget {
+  final String teamNo;
+
+  ListViewAgent({this.teamNo});
+
   @override
   _ListViewAgentState createState() => _ListViewAgentState();
 }
@@ -37,7 +41,7 @@ class _ListViewAgentState extends State<ListViewAgent> {
         subtitle: Text(name),
         onTap: (){
           Navigator.pop(context,
-              _agents.firstWhere((agent)=> agent.agentNo == id, orElse: ()=> null)
+              _agents.firstWhere((agent)=> agent.teamNo == id, orElse: ()=> null)
           );
         },
       ),
@@ -45,7 +49,7 @@ class _ListViewAgentState extends State<ListViewAgent> {
   }
 
   void _getAgents(){
-    NetworkService.getAgent().then((agentsDB){
+    NetworkService.getAgent(widget.teamNo).then((agentsDB){
       _agents = agentsDB;
       _isLoading = false;
       _onSetState();
@@ -70,7 +74,7 @@ class _ListViewAgentState extends State<ListViewAgent> {
 
     return ListView(
       children: _agents.map((agent) =>
-          _buildCard(agent.agentNo, agent.agentNameEn)
+          _buildCard(agent.teamNo, agent.agentNameEn)
       ).toList(),
     );
   }

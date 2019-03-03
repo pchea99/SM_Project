@@ -10,15 +10,16 @@ class NetworkService{
   static final String marketAuditReportDB = "market_audit_report";
   static final String routePlanDB = "route_plan";
   static final String teamInfoDB = "team_info";
-  static final String userAccountDB = "user_account";
+  static final String userDB = "user";
 
 
   static final DatabaseReference db = FirebaseDatabase.instance.reference();
 
-  static Future getAgent(){
+  static Future getAgent(String teamNo){
     var completer = new Completer<List<Agent>>();
     NetworkService.db.reference()
-        .child(NetworkService.teamInfoDB).once().then((snaphot){
+        .child(NetworkService.teamInfoDB).orderByChild("team_no").equalTo(teamNo)
+        .once().then((snaphot){
           List<Agent> agents = [];
           snaphot.value.forEach((key, value){
             Agent agent = Agent.fromJson(value);

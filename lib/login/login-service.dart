@@ -6,7 +6,7 @@ import 'package:sm_app/network-service/network.dart';
 class LoginService{
   static Future getUserLogin(String userNo){
     var completer = new Completer<User>();
-    NetworkService.db.reference().child(NetworkService.userAccountDB)
+    NetworkService.db.reference().child(NetworkService.userDB)
         .child(userNo).once().then((snaphot) {
           User user = User.fromJson(snaphot.value);
           completer.complete(user);

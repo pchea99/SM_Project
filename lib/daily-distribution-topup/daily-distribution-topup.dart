@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sm_app/daily-distribution-topup/dd-topup-service.dart';
 import 'package:sm_app/list-view/list-view-agent.dart';
+import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailyDistributionTopUpDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
@@ -200,9 +201,9 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   }
 
   void _onTabAgentNo() async {
-    var callback = await NavigateTo.navigateTo(context: context, route: ListViewAgent());
+    var callback = await NavigateTo.navigateTo(context: context, route: ListViewAgent(teamNo: sharedUser.teamNo));
     if(callback != null){
-      _txtAgentNo = callback.agentNo;
+      _txtAgentNo = callback.teamNo;
       _controllerAgentName.text = callback.agentNameEn;
       _onSetState();
     }
