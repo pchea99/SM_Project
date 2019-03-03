@@ -1,8 +1,3 @@
-
-import 'package:json_annotation/json_annotation.dart';
-part 'user.g.dart';
-
-@JsonSerializable()
 class User{
   String _userNo;
   String _firstName;
@@ -15,9 +10,27 @@ class User{
 
   User();
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  User.fromJson(Map json){
+    personalPhone = json['personal_phone'].toString();
+    position = json['position'];
+    idNumber = json['id_number'].toString();
+    sex = json['sex'];
+    lastName = json['last_name'];
+    firstName = json['first_name'];
+    password = json['password'].toString();
+    userNo = json['user_no'];
+  }
 
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  Map<String, dynamic> toJson() => {
+    'personal_phone': personalPhone,
+    'position': position,
+    'id_number': idNumber,
+    'sex': sex,
+    'last_name': lastName,
+    'first_name': firstName,
+    'user_no': userNo,
+    'password': password
+  };
 
   String get password => _password;
 

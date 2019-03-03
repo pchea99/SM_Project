@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sm_app/login/login-presenter.dart';
+import 'package:sm_app/login/login-service.dart';
+import 'package:sm_app/menu/menu.dart';
 import 'package:sm_app/model_dto/user.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
+import 'package:sm_app/utils/navigate-to.dart';
+import 'package:sm_app/utils/spinner-dialog.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -10,15 +16,20 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> implements LoginView {
-  LoginPresenter loginPresenter;
-  User user;
-  String errorMsg = "";
-  Map<String, FocusNode> focus;
+  LoginPresenter _loginPresenter;
+  User _user;
+  String _errorMsg = "";
+  Map<String, FocusNode> _focus;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   _LoginState(){
-    loginPresenter = new LoginPresenter(this);
-    user = new User();
-    focus = new Map();
+    _loginPresenter = new LoginPresenter(this);
+    _user = new User();
+    _focus = new Map();
   }
 
   Widget lblTitle(){
@@ -57,7 +68,7 @@ class _LoginState extends State<Login> implements LoginView {
     return TextField(
       keyboardType: TextInputType.text,
       autofocus: false,
-      focusNode: focus['pos'],
+      focusNode: _focus['pos'],
       style: TextStyle(
           fontSize: FontSizeRes.normal
       ),
@@ -70,7 +81,7 @@ class _LoginState extends State<Login> implements LoginView {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
       onChanged: (position){
-        user.position = position;
+        _user.position = position;
       },
     );
   }
@@ -79,7 +90,7 @@ class _LoginState extends State<Login> implements LoginView {
     return TextField(
       keyboardType: TextInputType.text,
       autofocus: false,
-      focusNode: focus['un'],
+      focusNode: _focus['un'],
       style: TextStyle(
           fontSize: FontSizeRes.normal
       ),
@@ -92,7 +103,7 @@ class _LoginState extends State<Login> implements LoginView {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
       onChanged: (username){
-        user.userNo = username;
+        _user.userNo = username;
       },
     );
   }
@@ -102,7 +113,7 @@ class _LoginState extends State<Login> implements LoginView {
       keyboardType: TextInputType.text,
       obscureText: true,
       autofocus: false,
-      focusNode: focus['pwd'],
+      focusNode: _focus['pwd'],
       style: TextStyle(
         fontSize: FontSizeRes.normal
       ),
@@ -115,7 +126,7 @@ class _LoginState extends State<Login> implements LoginView {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
       onChanged: (password){
-        user.password = password;
+        _user.password = password;
       },
     );
   }
@@ -134,7 +145,7 @@ class _LoginState extends State<Login> implements LoginView {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Text(
-        errorMsg,
+        _errorMsg,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.red,
@@ -172,13 +183,22 @@ class _LoginState extends State<Login> implements LoginView {
 
   @override
   void onLoginError(String error) {
-    errorMsg = error;
+    _errorMsg = error;
     onSetSate();
   }
 
   @override
   void onLoginSuccess(String msg) {
-    // TODO: implement onLoginSuccess
+    SpinnerDialog.onSpinner(context);
+    LoginService.getUserLogin(_user.userNo+"-"+_user.password).then((userDB) async {
+      if(userDB.position == _user.position && userDB.password == _user.password){
+        await NavigateTo.navigateTo(context: context, route: Menu());
+        exit(0);
+      }
+      Navigator.pop(context);
+    }).catchError((err){
+      Navigator.pop(context);
+    });
   }
 
   @override
@@ -186,8 +206,8 @@ class _LoginState extends State<Login> implements LoginView {
     var fpwd = FocusNode();
     FocusScope.of(context).requestFocus(fpwd);
     clearFocus();
-    focus['pwd'] = fpwd;
-    errorMsg = error;
+    _focus['pwd'] = fpwd;
+    _errorMsg = error;
     onSetSate();
   }
 
@@ -195,9 +215,9 @@ class _LoginState extends State<Login> implements LoginView {
   void onPositionError(String error) {
     var fpos = FocusNode();
     FocusScope.of(context).requestFocus(fpos);
-    errorMsg = error;
+    _errorMsg = error;
     clearFocus();
-    focus['pos'] = fpos;
+    _focus['pos'] = fpos;
     onSetSate();
   }
 
@@ -206,27 +226,27 @@ class _LoginState extends State<Login> implements LoginView {
     var fun = FocusNode();
     FocusScope.of(context).requestFocus(fun);
     clearFocus();
-    focus['un'] = fun;
-    errorMsg = error;
+    _focus['un'] = fun;
+    _errorMsg = error;
     onSetSate();
   }
 
   void clearFocus() {
-    if(focus['un'] != null) {
-      focus['un'].unfocus();
+    if(_focus['un'] != null) {
+      _focus['un'].unfocus();
     }
-    if(focus['pos'] != null) {
-      focus['pos'].unfocus();
+    if(_focus['pos'] != null) {
+      _focus['pos'].unfocus();
     }
-    if(focus['pwd'] != null) {
-      focus['pwd'].unfocus();
+    if(_focus['pwd'] != null) {
+      _focus['pwd'].unfocus();
     }
   }
 
   void submit() {
-    errorMsg = "";
+    _errorMsg = "";
     clearFocus();
-    loginPresenter.doLogin(user.userNo, user.password, user.position);
+    _loginPresenter.doLogin(_user.userNo, _user.password, _user.position);
   }
 
   void onSetSate(){
