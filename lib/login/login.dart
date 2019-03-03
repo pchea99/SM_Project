@@ -145,26 +145,27 @@ class _LoginState extends State<Login> implements LoginView {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Center(
-        child: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.only(left: 24.0, right: 24.0),
-          children: <Widget>[
-            lblTitle(),
-            SizedBox(height: 48.0),
-            txtUsername(),
-            SizedBox(height: 8.0),
-            txtPassword(),
-            SizedBox(height: 8.0),
-            txtPosition(),
-            SizedBox(height: 24.0),
-            btnLogin(),
-            lblCopyRight(),
-            lblError()
-          ],
+    return Material(
+      child: ListView(
+        padding: const EdgeInsets.only(
+          top: 115.0,
+          left: 8.0,
+          right: 8.0
         ),
+        shrinkWrap: true,
+        children: <Widget>[
+          lblTitle(),
+          SizedBox(height: 48.0),
+          txtUsername(),
+          SizedBox(height: 8.0),
+          txtPassword(),
+          SizedBox(height: 8.0),
+          txtPosition(),
+          SizedBox(height: 24.0),
+          btnLogin(),
+          lblCopyRight(),
+          lblError()
+        ],
       ),
     );
   }
