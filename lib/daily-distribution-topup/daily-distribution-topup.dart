@@ -48,7 +48,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
     _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
-    _controllerTeam = new TextEditingController();
+    _controllerTeam = new TextEditingController(text: sharedUser.teamNo);
     _controllerAgentName = new TextEditingController();
     _controllerSIMDistribution = new TextEditingController()..addListener((){
       _remainStock();
@@ -203,7 +203,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   void _onTabAgentNo() async {
     var callback = await NavigateTo.navigateTo(context: context, route: ListViewAgent(teamNo: sharedUser.teamNo));
     if(callback != null){
-      _txtAgentNo = callback.teamNo;
+      _txtAgentNo = callback.agentNo;
       _controllerAgentName.text = callback.agentNameEn;
       _onSetState();
     }

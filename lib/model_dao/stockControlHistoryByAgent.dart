@@ -2,20 +2,44 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sm_app/model_dto/agent.dart';
 import 'package:sm_app/model_dto/stock.dart';
-part 'stockControlHistoryByAgent.g.dart';
 
-@JsonSerializable()
-class StockControlHistoryByAgent{
+class StockControlHistoryByAgentDAO{
   String _team;
   DateTime _date;
   Agent _agent;
   Stock _stock;
 
-  StockControlHistoryByAgent();
+  StockControlHistoryByAgentDAO();
 
-  factory StockControlHistoryByAgent.fromJson(Map<String, dynamic> json) => _$StockControlHistoryByAgentFromJson(json);
+  StockControlHistoryByAgentDAO.fromJson(Map json) {
+    agent.agentNameEn = json['agent_name'];
+    agent.agentNo = json['agent_no'];
+    date = json['date'];
+    stock.remainingStockForTomorrowWorkByAgent =
+    json['remaining_stock_for_tomorrow_work_by_agent'];
+    stock.simDistribution = json['sim_distribution'];
+    stock.stockInHandBeforeTodayWork = json ['stock_in_hand_befor_today_work'];
+    stock.stockTeamLeaderTakingBackFromByAgent =
+    json['stock_team_leader_taking_back_from_agent'];
+    stock.stockTopUpDuringTodayWork = json['stock_top_up_during_today_work'];
+    team = json['team_no'];
+    stock.topup = json['top_up'];
+  }
 
-  Map<String, dynamic> toJson() => _$StockControlHistoryByAgentToJson(this);
+  Map<String, dynamic> toJson() => {
+    'agent_name': agent.agentNameEn,
+    'agent_no': agent.agentNo,
+    'date': date,
+    'remaining_stock_for_tomorrow_work_by_agent': stock
+            .remainingStockForTomorrowWorkByAgent,
+    'sim_distribution': stock.simDistribution,
+    'stock_in_hand_befor_today_work': stock.stockInHandBeforeTodayWork,
+    'stock_team_leader_taking_back_from_agent': stock
+            .stockTeamLeaderTakingBackFromByAgent,
+    'stock_top_up_during_today_work': stock.stockTopUpDuringTodayWork,
+    'team_no': team,
+    'top_up': stock.topup
+  };
 
   Stock get stock => _stock;
 

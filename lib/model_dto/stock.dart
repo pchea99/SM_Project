@@ -155,6 +155,4 @@ class Stock{
   String toString() {
     return 'Stock{_simDistribution: $_simDistribution, _topup: $_topup, _stockInHandBTW: $_stockInHandBeforetodayWork, _stockTopupDTW: $_stockTopUpDuringTodayWork, _stockReturnFromAgentToday: $_stockTeamLeaderTakingBackFromByAgent, _remainStockFTW: $_remainStockFTW, _initialStockInHandFTL: $_initialStockInHandFTL, _remainStockTLFY: $_remainStockTLFY, _simStockReceivedBA: $_simStockReceivedBA, _stockDeliveredBTA: $_stockDeliveredBTA, _totalStockAllocatedTAA: $_totalStockAllocatedTAA, _totalStockReturnTLBT: $_totalStockReturnTLBT, _remainStockTLFT: $_remainStockTLFT, _totalDistribution: $_totalDistribution, _totalTopup: $_totalTopup, _remainStockAgent: $_remainStockAgent, _remainStockTeamLeader: $_remainStockTeamLeader, _totalRemainStock: $_totalRemainStock, _remainStockFTWWA: $_remainingStockForTomorrowWorkByAgent}';
   }
-
-
 }

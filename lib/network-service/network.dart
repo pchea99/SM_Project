@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:sm_app/model_dao/stockControlHistoryByAgent.dart';
 import 'package:sm_app/model_dto/agent.dart';
+import 'package:sm_app/model_dto/stock.dart';
 
 class NetworkService{
   static final String dailyDistributionDB = "daily_distribution";
@@ -11,7 +13,7 @@ class NetworkService{
   static final String routePlanDB = "route_plan";
   static final String teamInfoDB = "team_info";
   static final String userDB = "user";
-
+  static final String stockControlHistoryByAgentDB = "stock_control_history_by_agent";
 
   static final DatabaseReference db = FirebaseDatabase.instance.reference();
 
@@ -33,16 +35,19 @@ class NetworkService{
     return completer.future;
   }
 
-  static Future getStock(){
-    var completer = new Completer<List>();
+  static Future getStockByTeamAgent(String teamNo, String agentNo){
+    var completer = new Completer<List<StockControlHistoryByAgentDAO>>();
     NetworkService.db.reference()
-        .child(NetworkService.teamInfoDB).once().then((snaphot){
-      List agents = [];
+        .child(NetworkService.stockControlHistoryByAgentDB).orderByChild("team_no").equalTo(teamNo)
+        .once().then((snaphot){
+      List<StockControlHistoryByAgentDAO> stocks = [];
       snaphot.value.forEach((key, value){
-        Agent agent = Agent.fromJson(value);
-        agents.add(agent);
+        StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO.fromJson(value);
+        if(stock.agent == agentNo) {
+          stocks.add(stock);
+        }
       });
-      completer.complete(agents);
+      completer.complete(stocks);
     }).catchError((err){
       completer.completeError(err);
     });

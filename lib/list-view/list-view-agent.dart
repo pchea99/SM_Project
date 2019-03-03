@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sm_app/model_dto/agent.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
@@ -14,7 +15,7 @@ class ListViewAgent extends StatefulWidget {
 }
 
 class _ListViewAgentState extends State<ListViewAgent> {
-  List _agents = [];
+  List<Agent> _agents = [];
   bool _isLoading = true;
 
   @override
@@ -41,7 +42,7 @@ class _ListViewAgentState extends State<ListViewAgent> {
         subtitle: Text(name),
         onTap: (){
           Navigator.pop(context,
-              _agents.firstWhere((agent)=> agent.teamNo == id, orElse: ()=> null)
+              _agents.firstWhere((agent)=> agent.agentNo == id, orElse: ()=> null)
           );
         },
       ),
@@ -74,7 +75,7 @@ class _ListViewAgentState extends State<ListViewAgent> {
 
     return ListView(
       children: _agents.map((agent) =>
-          _buildCard(agent.teamNo, agent.agentNameEn)
+          _buildCard(agent.agentNo, agent.agentNameEn)
       ).toList(),
     );
   }
