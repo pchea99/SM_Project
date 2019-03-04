@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sm_app/daily-retailer-mapping/dr-mapping-service.dart';
 import 'package:sm_app/list-view/list-view-province.dart';
+import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailyRetailerMappingDAO.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
@@ -36,17 +37,17 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
 
   String _txtProvince;
   int _radioValue;
-  String _date;
+  DateTime _date;
 
   @override
   void initState() {
     super.initState();
     _radioValue = 0;
-    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+    _date = DateTime.now();
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
-    _controllerTeam = new TextEditingController();
+    _controllerTeam = new TextEditingController(text: sharedUser.teamNo);
     _controllerDistrict = new TextEditingController();
     _controllerCommune = new TextEditingController();
     _controllerVillage = new TextEditingController();
@@ -189,7 +190,7 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
 
     DailyRetailerMappingDAO data = new DailyRetailerMappingDAO()
       ..teamNo = _controllerTeam.text
-      ..date = _date
+      ..date = StringUtil.dateToDB(_date)
       ..anotherRetailer = _radioValue == 0 ? 'yes' : 'no'
       ..address.province = _txtProvince
       ..address.district = _controllerDistrict.text

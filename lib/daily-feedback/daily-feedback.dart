@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sm_app/daily-feedback/daily-feedback-service.dart';
 import 'package:sm_app/list-view/list-view-province.dart';
+import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailyFeedbackDAO.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
@@ -46,7 +47,7 @@ class _DailyFeedbackState extends State<DailyFeedback> {
   TextEditingController _controllerLongtitude;
 
   String _txtProvince;
-  String _date;
+  DateTime _date;
 
   @override
   void initState() {
@@ -62,12 +63,12 @@ class _DailyFeedbackState extends State<DailyFeedback> {
     _radioValueNoPeople = 0;
     _radioValueOverVisited = 0;
 
-    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+    _date = DateTime.now();
 
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
-    _controllerTeamNo = new TextEditingController();
+    _controllerTeamNo = new TextEditingController(text: sharedUser.teamNo);
     _controllerAnotherIssue = new TextEditingController();
     _controllerSmartDownload = new TextEditingController();
     _controllerSmartUpload = new TextEditingController();
@@ -293,18 +294,17 @@ class _DailyFeedbackState extends State<DailyFeedback> {
 
   void _saveToDB() {
     SpinnerDialog.onSpinner(context);
-    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
 
     DailyFeedbackDAO data = new DailyFeedbackDAO()
       ..feedback.address.province = _txtProvince
       ..feedback.team = _controllerTeamNo.text
-      ..feedback.date = _date
+      ..feedback.date = StringUtil.dateToDB(_date)
       ..feedback.address.district = _controllerDistrict.text
       ..feedback.address.commune = _controllerCommune.text
       ..feedback.address.village = _controllerVillage.text
       ..feedback.smartCoverageDownload = _controllerSmartDownload.text
       ..feedback.smartCoverageUpload = _controllerSmartUpload.text
-      ..feedback.anotherFeedback = _controllerAnotherIssue.text
+      ..feedback.otherIssueRemark = _controllerAnotherIssue.text
       ..feedback.issue = _radioValueIssue == 0 ? 'yes' : 'no'
       ..feedback.anotherFeedback = _radioValueFeedback == 0 ? 'yes' : 'no'
       ..feedback.brokenPhone = _radioValueBrokenPhone == 0 ? 'yes' : 'no'

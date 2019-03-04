@@ -20,7 +20,7 @@ class DailyFeedbackDAO{
 
   toJson(){
     return{
-      'another_retailer': feedback.anotherFeedback,
+      'another_feedback': feedback.anotherFeedback,
       'broken_app': feedback.brokenApp,
       'broken_phone': feedback.brokenPhone,
       'commune': feedback.address.commune,
