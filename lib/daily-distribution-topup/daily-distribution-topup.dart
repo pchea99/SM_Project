@@ -39,15 +39,16 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String _txtAgentNo;
-  String _date;
+  DateTime _date;
 
   @override
   void initState() {
     super.initState();
+
     _controllerDate = new TextEditingController(
       text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
-    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+    _date = DateTime.now();
     _controllerTeam = new TextEditingController(text: sharedUser.teamNo);
     _controllerAgentName = new TextEditingController();
     _controllerSIMDistribution = new TextEditingController()..addListener((){
@@ -166,12 +167,11 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
   void _saveToDB() {
     SpinnerDialog.onSpinner(context);
-//    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
 
     DailyDistributionTopUpDAO data = new DailyDistributionTopUpDAO()
-      ..team = _txtAgentNo
-      ..agent.agentNo = _controllerAgentName.text
-      ..date = _date
+      ..team = _controllerTeam.text
+      ..agent.agentNo = _txtAgentNo
+      ..date = StringUtil.dateToDB(_date)
       ..agent.agentNameEn = _controllerAgentName.text
       ..stock.simDistribution = SafeValue.getSafeDouble(_controllerSIMDistribution.text)
       ..stock.topup = SafeValue.getSafeDouble(_controllerTopUp.text)
@@ -205,6 +205,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     if(callback != null){
       _txtAgentNo = callback.agentNo;
       _controllerAgentName.text = callback.agentNameEn;
+      _getStockInHand();
       _onSetState();
     }
   }
@@ -215,5 +216,13 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     }
 
     setState(() {});
+  }
+
+  void _getStockInHand(){
+    NetworkService.getStockByTeamAgent(_controllerTeam.text, _txtAgentNo)
+        .then((data){
+          _controllerStockInHand.text = data.stock.stockInHandBeforeTodayWork.toString();
+          _onSetState();
+    });
   }
 }

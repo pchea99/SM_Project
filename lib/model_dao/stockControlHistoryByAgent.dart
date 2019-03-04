@@ -5,25 +5,31 @@ import 'package:sm_app/model_dto/stock.dart';
 
 class StockControlHistoryByAgentDAO{
   String _team;
-  DateTime _date;
+  String _date;
   Agent _agent;
   Stock _stock;
 
-  StockControlHistoryByAgentDAO();
+  StockControlHistoryByAgentDAO(){
+   agent = new Agent();
+   stock = new Stock();
+  }
 
   StockControlHistoryByAgentDAO.fromJson(Map json) {
+    agent = new Agent();
+    stock = new Stock();
+
     agent.agentNameEn = json['agent_name'];
     agent.agentNo = json['agent_no'];
     date = json['date'];
     stock.remainingStockForTomorrowWorkByAgent =
-    json['remaining_stock_for_tomorrow_work_by_agent'];
-    stock.simDistribution = json['sim_distribution'];
-    stock.stockInHandBeforeTodayWork = json ['stock_in_hand_befor_today_work'];
+    json['remaining_stock_for_tomorrow_work_by_agent'] + 0.0;
+    stock.simDistribution = json['sim_distribution'] + 0.0;
+    stock.stockInHandBeforeTodayWork = json ['stock_in_hand_befor_today_work'] + 0.0;
     stock.stockTeamLeaderTakingBackFromByAgent =
-    json['stock_team_leader_taking_back_from_agent'];
-    stock.stockTopUpDuringTodayWork = json['stock_top_up_during_today_work'];
+    json['stock_team_leader_taking_back_from_agent'] + 0.0;
+    stock.stockTopUpDuringTodayWork = json['stock_top_up_during_today_work'] + 0.0;
     team = json['team_no'];
-    stock.topup = json['top_up'];
+    stock.topup = json['top_up'] + 0.0;
   }
 
   Map<String, dynamic> toJson() => {
@@ -53,9 +59,9 @@ class StockControlHistoryByAgentDAO{
     _agent = value;
   }
 
-  DateTime get date => _date;
+  String get date => _date;
 
-  set date(DateTime value) {
+  set date(String value) {
     _date = value;
   }
 

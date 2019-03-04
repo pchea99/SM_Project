@@ -36,18 +36,18 @@ class NetworkService{
   }
 
   static Future getStockByTeamAgent(String teamNo, String agentNo){
-    var completer = new Completer<List<StockControlHistoryByAgentDAO>>();
+    var completer = new Completer<StockControlHistoryByAgentDAO>();
     NetworkService.db.reference()
-        .child(NetworkService.stockControlHistoryByAgentDB).orderByChild("team_no").equalTo(teamNo)
+        .child(NetworkService.stockControlHistoryByAgentDB)
+        .orderByChild("team_no").equalTo(teamNo)
         .once().then((snaphot){
-      List<StockControlHistoryByAgentDAO> stocks = [];
       snaphot.value.forEach((key, value){
         StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO.fromJson(value);
-        if(stock.agent == agentNo) {
-          stocks.add(stock);
+        if(stock.agent.agentNo == agentNo) {
+          completer.complete(stock);
+          return;
         }
       });
-      completer.complete(stocks);
     }).catchError((err){
       completer.completeError(err);
     });
