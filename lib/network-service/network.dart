@@ -54,4 +54,24 @@ class NetworkService{
 
     return completer.future;
   }
+
+  static Future getSummary(String teamNo, String agentNo){
+    var completer = new Completer<StockControlHistoryByAgentDAO>();
+    NetworkService.db.reference()
+        .child(NetworkService.stockControlHistoryByAgentDB)
+        .orderByChild("team_no").equalTo(teamNo)
+        .once().then((snaphot){
+      snaphot.value.forEach((key, value){
+        StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO.fromJson(value);
+        if(stock.agent.agentNo == agentNo) {
+          completer.complete(stock);
+          return;
+        }
+      });
+    }).catchError((err){
+      completer.completeError(err);
+    });
+
+    return completer.future;
+  }
 }
