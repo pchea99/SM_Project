@@ -22,16 +22,16 @@ class NetworkService{
   static final DatabaseReference db = FirebaseDatabase.instance.reference();
 
   static Future getTeamInfo(String teamNo){
-    var completer = new Completer<List<TeamInfoDAO>>();
+    var completer = new Completer<List<Agent>>();
     NetworkService.db.reference()
         .child(NetworkService.teamInfoDB).orderByChild("team_no").equalTo(teamNo)
         .once().then((snaphot){
-          List<TeamInfoDAO> teamInfos = [];
+          List<Agent> agents = [];
           snaphot.value.forEach((key, value){
-            TeamInfoDAO teamInfo = TeamInfoDAO.fromJson(value);
-            teamInfos.add(teamInfo);
+            Agent agent = Agent.fromJson(value);
+            agents.add(agent);
           });
-          completer.complete(teamInfos);
+          completer.complete(agents);
         }).catchError((err){
           completer.completeError(err);
         });
@@ -62,12 +62,17 @@ class NetworkService{
   static Future getSummary(String date, String teamNo, String agentNo){
     var completer = new Completer<StockControlHistoryByAgentDAO>();
     NetworkService.db.reference()
-        .child(NetworkService.stockControlHistoryByAgentDB)
+        .child(NetworkService.dailySummaryDB)
         .orderByChild("date").equalTo(date)
-        .once().then((snaphot){
-      snaphot.value.forEach((key, value){
-        StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO.fromJson(value);
-        if(stock.agent.agentNo == agentNo && stock.team == teamNo) {
+        .once().then((snaphot) {
+      if (snaphot.value == null) {
+        completer.complete(null);
+        return;
+      }
+      snaphot.value.forEach((key, value) {
+        StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO
+            .fromJson(value);
+        if (stock.agent.agentNo == agentNo && stock.team == teamNo) {
           completer.complete(stock);
           return;
         }

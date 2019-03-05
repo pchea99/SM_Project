@@ -43,7 +43,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   DateTime _date;
   StockControlHistoryByAgentDAO _stockControlHistoryByAgent;
   DailySummaryDAO _dailySummary;
-  String _province;
+//  String _province;
 
   @override
   void initState() {
@@ -225,7 +225,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       _dailySummary = new DailySummaryDAO()
         ..date = StringUtil.dateToDB(_date)
         ..team = _controllerTeam.text
-        ..address.province = _province
+//        ..address.province = _province
         ..agentNumber = 1
         ..stock.totalTopup = double.parse(_controllerTopUp.text)
         ..stock.totalDistribution = double.parse(_controllerSIMDistribution.text)
@@ -240,7 +240,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       DailySummaryDAO summary = new DailySummaryDAO()
         ..date = StringUtil.dateToDB(_date)
         ..team = _controllerTeam.text
-        ..address.province = _province
+//        ..address.province = _province
         ..agentNumber = _dailySummary.agentNumber + distribution
         ..stock.totalTopup = double.parse(_controllerTopUp.text) + _dailySummary.stock.totalTopup
         ..stock.totalDistribution = double.parse(_controllerSIMDistribution.text) + _dailySummary.stock.totalDistribution
@@ -270,9 +270,9 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         route: ListViewAgent(teamNo: sharedUser.teamNo)
     );
     if(callback != null){
-      _txtAgentNo = callback.agentNumber;
+      _txtAgentNo = callback.agentNo;
       _controllerAgentName.text = callback.agentNameEn;
-      _province = callback.province;
+      //_province = callback.province;
       _getStockInHand();
       _getDailySummary();
       _onSetState();

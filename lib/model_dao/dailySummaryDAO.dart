@@ -9,7 +9,10 @@ class DailySummaryDAO{
   int _agentNumber;
   Stock _stock;
 
-  DailySummaryDAO();
+  DailySummaryDAO(){
+    address = new Address();
+    stock = new Stock();
+  }
 
   DailySummaryDAO.fromJson(Map json) {
     agentNumber = json['agent_no'];

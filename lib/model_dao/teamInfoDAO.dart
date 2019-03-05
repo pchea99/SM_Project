@@ -22,27 +22,27 @@ class TeamInfoDAO{
     sim = new Sim();
   }
 
-  TeamInfoDAO.fromJson(Map<String, dynamic> json) {
+  TeamInfoDAO.fromJson(Map json) {
     van = new Van();
     agent = new Agent();
     user = new User();
     sim = new Sim();
 
-    agent.agentNo = json['agent_name_en'];
+    agent.agentNameEn = json['agent_name_en'];
     agent.agentNameKh = json['agent_name_kh'];
     agent.agentNo = json['agent_no'];
     date = json['date'];
     entryDate = json['entry_date'];
-    user.idNumber = json['id_number'];
-    sim.masterSIM = json['master_sim'];
-    sim.masterSIMPassword = json['master_sim_password'];
-    user.personalPhone = json['personal_phone'];
+    user.idNumber = json['id_number'].toString();
+    sim.masterSIM = json['master_sim'] + 0.0;
+    sim.masterSIMPassword = json['master_sim_password'] + 0.0;
+    user.personalPhone = json['personal_phone'].toString();
     user.position = json['position'];
     projectLeadName = json['project_lead_name'];
-    sim.registeredSIM = json['register_sim'];
+    sim.registeredSIM = json['register_sim'] + 0.0;
     user.sex = json['sex'];
-    sim.slaveSIM = json['slave_sim'];
-    sim.slaveSIMPassword = json['slave_sim_password'];
+    sim.slaveSIM = json['slave_sim'] + 0.0;
+    sim.slaveSIMPassword = json['slave_sim_password'] + 0.0;
     teamLeaderName = json['team_lead_name'];
     team = json['team_no'];
     van.driverID = json['van_driver_id'];
