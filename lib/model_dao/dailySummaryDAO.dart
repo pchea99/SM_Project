@@ -4,15 +4,15 @@ import 'package:sm_app/model_dto/stock.dart';
 
 class DailySummaryDAO{
   String _team;
-  DateTime _date;
+  String _date;
   Address _address;
-  String _agentNo;
+  int _agentNumber;
   Stock _stock;
 
   DailySummaryDAO();
 
   DailySummaryDAO.fromJson(Map json) {
-    agentNo = json['agent_no'];
+    agentNumber = json['agent_no'];
     date = json['date'];
     address.province = json['province'];
     stock.remainStockAgent = json['remaining_stocks_at_agent'];
@@ -24,7 +24,7 @@ class DailySummaryDAO{
 
   Map<String, dynamic> toJson() =>
       {
-        'agent_no': agentNo,
+        'agent_no': agentNumber,
         'date': date,
         'province': address.province,
         'remaining_stocks_at_agent': stock.remainStockAgent,
@@ -40,10 +40,10 @@ class DailySummaryDAO{
     _stock = value;
   }
 
-  String get agentNo => _agentNo;
+  int get agentNumber => _agentNumber;
 
-  set agentNo(String value) {
-    _agentNo = value;
+  set agentNumber(int value) {
+    _agentNumber = value;
   }
 
   Address get address => _address;
@@ -52,9 +52,9 @@ class DailySummaryDAO{
     _address = value;
   }
 
-  DateTime get date => _date;
+  String get date => _date;
 
-  set date(DateTime value) {
+  set date(String value) {
     _date = value;
   }
 
@@ -66,7 +66,7 @@ class DailySummaryDAO{
 
   @override
   String toString() {
-    return 'DailySummary{_team: $_team, _date: $_date, _address: $_address, _agentNo: $_agentNo, _stock: $_stock}';
+    return 'DailySummary{_team: $_team, _date: $_date, _address: $_address, _agentNo: $_agentNumber, _stock: $_stock}';
   }
 
 }

@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:sm_app/model_dao/stockControlHistoryByAgent.dart';
+import 'package:sm_app/model_dao/dailyDistributionTopUpDAO.dart';
+import 'package:sm_app/model_dao/dailySummaryDAO.dart';
+import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
+import 'package:sm_app/model_dao/teamInfoDAO.dart';
 import 'package:sm_app/model_dto/agent.dart';
 import 'package:sm_app/model_dto/stock.dart';
 
@@ -13,21 +16,22 @@ class NetworkService{
   static final String routePlanDB = "route_plan";
   static final String teamInfoDB = "team_info";
   static final String userDB = "user";
+  static final String dailySummaryDB = "daily_summary";
   static final String stockControlHistoryByAgentDB = "stock_control_history_by_agent";
 
   static final DatabaseReference db = FirebaseDatabase.instance.reference();
 
-  static Future getAgent(String teamNo){
-    var completer = new Completer<List<Agent>>();
+  static Future getTeamInfo(String teamNo){
+    var completer = new Completer<List<TeamInfoDAO>>();
     NetworkService.db.reference()
         .child(NetworkService.teamInfoDB).orderByChild("team_no").equalTo(teamNo)
         .once().then((snaphot){
-          List<Agent> agents = [];
+          List<TeamInfoDAO> teamInfos = [];
           snaphot.value.forEach((key, value){
-            Agent agent = Agent.fromJson(value);
-            agents.add(agent);
+            TeamInfoDAO teamInfo = TeamInfoDAO.fromJson(value);
+            teamInfos.add(teamInfo);
           });
-          completer.complete(agents);
+          completer.complete(teamInfos);
         }).catchError((err){
           completer.completeError(err);
         });
@@ -35,15 +39,15 @@ class NetworkService{
     return completer.future;
   }
 
-  static Future getStockByTeamAgent(String teamNo, String agentNo){
+  static Future getStockByTeamAgent(String date, String teamNo, String agentNo){
     var completer = new Completer<StockControlHistoryByAgentDAO>();
     NetworkService.db.reference()
         .child(NetworkService.stockControlHistoryByAgentDB)
-        .orderByChild("team_no").equalTo(teamNo)
+        .orderByChild("date").equalTo(date)
         .once().then((snaphot){
       snaphot.value.forEach((key, value){
         StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO.fromJson(value);
-        if(stock.agent.agentNo == agentNo) {
+        if(stock.agent.agentNo == agentNo && stock.team == teamNo) {
           completer.complete(stock);
           return;
         }
@@ -55,21 +59,63 @@ class NetworkService{
     return completer.future;
   }
 
-  static Future getSummary(String teamNo, String agentNo){
+  static Future getSummary(String date, String teamNo, String agentNo){
     var completer = new Completer<StockControlHistoryByAgentDAO>();
     NetworkService.db.reference()
         .child(NetworkService.stockControlHistoryByAgentDB)
-        .orderByChild("team_no").equalTo(teamNo)
+        .orderByChild("date").equalTo(date)
         .once().then((snaphot){
       snaphot.value.forEach((key, value){
         StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO.fromJson(value);
-        if(stock.agent.agentNo == agentNo) {
+        if(stock.agent.agentNo == agentNo && stock.team == teamNo) {
           completer.complete(stock);
           return;
         }
       });
     }).catchError((err){
       completer.completeError(err);
+    });
+
+    return completer.future;
+  }
+
+  static Future insertDailyDistributionTopUp(DailyDistributionTopUpDAO data){
+    var completer = new Completer<String>();
+    NetworkService.db.reference()
+        .child(NetworkService.dailyDistributionDB)
+        .child(data.date)
+        .set(data.toJson()).then((_){
+      completer.complete("success");
+    }).catchError((err){
+      completer.complete("failed");
+    });
+
+    return completer.future;
+  }
+
+  static Future insertStockByTeamAgent(StockControlHistoryByAgentDAO data){
+    var completer = new Completer<String>();
+    NetworkService.db.reference()
+        .child(NetworkService.stockControlHistoryByAgentDB)
+        .child(data.date +"-"+ data.team+"-"+data.agent.agentNo)
+        .set(data.toJson()).then((_){
+      completer.complete("success");
+    }).catchError((err){
+      completer.complete("failed");
+    });
+
+    return completer.future;
+  }
+
+  static Future insertDailySummary(DailySummaryDAO data){
+    var completer = new Completer<String>();
+    NetworkService.db.reference()
+        .child(NetworkService.dailySummaryDB)
+        .child(data.date)
+        .set(data.toJson()).then((_){
+      completer.complete("success");
+    }).catchError((err){
+      completer.complete("failed");
     });
 
     return completer.future;

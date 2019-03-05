@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:sm_app/daily-distribution-topup/dd-topup-service.dart';
 import 'package:sm_app/list-view/list-view-agent.dart';
 import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailyDistributionTopUpDAO.dart';
+import 'package:sm_app/model_dao/dailySummaryDAO.dart';
+import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
@@ -25,6 +25,7 @@ class DailyDistributionTopUp extends StatefulWidget {
 }
 
 class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
+
   TextEditingController _controllerTeam;
   TextEditingController _controllerDate;
   TextEditingController _controllerAgentName;
@@ -40,6 +41,9 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String _txtAgentNo;
   DateTime _date;
+  StockControlHistoryByAgentDAO _stockControlHistoryByAgent;
+  DailySummaryDAO _dailySummary;
+  String _province;
 
   @override
   void initState() {
@@ -168,6 +172,14 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   void _saveToDB() {
     SpinnerDialog.onSpinner(context);
 
+    _saveDailyDistribution();
+
+    _saveStockControlHistroyAgent();
+
+    _saveDailySummary();
+  }
+
+  void _saveDailyDistribution() {
     DailyDistributionTopUpDAO data = new DailyDistributionTopUpDAO()
       ..team = _controllerTeam.text
       ..agent.agentNo = _txtAgentNo
@@ -183,11 +195,63 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       ..remark = _controllerRemark.text
     ;
 
-    DDTopUPService.insertDDTopUp(data).then((value){
+    NetworkService.insertDailyDistributionTopUp(data).then((value){
+      Navigator.pop(context);
       Navigator.pop(context);
     }).catchError((err){
       Navigator.pop(context);
     });
+  }
+
+  void _saveStockControlHistroyAgent() {
+    _stockControlHistoryByAgent = new StockControlHistoryByAgentDAO()
+      ..team = _controllerTeam.text
+      ..agent.agentNo = _txtAgentNo
+      ..agent.agentNameEn = _controllerAgentName.text
+      ..date = StringUtil.dateToDB(_date)
+      ..stock.simDistribution = double.parse(_controllerSIMDistribution.text)
+      ..stock.topup = double.parse(_controllerTopUp.text)
+      ..stock.stockInHandBeforeTodayWork = double.parse(_controllerRemainStock.text)
+      ..stock.stockTopUpDuringTodayWork = double.parse(_controllerStockTopUp.text)
+      ..stock.stockTeamLeaderTakingBackFromByAgent = double.parse(_controllerStockTeamLeader.text)
+      ..stock.remainStockForTomorrowWorkAgent = double.parse(_controllerRemainStock.text)
+    ;
+
+    NetworkService.insertStockByTeamAgent(_stockControlHistoryByAgent);
+  }
+
+  void _saveDailySummary() {
+    if(_dailySummary == null){
+      _dailySummary = new DailySummaryDAO()
+        ..date = StringUtil.dateToDB(_date)
+        ..team = _controllerTeam.text
+        ..address.province = _province
+        ..agentNumber = 1
+        ..stock.totalTopup = double.parse(_controllerTopUp.text)
+        ..stock.totalDistribution = double.parse(_controllerSIMDistribution.text)
+         ..stock.remainStockAgent = double.parse(_controllerRemainStock.text)
+        ..stock.remainStockTeamLeader = double.parse("0.0")
+      ;
+    }else{
+      int distribution = 0;
+      if(_controllerSIMDistribution.text != null && _controllerSIMDistribution.text.isNotEmpty){
+        distribution = 1;
+      }
+      DailySummaryDAO summary = new DailySummaryDAO()
+        ..date = StringUtil.dateToDB(_date)
+        ..team = _controllerTeam.text
+        ..address.province = _province
+        ..agentNumber = _dailySummary.agentNumber + distribution
+        ..stock.totalTopup = double.parse(_controllerTopUp.text) + _dailySummary.stock.totalTopup
+        ..stock.totalDistribution = double.parse(_controllerSIMDistribution.text) + _dailySummary.stock.totalDistribution
+        ..stock.remainStockAgent = double.parse(_controllerRemainStock.text) + _dailySummary.stock.totalRemainStock
+        ..stock.remainStockTeamLeader = double.parse("0.0")
+      ;
+
+      _dailySummary = summary;
+    }
+
+    NetworkService.insertDailySummary(_dailySummary);
   }
 
   _remainStock(){
@@ -195,19 +259,34 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     remain = SafeValue.getSafeDouble(_controllerStockInHand.text) +
         SafeValue.getSafeDouble(_controllerStockTopUp.text) -
         SafeValue.getSafeDouble(_controllerSIMDistribution.text) -
-            SafeValue.getSafeDouble(_controllerStockTeamLeader.text);
+        SafeValue.getSafeDouble(_controllerStockTeamLeader.text);
     _controllerRemainStock.text = remain.toString();
     _onSetState();
   }
 
   void _onTabAgentNo() async {
-    var callback = await NavigateTo.navigateTo(context: context, route: ListViewAgent(teamNo: sharedUser.teamNo));
+    var callback = await NavigateTo.navigateTo(
+        context: context,
+        route: ListViewAgent(teamNo: sharedUser.teamNo)
+    );
     if(callback != null){
-      _txtAgentNo = callback.agentNo;
+      _txtAgentNo = callback.agentNumber;
       _controllerAgentName.text = callback.agentNameEn;
+      _province = callback.province;
       _getStockInHand();
+      _getDailySummary();
       _onSetState();
     }
+  }
+
+  void _getDailySummary() {
+    NetworkService.getSummary(
+        StringUtil.dateToDB(_date), _controllerTeam.text, _txtAgentNo
+    ).then((summary){
+      if(summary != null){
+        _dailySummary = DailySummaryDAO.fromJson(summary);
+      }
+    });
   }
 
   void _onSetState(){
@@ -219,10 +298,12 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   }
 
   void _getStockInHand(){
-    NetworkService.getStockByTeamAgent(_controllerTeam.text, _txtAgentNo)
-        .then((data){
-          _controllerStockInHand.text = data.stock.stockInHandBeforeTodayWork.toString();
-          _onSetState();
+    NetworkService.getStockByTeamAgent(
+        StringUtil.dateToDB(_date.subtract(const Duration(days: 1))),
+        _controllerTeam.text, _txtAgentNo
+    ).then((data){
+      _controllerStockInHand.text = data.stock.stockInHandBeforeTodayWork.toString();
+      _onSetState();
     });
   }
 }

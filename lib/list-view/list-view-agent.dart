@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sm_app/model_dao/teamInfoDAO.dart';
 import 'package:sm_app/model_dto/agent.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
+import 'package:sm_app/team-info/team-info.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 
@@ -15,13 +17,13 @@ class ListViewAgent extends StatefulWidget {
 }
 
 class _ListViewAgentState extends State<ListViewAgent> {
-  List<Agent> _agents = [];
+  List<TeamInfoDAO> _teamInfos = [];
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _getAgents();
+    _getTeamInfo();
   }
 
   @override
@@ -42,16 +44,17 @@ class _ListViewAgentState extends State<ListViewAgent> {
         subtitle: Text(name),
         onTap: (){
           Navigator.pop(context,
-              _agents.firstWhere((agent)=> agent.agentNo == id, orElse: ()=> null)
+              _teamInfos.firstWhere(
+                      (teamInfo)=> teamInfo.agent.agentNo == id, orElse: ()=> null)
           );
         },
       ),
     );
   }
 
-  void _getAgents(){
-    NetworkService.getAgent(widget.teamNo).then((agentsDB){
-      _agents = agentsDB;
+  void _getTeamInfo(){
+    NetworkService.getTeamInfo(widget.teamNo).then((teamInfosDB){
+      _teamInfos = teamInfosDB;
       _isLoading = false;
       _onSetState();
     }).catchError((err){
@@ -74,8 +77,8 @@ class _ListViewAgentState extends State<ListViewAgent> {
     }
 
     return ListView(
-      children: _agents.map((agent) =>
-          _buildCard(agent.agentNo, agent.agentNameEn)
+      children: _teamInfos.map((teamInfo) =>
+          _buildCard(teamInfo.agent.agentNo, teamInfo.agent.agentNameEn)
       ).toList(),
     );
   }
