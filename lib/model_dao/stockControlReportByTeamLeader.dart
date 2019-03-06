@@ -1,18 +1,37 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:sm_app/model_dto/stock.dart';
-part 'stockControlReportByTeamLeader.g.dart';
 
-@JsonSerializable()
 class StockControlReportByTeamLeader{
   String _team;
-  DateTime _date;
+  String _date;
   Stock _stock;
 
-  StockControlReportByTeamLeader();
+  StockControlReportByTeamLeader(){
+    stock = new Stock();
+  }
 
-  factory StockControlReportByTeamLeader.fromJson(Map<String, dynamic> json) => _$StockControlReportByTeamLeaderFromJson(json);
+  StockControlReportByTeamLeader.fromJson(Map json){
+    team = json['team_no'];
+    date = json['date'];
+    stock.initialStockInHandForTeamLeader = json['initial_stock_in_hand_for_team_leader'];
+    stock.remainStockTeamLeaderFromYesterday = json['reamining_stock_at_team_leader_from_yesterday'];
+    stock.simStockReceivedByAssistant = json['sim_stock_received_by_assistant'];
+    stock.stockDeliveredBackToAssistant = json['stock_delivered_back_to_assistant'];
+    stock.totalStockAllocatedToAllAgent = json['total_stock_allocated_to_all_agent'];
+    stock.totalStockReturnTeamLeaderTakingBackToday = json['total_stock_team_leader_taking_back_today'];
+    stock.remainStockTeamLeaderForToday = json['remaining_stock_at_team_leader_for_today'];
+  }
 
-  Map<String, dynamic> toJson() => _$StockControlReportByTeamLeaderToJson(this);
+  Map toJson() => {
+    'team_no': team,
+    'date': date,
+    'initial_stock_in_hand_for_team_leader': stock.initialStockInHandForTeamLeader,
+    'reamining_stock_at_team_leader_from_yesterday': stock.remainStockTeamLeaderFromYesterday,
+    'sim_stock_received_by_assistant': stock.simStockReceivedByAssistant,
+    'stock_delivered_back_to_assistant': stock.stockDeliveredBackToAssistant,
+    'total_stock_allocated_to_all_agent': stock.totalStockAllocatedToAllAgent,
+    'total_stock_team_leader_taking_back_today': stock.totalStockReturnTeamLeaderTakingBackToday,
+    'remaining_stock_at_team_leader_for_today': stock.remainStockTeamLeaderForToday
+  };
 
   Stock get stock => _stock;
 
@@ -20,9 +39,9 @@ class StockControlReportByTeamLeader{
     _stock = value;
   }
 
-  DateTime get date => _date;
+  String get date => _date;
 
-  set date(DateTime value) {
+  set date(String value) {
     _date = value;
   }
 

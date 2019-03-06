@@ -1,4 +1,3 @@
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sm_app/model_dto/agent.dart';
 import 'package:sm_app/model_dto/stock.dart';
@@ -17,7 +16,6 @@ class StockControlHistoryByAgentDAO{
   StockControlHistoryByAgentDAO.fromJson(Map json) {
     agent = new Agent();
     stock = new Stock();
-
     agent.agentNameEn = json['agent_name'];
     agent.agentNo = json['agent_no'];
     date = json['date'];

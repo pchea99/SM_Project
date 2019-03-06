@@ -1,10 +1,6 @@
-
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sm_app/model_dto/remark.dart';
-part 'marketAuditReport.g.dart';
 
-@JsonSerializable()
 class MarketAuditReportDAO{
   String _team;
   String _date;
@@ -14,7 +10,14 @@ class MarketAuditReportDAO{
     remark = new Remark();
   }
 
-  factory MarketAuditReportDAO.fromJson(Map<String, dynamic> json) => _$MarketAuditReportFromJson(json);
+  MarketAuditReportDAO.fromJson(Map json) {
+    date = json['date'];
+    remark.otherIssue = json['other_issue'];
+    remark.agentPerformance = json['remark_on_agent_performance'];
+    remark.systemIssue = json['remark_on_system_issues'];
+    remark.visitedLocation = json['remark_on_visited_location'];
+    team = json['team_no'];
+  }
 
   Map toJson() => {
     'date': date,

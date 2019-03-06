@@ -79,45 +79,45 @@ class Stock{
     _totalDistribution = value;
   }
 
-  double get remainStockTLFT => _remainStockTLFT;
+  double get remainStockTeamLeaderForToday => _remainStockTLFT;
 
-  set remainStockTLFT(double value) {
+  set remainStockTeamLeaderForToday(double value) {
     _remainStockTLFT = value;
   }
 
-  double get totalStockReturnTLBT => _totalStockReturnTLBT;
+  double get totalStockReturnTeamLeaderTakingBackToday => _totalStockReturnTLBT;
 
-  set totalStockReturnTLBT(double value) {
+  set totalStockReturnTeamLeaderTakingBackToday(double value) {
     _totalStockReturnTLBT = value;
   }
 
-  double get totalStockAllocatedTAA => _totalStockAllocatedTAA;
+  double get totalStockAllocatedToAllAgent => _totalStockAllocatedTAA;
 
-  set totalStockAllocatedTAA(double value) {
+  set totalStockAllocatedToAllAgent(double value) {
     _totalStockAllocatedTAA = value;
   }
 
-  double get stockDeliveredBTA => _stockDeliveredBTA;
+  double get stockDeliveredBackToAssistant => _stockDeliveredBTA;
 
-  set stockDeliveredBTA(double value) {
+  set stockDeliveredBackToAssistant(double value) {
     _stockDeliveredBTA = value;
   }
 
-  double get simStockReceivedBA => _simStockReceivedBA;
+  double get simStockReceivedByAssistant => _simStockReceivedBA;
 
-  set simStockReceivedBA(double value) {
+  set simStockReceivedByAssistant(double value) {
     _simStockReceivedBA = value;
   }
 
-  double get remainStockTLFY => _remainStockTLFY;
+  double get remainStockTeamLeaderFromYesterday => _remainStockTLFY;
 
-  set remainStockTLFY(double value) {
+  set remainStockTeamLeaderFromYesterday(double value) {
     _remainStockTLFY = value;
   }
 
-  double get initialStockInHandFTL => _initialStockInHandFTL;
+  double get initialStockInHandForTeamLeader => _initialStockInHandFTL;
 
-  set initialStockInHandFTL(double value) {
+  set initialStockInHandForTeamLeader(double value) {
     _initialStockInHandFTL = value;
   }
 

@@ -13,14 +13,14 @@ Stock _$StockFromJson(Map<String, dynamic> json) {
     ..stockTeamLeaderTakingBackFromByAgent = (json['remainStockTeamLeader'] as num)?.toDouble()
     ..totalTopup = (json['totalTopup'] as num)?.toDouble()
     ..totalDistribution = (json['totalDistribution'] as num)?.toDouble()
-    ..remainStockTLFT = (json['remainStockTLFT'] as num)?.toDouble()
-    ..totalStockReturnTLBT = (json['totalStockReturnTLBT'] as num)?.toDouble()
-    ..totalStockAllocatedTAA =
+    ..remainStockTeamLeaderForToday = (json['remainStockTLFT'] as num)?.toDouble()
+    ..totalStockReturnTeamLeaderTakingBackToday = (json['totalStockReturnTLBT'] as num)?.toDouble()
+    ..totalStockAllocatedToAllAgent =
         (json['totalStockAllocatedTAA'] as num)?.toDouble()
-    ..stockDeliveredBTA = (json['stockDeliveredBTA'] as num)?.toDouble()
-    ..simStockReceivedBA = (json['simStockReceivedBA'] as num)?.toDouble()
-    ..remainStockTLFY = (json['remainStockTLFY'] as num)?.toDouble()
-    ..initialStockInHandFTL = (json['initialStockInHandFTL'] as num)?.toDouble()
+    ..stockDeliveredBackToAssistant = (json['stockDeliveredBTA'] as num)?.toDouble()
+    ..simStockReceivedByAssistant = (json['simStockReceivedBA'] as num)?.toDouble()
+    ..remainStockTeamLeaderFromYesterday = (json['remainStockTLFY'] as num)?.toDouble()
+    ..initialStockInHandForTeamLeader = (json['initialStockInHandFTL'] as num)?.toDouble()
     ..remainStockForTomorrowWorkAgent = (json['remainStockFTW'] as num)?.toDouble()
     ..stockReturnFromAgentToday =
         (json['stockReturnFromAgentToday'] as num)?.toDouble()
@@ -38,13 +38,13 @@ Map<String, dynamic> _$StockToJson(Stock instance) => <String, dynamic>{
       'remainStockAgent': instance.remainingStockForTomorrowWorkByAgent,
       'totalTopup': instance.totalTopup,
       'totalDistribution': instance.totalDistribution,
-      'remainStockTLFT': instance.remainStockTLFT,
-      'totalStockReturnTLBT': instance.totalStockReturnTLBT,
-      'totalStockAllocatedTAA': instance.totalStockAllocatedTAA,
-      'stockDeliveredBTA': instance.stockDeliveredBTA,
-      'simStockReceivedBA': instance.simStockReceivedBA,
-      'remainStockTLFY': instance.remainStockTLFY,
-      'initialStockInHandFTL': instance.initialStockInHandFTL,
+      'remainStockTLFT': instance.remainStockTeamLeaderForToday,
+      'totalStockReturnTLBT': instance.totalStockReturnTeamLeaderTakingBackToday,
+      'totalStockAllocatedTAA': instance.totalStockAllocatedToAllAgent,
+      'stockDeliveredBTA': instance.stockDeliveredBackToAssistant,
+      'simStockReceivedBA': instance.simStockReceivedByAssistant,
+      'remainStockTLFY': instance.remainStockTeamLeaderFromYesterday,
+      'initialStockInHandFTL': instance.initialStockInHandForTeamLeader,
       'remainStockFTW': instance.remainStockForTomorrowWorkAgent,
       'stockReturnFromAgentToday': instance.stockReturnFromAgentToday,
       'stockTopupDTW': instance.stockTopUpDuringTodayWork,

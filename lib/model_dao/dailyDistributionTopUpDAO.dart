@@ -1,9 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sm_app/model_dto/agent.dart';
 import 'package:sm_app/model_dto/stock.dart';
-part 'dailyDistributionTopUp.g.dart';
 
-@JsonSerializable()
 class DailyDistributionTopUpDAO{
   String _team;
   String _date;
@@ -16,10 +14,35 @@ class DailyDistributionTopUpDAO{
     stock = new Stock();
   }
 
-  factory DailyDistributionTopUpDAO.fromJson(Map<String, dynamic> json)
-          => _$DailyDistributionTopUpFromJson(json);
+  DailyDistributionTopUpDAO.fromJson(Map json){
+    agent.agentNameEn = json['agent_name'];
+    agent.agentNo = json['agent_no'];
+    date = json['date'];
+    stock.topUpAmount = json['daily_top_up_amount'];
+    stock.remainStockForTomorrowWorkAgent = json['remaining_stock_for_tomorrow_work_by_agent'];
+    remark = json['remar'];
+    stock.simDistribution = json['sim_distribution'];
+    stock.stockInHandBeforeTodayWork = json['stock_in_hand_before_today_work'];
+    stock.stockTeamLeaderTakingBackFromByAgent = json['stock_team_leader_taking_back_from_by_agent'];
+    stock.stockTopUpDuringTodayWork = json['stock_top_up_during_today_work'];
+    team = json['team_no'];
+    stock.topup = json['top_up'];
+  }
 
-  Map<String, dynamic> toJson() => _$DailyDistributionTopUpToJson(this);
+  Map toJson() => {
+    'agent_name': agent.agentNameEn,
+    'agent_no': agent.agentNo,
+    'date': date,
+    'daily_top_up_amount': stock.topUpAmount,
+    'remaining_stock_for_tomorrow_work_by_agent': stock.remainStockForTomorrowWorkAgent,
+    'remar': remark,
+    'sim_distribution': stock.simDistribution,
+    'stock_in_hand_before_today_work': stock.stockInHandBeforeTodayWork,
+    'stock_team_leader_taking_back_from_by_agent': stock.stockTeamLeaderTakingBackFromByAgent,
+    'stock_top_up_during_today_work': stock.stockTopUpDuringTodayWork,
+    'team_no': team,
+    'top_up': stock.topup
+  };
 
   String get remark => _remark;
 

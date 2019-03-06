@@ -1,8 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sm_app/model_dto/address.dart';
-part 'routePlan.g.dart';
 
-@JsonSerializable()
 class RoutePlanDAO{
   String _team;
   String _date;
@@ -13,7 +11,15 @@ class RoutePlanDAO{
     address = new Address();
   }
 
-  factory RoutePlanDAO.fromJson(Map<String, dynamic> json) => _$RoutePlanFromJson(json);
+  RoutePlanDAO.fromJson(Map json) {
+    actualVisitVs_Plan = json['actual_visit_vs_plan'];
+    date = json['date'];
+    address.commune= json['planned_commune'];
+    address.district = json['planned_district'];
+    address.province = json['planned_province'];
+    address.village = json['planned_village'];
+    team = json['team_no'];
+  }
 
   Map toJson() => {
     'actual_visit_vs_plan': actualVisitVs_Plan,
