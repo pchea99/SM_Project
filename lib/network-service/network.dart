@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:sm_app/model_dao/dailyDistributionTopUpDAO.dart';
+import 'package:sm_app/model_dao/dailyFeedbackDAO.dart';
+import 'package:sm_app/model_dao/dailyRetailerMappingDAO.dart';
 import 'package:sm_app/model_dao/dailySummaryDAO.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
 import 'package:sm_app/model_dao/teamInfoDAO.dart';
@@ -59,8 +61,8 @@ class NetworkService{
     return completer.future;
   }
 
-  static Future getSummary(String date, String teamNo, String agentNo){
-    var completer = new Completer<StockControlHistoryByAgentDAO>();
+  static Future getSummaryByDateTeamAgent(String date, String teamNo, String agentNo){
+    var completer = new Completer<DailySummaryDAO>();
     NetworkService.db.reference()
         .child(NetworkService.dailySummaryDB)
         .orderByChild("date").equalTo(date)
@@ -69,14 +71,30 @@ class NetworkService{
         completer.complete(null);
         return;
       }
-      snaphot.value.forEach((key, value) {
-        StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO
-            .fromJson(value);
-        if (stock.agent.agentNo == agentNo && stock.team == teamNo) {
-          completer.complete(stock);
-          return;
-        }
-      });
+
+      Map json = new Map.from(snaphot.value);
+      DailySummaryDAO summaryDAO = DailySummaryDAO.fromJson(json.values.first);
+      completer.complete(summaryDAO);
+    }).catchError((err){
+      completer.completeError(err);
+    });
+
+    return completer.future;
+  }
+
+  static Future getSummaryByTeam(String date, String teamNo){
+    var completer = new Completer<DailySummaryDAO>();
+    NetworkService.db.reference()
+        .child(NetworkService.dailySummaryDB)
+        .orderByChild("date").equalTo(date)
+        .once().then((snaphot) {
+      if (snaphot.value == null) {
+        completer.complete(null);
+        return;
+      }
+      Map json = new Map.from(snaphot.value);
+      DailySummaryDAO summaryDAO = DailySummaryDAO.fromJson(json.values.first);
+      completer.complete(summaryDAO);
     }).catchError((err){
       completer.completeError(err);
     });
@@ -116,6 +134,34 @@ class NetworkService{
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.dailySummaryDB)
+        .child(data.date)
+        .set(data.toJson()).then((_){
+      completer.complete("success");
+    }).catchError((err){
+      completer.complete("failed");
+    });
+
+    return completer.future;
+  }
+
+  static Future insertDailyFeedback(DailyFeedbackDAO data){
+    var completer = new Completer<String>();
+    NetworkService.db.reference()
+        .child(NetworkService.dailyFeedbacksDB)
+        .child(data.feedback.date)
+        .set(data.toJson()).then((_){
+      completer.complete("success");
+    }).catchError((err){
+      completer.complete("failed");
+    });
+
+    return completer.future;
+  }
+
+  static Future insertDRMapping(DailyRetailerMappingDAO data){
+    var completer = new Completer<String>();
+    NetworkService.db.reference()
+        .child(NetworkService.dailyRetailerMappingDB)
         .child(data.date)
         .set(data.toJson()).then((_){
       completer.complete("success");

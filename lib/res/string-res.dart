@@ -21,6 +21,7 @@ class StringRes{
   static final String team = "Team";
   static final String date = "Date";
   static final String agentNo = "Agent No";
+  static final String agentNunmber = "# Agent";
   static final String agentName = "Agent Name";
   static final String simDistribution = "SIM Distribution";
   static final String topUp = "Top Up";

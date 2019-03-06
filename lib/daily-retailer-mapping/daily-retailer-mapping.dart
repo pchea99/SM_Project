@@ -1,10 +1,9 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:sm_app/daily-retailer-mapping/dr-mapping-service.dart';
 import 'package:sm_app/list-view/list-view-province.dart';
 import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailyRetailerMappingDAO.dart';
+import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
@@ -202,7 +201,7 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
       ..retailerPhone = _controllerRetailerPhone.text
     ;
 
-    DRMappingService.insertDRMapping(data).then((value){
+    NetworkService.insertDRMapping(data).then((value){
       Navigator.pop(context);
     }).catchError((err){
       Navigator.pop(context);

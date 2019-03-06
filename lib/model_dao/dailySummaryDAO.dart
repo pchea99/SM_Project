@@ -15,14 +15,17 @@ class DailySummaryDAO{
   }
 
   DailySummaryDAO.fromJson(Map json) {
+    address = new Address();
+    stock = new Stock();
+
     agentNumber = json['agent_no'];
     date = json['date'];
     address.province = json['province'];
-    stock.remainStockAgent = json['remaining_stocks_at_agent'];
-    stock.remainStockTeamLeader = json['remaining_stocks_at_team_leader'];
+    stock.remainStockAgent = json['remaining_stocks_at_agent'] + 0.0;
+    stock.remainStockTeamLeader = json['remaining_stocks_at_team_leader'] + 0.0;
     team = json['team_no'];
-    stock.totalDistribution = json['total_distribution'];
-    stock.totalTopup = json['total_top_up'];
+    stock.totalDistribution = json['total_distribution'] + 0.0;
+    stock.totalTopup = json['total_top_up'] + 0.0;
   }
 
   Map<String, dynamic> toJson() =>

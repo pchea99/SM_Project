@@ -1,6 +1,8 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:sm_app/login/login.dart';
+import 'package:sm_app/model_dao/dailySummaryDAO.dart';
+import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
@@ -37,6 +39,8 @@ class _DailySummaryState extends State<DailySummary> {
     _controllerTotalTopUp = new TextEditingController();
     _controllerRemainingStockAtAgent = new TextEditingController();
     _controllerRemainStockAtTeamLeader = new TextEditingController();
+
+    _getSummary();
   }
 
   @override
@@ -53,7 +57,7 @@ class _DailySummaryState extends State<DailySummary> {
     return ContainerForm.buildContainForm(
         Column(
           children: <Widget>[
-            DatePicker.datePicker(onSelectedDate),
+            DatePicker.datePicker(_onSelectedDate),
             InputField.buildTextField(
               controller: _controllerTeam,
               label: StringRes.team,
@@ -62,9 +66,9 @@ class _DailySummaryState extends State<DailySummary> {
                 controller: _controllerProvince,
                 label: StringRes.province
             ),
-            InputField.buildTextField(
+            InputNumber.buildTextField(
                 controller: _controllerAgentNo,
-                label: StringRes.agentNo
+                label: StringRes.agentNunmber
             ),
             InputNumber.buildTextField(
                 controller: _controllerTotalDistribution,
@@ -88,10 +92,35 @@ class _DailySummaryState extends State<DailySummary> {
   }
 
   void _getSummary() {
-
+    NetworkService.getSummaryByTeam(StringUtil.dateToDB(_date), _controllerTeam.text)
+        .then((data){
+          if(data != null) {
+            DailySummaryDAO summaryDAO = data;
+//          _controllerProvince.text = summaryDAO.address.province;
+            _controllerAgentNo.text = summaryDAO.agentNumber.toString();
+            _controllerTotalDistribution.text =
+                summaryDAO.stock.totalDistribution.toString();
+            _controllerTotalTopUp.text = summaryDAO.stock.totalTopup.toString();
+            _controllerRemainingStockAtAgent.text =
+                summaryDAO.stock.remainStockAgent.toString();
+            _controllerRemainStockAtTeamLeader.text =
+                summaryDAO.stock.remainStockTeamLeader.toString();
+          }
+        });
   }
 
-  void onSelectedDate(value) {
+  void _onSelectedDate(value) {
     _date = value;
+    _clearData();
+    _getSummary();
+  }
+
+  void _clearData(){
+    _controllerProvince.text = "";
+    _controllerAgentNo.text = "";
+    _controllerTotalDistribution.text = "";
+    _controllerTotalTopUp.text = "";
+    _controllerRemainingStockAtAgent.text = "";
+    _controllerRemainStockAtTeamLeader.text = "";
   }
 }

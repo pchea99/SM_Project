@@ -279,11 +279,11 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   }
 
   void _getDailySummary() {
-    NetworkService.getSummary(
+    NetworkService.getSummaryByDateTeamAgent(
         StringUtil.dateToDB(_date), _controllerTeam.text, _txtAgentNo
-    ).then((summary){
-      if(summary != null){
-        _dailySummary = DailySummaryDAO.fromJson(summary);
+    ).then((data){
+      if(data != null){
+        _dailySummary = data;
       }
     });
   }

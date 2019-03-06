@@ -1,10 +1,9 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:sm_app/daily-feedback/daily-feedback-service.dart';
 import 'package:sm_app/list-view/list-view-province.dart';
 import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailyFeedbackDAO.dart';
+import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
@@ -319,7 +318,7 @@ class _DailyFeedbackState extends State<DailyFeedback> {
       ..feedback.gps.longtitude = _controllerLongtitude.text
     ;
 
-    DailyFeedbackService.insertDailyFeedback(data).then((value){
+    NetworkService.insertDailyFeedback(data).then((value){
       Navigator.pop(context);
     }).catchError((err){
       Navigator.pop(context);
