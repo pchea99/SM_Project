@@ -28,8 +28,8 @@ class StockControlReportByTeamLeader{
     'reamining_stock_at_team_leader_from_yesterday': stock.remainStockTeamLeaderFromYesterday,
     'sim_stock_received_by_assistant': stock.simStockReceivedByAssistant,
     'stock_delivered_back_to_assistant': stock.stockDeliveredBackToAssistant,
-    'total_stock_allocated_to_all_agent': stock.totalStockAllocatedToAllAgent,
-    'total_stock_team_leader_taking_back_today': stock.totalStockReturnTeamLeaderTakingBackToday,
+    'total_stocks_allocated_to_all_agent': stock.totalStockAllocatedToAllAgent,
+    'total_stocks_team_leader_taking_back_today': stock.totalStockReturnTeamLeaderTakingBackToday,
     'remaining_stock_at_team_leader_for_today': stock.remainStockTeamLeaderForToday
   };
 
