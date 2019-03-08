@@ -36,7 +36,7 @@ class StockControlHistoryByAgentDAO{
     'agent_no': agent.agentNo,
     'date': date,
     'remaining_stock_for_tomorrow_work_by_agent': stock
-            .remainingStockForTomorrowWorkByAgent,
+            .remainStockForTomorrowWorkAgent,
     'sim_distribution': stock.simDistribution,
     'stock_in_hand_befor_today_work': stock.stockInHandBeforeTodayWork,
     'stock_team_leader_taking_back_from_agent': stock

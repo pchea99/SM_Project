@@ -133,7 +133,7 @@ class NetworkService{
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.dailyDistributionDB)
-        .child(data.date)
+        .child(data.date +"-"+ data.team +"-"+ data.agent.agentNo)
         .set(data.toJson()).then((_){
       completer.complete("success");
     }).catchError((err){
@@ -147,7 +147,7 @@ class NetworkService{
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.stockControlHistoryByAgentDB)
-        .child(data.date +"-"+ data.team+"-"+data.agent.agentNo)
+        .child(data.date +"-"+ data.team +"-"+ data.agent.agentNo)
         .set(data.toJson()).then((_){
       completer.complete("success");
     }).catchError((err){
