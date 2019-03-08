@@ -16,6 +16,7 @@ class StockControlHistoryByAgentDAO{
   StockControlHistoryByAgentDAO.fromJson(Map json) {
     agent = new Agent();
     stock = new Stock();
+
     agent.agentNameEn = json['agent_name'];
     agent.agentNo = json['agent_no'];
     date = json['date'];

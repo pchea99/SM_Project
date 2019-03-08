@@ -1,5 +1,9 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:sm_app/list-view/list-view-agent.dart';
+import 'package:sm_app/login/login.dart';
+import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
+import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
@@ -7,6 +11,7 @@ import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/date-picker.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
+import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/select-value.dart';
 import 'package:sm_app/utils/string-util.dart';
 
@@ -17,8 +22,6 @@ class StockControlHistoryByAgent extends StatefulWidget {
 
 class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent> {
   TextEditingController _controllerTeam;
-  TextEditingController _controllerDate;
-  TextEditingController _controllerAgentNo;
   TextEditingController _controllerAgentName;
   TextEditingController _controllerSIMDistribution;
   TextEditingController _controllerTopUp;
@@ -26,14 +29,23 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
   TextEditingController _controllerStockTopUp;
   TextEditingController _controllerStockTeamLeader;
   TextEditingController _controllerRemainStock;
-  TextEditingController _controllerRemark;
+
+  String _txtAgentNo;
+  DateTime _date;
 
   @override
   void initState() {
     super.initState();
-    _controllerDate = new TextEditingController(
-        text: formatDate(new DateTime.now(), StringUtil.dateFormats())
-    );
+    _date = DateTime.now();
+    _controllerTeam = new TextEditingController(text: sharedUser.teamNo);
+    _controllerAgentName = new TextEditingController();
+    _controllerSIMDistribution = new TextEditingController();
+    _controllerTopUp = new TextEditingController();
+    _controllerStockInHand = new TextEditingController();
+    _controllerStockTopUp = new TextEditingController();
+    _controllerStockTeamLeader = new TextEditingController();
+    _controllerRemainStock = new TextEditingController();
+    _loadData();
   }
 
   @override
@@ -54,7 +66,8 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
               padding: const EdgeInsets.only(top: 8.0),
               child: SelectValue.selectView(
                   label: StringRes.agentNo,
-                  callback: null
+                  value: _txtAgentNo,
+                  callback: _selectAgentNo
               ),
             ),
             DatePicker.datePicker(onSelectedDate),
@@ -95,11 +108,65 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
     );
   }
 
-  void _onSave() {
-
+  void _getStockControlHistory(){
+    NetworkService.getStockByTeamAgent(
+      StringUtil.dateToDB(_date),
+      _controllerTeam.text,
+      _txtAgentNo
+    ).then((data){
+      _clearData();
+      StockControlHistoryByAgentDAO stock = data;
+      _controllerSIMDistribution.text = stock.stock.simDistribution.toString();
+      _controllerTopUp.text = stock.stock.topup.toString();
+      _controllerStockInHand.text = stock.stock.stockInHandBeforeTodayWork.toString();
+      _controllerStockTopUp.text = stock.stock.stockTopUpDuringTodayWork.toString();
+      _controllerStockTeamLeader.text = stock.stock.stockTeamLeaderTakingBackFromByAgent.toString();
+      _controllerRemainStock.text = stock.stock.remainingStockForTomorrowWorkByAgent.toString();
+      _onSetState();
+    });
   }
 
   void onSelectedDate(value) {
+    _date = value;
+    _loadData();
+  }
+
+  void _loadData() {
+    if(_date != null && _txtAgentNo != null && _txtAgentNo.isNotEmpty){
+      _getStockControlHistory();
+    }
+  }
+
+  void _selectAgentNo() async {
+    var callback = await NavigateTo.navigateTo(
+        context: context,
+        route: ListViewAgent(teamNo: sharedUser.teamNo)
+    );
+    if(callback != null){
+      _txtAgentNo = callback.agentNo;
+      _controllerAgentName.text = callback.agentNameEn;
+      _onSetState();
+      _loadData();
+    }
+  }
+
+  void _onSetState() {
+    if(!mounted){
+      return;
+    }
+
+    setState(() {});
+  }
+
+  void _clearData(){
+    _date = null;
+    _controllerSIMDistribution.text = "";
+    _controllerTopUp.text = "";
+    _controllerStockInHand.text = "";
+    _controllerStockTopUp.text = "";
+    _controllerStockTeamLeader.text = "";
+    _controllerRemainStock.text = "";
 
   }
+
 }

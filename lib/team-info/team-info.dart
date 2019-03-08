@@ -57,6 +57,10 @@ class _TeamInfoState extends State<TeamInfo> {
               ),
             ),
             InputField.buildTextField(
+                controller: _controllerDate,
+                label: StringRes.date
+            ),
+            InputField.buildTextField(
                 controller: _controllerAgentName,
                 label: StringRes.agentName+" (Eng)"
             ),
@@ -71,10 +75,6 @@ class _TeamInfoState extends State<TeamInfo> {
             InputField.buildTextField(
               controller: _controllerTeam,
               label: StringRes.team,
-            ),
-            InputField.buildTextField(
-                controller: _controllerDate,
-                label: StringRes.date
             ),
             InputNumber.buildTextField(
                 controller: _controllerSIMDistribution,

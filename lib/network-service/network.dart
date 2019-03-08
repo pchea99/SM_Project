@@ -47,13 +47,16 @@ class NetworkService{
         .child(NetworkService.stockControlHistoryByAgentDB)
         .orderByChild("date").equalTo(date)
         .once().then((snaphot){
-      snaphot.value.forEach((key, value){
-        StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO.fromJson(value);
-        if(stock.agent.agentNo == agentNo && stock.team == teamNo) {
-          completer.complete(stock);
-          return;
-        }
-      });
+          if(snaphot != null && snaphot.value != null) {
+            snaphot.value.forEach((key, value) {
+              StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO
+                  .fromJson(value);
+              if (stock.agent.agentNo == agentNo && stock.team == teamNo) {
+                completer.complete(stock);
+                return;
+              }
+            });
+          }
     }).catchError((err){
       completer.completeError(err);
     });
