@@ -70,7 +70,6 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     _controllerRemainStock = new TextEditingController(text: '0.0');
     _controllerRemark = new TextEditingController();
     _controllerTopUpAmount = new TextEditingController();
-    _getStockControlReportTeamLeader();
   }
 
   @override
@@ -179,6 +178,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     _saveStockControlHistoryAgent();
 
     _saveDailySummary();
+
+    _saveStockControlReportTeamLeader();
   }
 
   void _saveDailyDistribution() {
@@ -219,7 +220,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       ..stock.remainStockForTomorrowWorkAgent = double.parse(_controllerRemainStock.text)
     ;
 
-    NetworkService.insertStockByTeamAgent(_stockControlHistoryByAgent);
+    NetworkService.insertStockHistoryByAgent(_stockControlHistoryByAgent);
   }
 
   void _saveDailySummary() {
@@ -233,6 +234,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.totalDistribution = double.parse(_controllerSIMDistribution.text)
          ..stock.remainStockAgent = double.parse(_controllerRemainStock.text)
         ..stock.remainStockTeamLeader = double.parse("0.0")
+        ..stock.totalRemainStock = double.parse(_controllerRemainStock.text)
       ;
     }else{
       int distribution = 0;
@@ -248,6 +250,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.totalDistribution = double.parse(_controllerSIMDistribution.text) + _dailySummary.stock.totalDistribution
         ..stock.remainStockAgent = double.parse(_controllerRemainStock.text) + _dailySummary.stock.totalRemainStock
         ..stock.remainStockTeamLeader = double.parse("0.0")
+        ..stock.totalRemainStock = double.parse(_controllerRemainStock.text) + _dailySummary.stock.totalRemainStock
       ;
 
       _dailySummary = summary;
@@ -257,19 +260,16 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   }
 
   void _saveStockControlReportTeamLeader() {
-    if(_stockControlReportByTeamLeaderDAO == null){
-      _stockControlReportByTeamLeaderDAO = new StockControlReportByTeamLeaderDAO()
+     if(_stockControlReportByTeamLeaderDAO == null){
+       _stockControlReportByTeamLeaderDAO = new StockControlReportByTeamLeaderDAO()
         ..date = StringUtil.dateToDB(_date)
         ..team = _controllerTeam.text
         ..stock.initialStockInHandForTeamLeader = 0.0
         ..stock.remainStockTeamLeaderFromYesterday = 0.0
         ..stock.simStockReceivedByAssistant = 0.0
         ..stock.stockDeliveredBackToAssistant = 0.0
-        ..stock.totalStockAllocatedToAllAgent =
-            double.parse(_controllerStockTopUp.text) - _sumSIMDistributionAndTopUp()
-        ..stock.totalStockReturnTeamLeaderTakingBackToday =
-            double.parse(_controllerStockTeamLeader.text) - _sumSIMDistributionAndTopUp()
-      ;
+        ..stock.totalStockAllocatedToAllAgent = _sumTotalStockAllocatedToAllAgent()
+        ..stock.totalStockReturnTeamLeaderTakingBackToday =_sumTotalStockReturnTeamLeaderTakingBackToday();
     }else{
       StockControlReportByTeamLeaderDAO stockReport = new StockControlReportByTeamLeaderDAO()
         ..date = StringUtil.dateToDB(_date)
@@ -283,23 +283,29 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.stockDeliveredBackToAssistant =
             _stockControlReportByTeamLeaderDAO.stock.stockDeliveredBackToAssistant
         ..stock.totalStockAllocatedToAllAgent =
-            (double.parse(_controllerStockTopUp.text)
-                + _stockControlReportByTeamLeaderDAO.stock.totalStockAllocatedToAllAgent)
-                - _sumSIMDistributionAndTopUp()
+            _stockControlReportByTeamLeaderDAO.stock.totalStockAllocatedToAllAgent
+                + _sumTotalStockAllocatedToAllAgent()
         ..stock.totalStockReturnTeamLeaderTakingBackToday =
-            (double.parse(_controllerStockTeamLeader.text)
-                + _stockControlReportByTeamLeaderDAO.stock.totalStockReturnTeamLeaderTakingBackToday)
-                - _sumSIMDistributionAndTopUp()
+            _stockControlReportByTeamLeaderDAO.stock.totalStockReturnTeamLeaderTakingBackToday
+                + _sumTotalStockReturnTeamLeaderTakingBackToday()
       ;
+
       _stockControlReportByTeamLeaderDAO = stockReport;
     }
 
     NetworkService.insertStockControlReportByTeamLeader(_stockControlReportByTeamLeaderDAO);
   }
 
-  double _sumSIMDistributionAndTopUp() {
-    return (double.parse(_controllerSIMDistribution.text)
-              + double.parse(_controllerTopUp.text));
+  double _sumTotalStockAllocatedToAllAgent() {
+    return (double.parse(_controllerStockTopUp.text) -
+        double.parse(_controllerSIMDistribution.text)
+        + double.parse(_controllerTopUp.text));
+  }
+
+  double _sumTotalStockReturnTeamLeaderTakingBackToday() {
+    return (double.parse(_controllerStockTeamLeader.text) -
+        double.parse(_controllerSIMDistribution.text)
+        + double.parse(_controllerTopUp.text));
   }
 
   _remainStock(){
@@ -323,11 +329,13 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       //_province = callback.province;
       _getStockInHand();
       _getDailySummary();
+      _getStockControlReportTeamLeader();
       _onSetState();
     }
   }
 
   void _getDailySummary() {
+    _dailySummary = null;
     NetworkService.getSummaryByDateTeamAgent(
         StringUtil.dateToDB(_date), _controllerTeam.text, _txtAgentNo
     ).then((data){
@@ -346,6 +354,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   }
 
   void _getStockInHand(){
+    _controllerStockInHand.text = "";
     NetworkService.getStockByTeamAgent(
         StringUtil.dateToDB(_date.subtract(const Duration(days: 1))),
         _controllerTeam.text, _txtAgentNo
@@ -356,6 +365,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   }
 
   void _getStockControlReportTeamLeader(){
+    _stockControlReportByTeamLeaderDAO = null;
     NetworkService.getStockControlReportTeamLeader(
         StringUtil.dateToDB(_date.subtract(const Duration(days: 1))),
         _controllerTeam.text

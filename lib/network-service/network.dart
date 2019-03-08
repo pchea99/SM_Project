@@ -143,7 +143,7 @@ class NetworkService{
     return completer.future;
   }
 
-  static Future insertStockByTeamAgent(StockControlHistoryByAgentDAO data){
+  static Future insertStockHistoryByAgent(StockControlHistoryByAgentDAO data){
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.stockControlHistoryByAgentDB)
@@ -185,7 +185,7 @@ class NetworkService{
     return completer.future;
   }
 
-  static Future insertDRMapping(DailyRetailerMappingDAO data){
+  static Future insertDailyRetailerMapping(DailyRetailerMappingDAO data){
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.dailyRetailerMappingDB)
