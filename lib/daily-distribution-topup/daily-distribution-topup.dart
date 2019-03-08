@@ -4,6 +4,7 @@ import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailyDistributionTopUpDAO.dart';
 import 'package:sm_app/model_dao/dailySummaryDAO.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
+import 'package:sm_app/model_dao/stockControlReportByTeamLeaderDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
@@ -42,6 +43,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   DateTime _date;
   StockControlHistoryByAgentDAO _stockControlHistoryByAgent;
   DailySummaryDAO _dailySummary;
+  StockControlReportByTeamLeaderDAO _stockControlReportByTeamLeaderDAO;
 //  String _province;
 
   @override
@@ -68,6 +70,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     _controllerRemainStock = new TextEditingController(text: '0.0');
     _controllerRemark = new TextEditingController();
     _controllerTopUpAmount = new TextEditingController();
+    _getStockControlReportTeamLeader();
   }
 
   @override
@@ -173,7 +176,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
     _saveDailyDistribution();
 
-    _saveStockControlHistroyAgent();
+    _saveStockControlHistoryAgent();
 
     _saveDailySummary();
   }
@@ -202,7 +205,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     });
   }
 
-  void _saveStockControlHistroyAgent() {
+  void _saveStockControlHistoryAgent() {
     _stockControlHistoryByAgent = new StockControlHistoryByAgentDAO()
       ..team = _controllerTeam.text
       ..agent.agentNo = _txtAgentNo
@@ -251,6 +254,52 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     }
 
     NetworkService.insertDailySummary(_dailySummary);
+  }
+
+  void _saveStockControlReportTeamLeader() {
+    if(_stockControlReportByTeamLeaderDAO == null){
+      _stockControlReportByTeamLeaderDAO = new StockControlReportByTeamLeaderDAO()
+        ..date = StringUtil.dateToDB(_date)
+        ..team = _controllerTeam.text
+        ..stock.initialStockInHandForTeamLeader = 0.0
+        ..stock.remainStockTeamLeaderFromYesterday = 0.0
+        ..stock.simStockReceivedByAssistant = 0.0
+        ..stock.stockDeliveredBackToAssistant = 0.0
+        ..stock.totalStockAllocatedToAllAgent =
+            double.parse(_controllerStockTopUp.text) - _sumSIMDistributionAndTopUp()
+        ..stock.totalStockReturnTeamLeaderTakingBackToday =
+            double.parse(_controllerStockTeamLeader.text) - _sumSIMDistributionAndTopUp()
+      ;
+    }else{
+      StockControlReportByTeamLeaderDAO stockReport = new StockControlReportByTeamLeaderDAO()
+        ..date = StringUtil.dateToDB(_date)
+        ..team = _controllerTeam.text
+        ..stock.initialStockInHandForTeamLeader =
+            _stockControlReportByTeamLeaderDAO.stock.initialStockInHandForTeamLeader
+        ..stock.remainStockTeamLeaderFromYesterday =
+            _stockControlReportByTeamLeaderDAO.stock.remainStockTeamLeaderFromYesterday
+        ..stock.simStockReceivedByAssistant =
+            _stockControlReportByTeamLeaderDAO.stock.simStockReceivedByAssistant
+        ..stock.stockDeliveredBackToAssistant =
+            _stockControlReportByTeamLeaderDAO.stock.stockDeliveredBackToAssistant
+        ..stock.totalStockAllocatedToAllAgent =
+            (double.parse(_controllerStockTopUp.text)
+                + _stockControlReportByTeamLeaderDAO.stock.totalStockAllocatedToAllAgent)
+                - _sumSIMDistributionAndTopUp()
+        ..stock.totalStockReturnTeamLeaderTakingBackToday =
+            (double.parse(_controllerStockTeamLeader.text)
+                + _stockControlReportByTeamLeaderDAO.stock.totalStockReturnTeamLeaderTakingBackToday)
+                - _sumSIMDistributionAndTopUp()
+      ;
+      _stockControlReportByTeamLeaderDAO = stockReport;
+    }
+
+    NetworkService.insertStockControlReportByTeamLeader(_stockControlReportByTeamLeaderDAO);
+  }
+
+  double _sumSIMDistributionAndTopUp() {
+    return (double.parse(_controllerSIMDistribution.text)
+              + double.parse(_controllerTopUp.text));
   }
 
   _remainStock(){
@@ -302,6 +351,18 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         _controllerTeam.text, _txtAgentNo
     ).then((data){
       _controllerStockInHand.text = data.stock.stockInHandBeforeTodayWork.toString();
+      _onSetState();
+    });
+  }
+
+  void _getStockControlReportTeamLeader(){
+    NetworkService.getStockControlReportTeamLeader(
+        StringUtil.dateToDB(_date.subtract(const Duration(days: 1))),
+        _controllerTeam.text
+    ).then((data){
+      if(data != null){
+        _stockControlReportByTeamLeaderDAO = data;
+      }
       _onSetState();
     });
   }

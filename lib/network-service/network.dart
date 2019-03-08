@@ -66,6 +66,28 @@ class NetworkService{
     return completer.future;
   }
 
+  static Future getStockControlReportTeamLeader(String date, String teamNo){
+    var completer = new Completer<StockControlReportByTeamLeaderDAO>();
+    NetworkService.db.reference()
+        .child(NetworkService.stockControlReportByTeamLeaderDB)
+        .orderByChild("date").equalTo(date)
+        .once().then((snaphot){
+      if(snaphot != null && snaphot.value != null) {
+        snaphot.value.forEach((key, value) {
+          StockControlReportByTeamLeaderDAO stock = StockControlReportByTeamLeaderDAO.fromJson(value);
+          if (stock.team == teamNo) {
+            completer.complete(stock);
+            return;
+          }
+        });
+      }
+    }).catchError((err){
+      completer.completeError(err);
+    });
+
+    return completer.future;
+  }
+
   static Future getSummaryByDateTeamAgent(String date, String teamNo, String agentNo){
     var completer = new Completer<DailySummaryDAO>();
     NetworkService.db.reference()
@@ -177,7 +199,7 @@ class NetworkService{
     return completer.future;
   }
 
-  static Future insertStockControlReportByTeamAgent(StockControlReportByTeamLeaderDAO data){
+  static Future insertStockControlReportByTeamLeader(StockControlReportByTeamLeaderDAO data){
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.stockControlReportByTeamLeaderDB)

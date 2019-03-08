@@ -1,5 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:sm_app/login/login.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
@@ -30,6 +31,14 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
+    _controllerTeam = new TextEditingController(text: sharedUser.teamNo);
+    _controllerInitialStockInHandForTeamLeader = new TextEditingController();
+    _controllerRemainingStockAtTeamLeaderFromYesterday = new TextEditingController();
+    _controllerSIMStockReceivedByAssistant = new TextEditingController();
+    _controllerStockDeliveredBackToAssistant = new TextEditingController();
+    _controllerTotalStockAllocatedToAllAgent = new TextEditingController();
+    _controllerTotalStockTeamLeaderTakingBackToday = new TextEditingController();
+    _controllerRemainingStockAtTeamLeaderForToday = new TextEditingController();
   }
 
   @override
