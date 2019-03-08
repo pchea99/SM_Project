@@ -6,6 +6,7 @@ import 'package:sm_app/model_dao/dailyFeedbackDAO.dart';
 import 'package:sm_app/model_dao/dailyRetailerMappingDAO.dart';
 import 'package:sm_app/model_dao/dailySummaryDAO.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
+import 'package:sm_app/model_dao/stockControlReportByTeamLeaderDAO.dart';
 import 'package:sm_app/model_dao/teamInfoDAO.dart';
 import 'package:sm_app/model_dto/agent.dart';
 import 'package:sm_app/model_dto/stock.dart';
@@ -20,6 +21,7 @@ class NetworkService{
   static final String userDB = "user";
   static final String dailySummaryDB = "daily_summary";
   static final String stockControlHistoryByAgentDB = "stock_control_history_by_agent";
+  static final String stockControlReportByTeamLeaderDB = "stock_control_report_by_team_leader";
 
   static final DatabaseReference db = FirebaseDatabase.instance.reference();
 
@@ -165,6 +167,20 @@ class NetworkService{
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.dailyRetailerMappingDB)
+        .child(data.date)
+        .set(data.toJson()).then((_){
+      completer.complete("success");
+    }).catchError((err){
+      completer.complete("failed");
+    });
+
+    return completer.future;
+  }
+
+  static Future insertStockControlReportByTeamAgent(StockControlReportByTeamLeaderDAO data){
+    var completer = new Completer<String>();
+    NetworkService.db.reference()
+        .child(NetworkService.stockControlReportByTeamLeaderDB)
         .child(data.date)
         .set(data.toJson()).then((_){
       completer.complete("success");

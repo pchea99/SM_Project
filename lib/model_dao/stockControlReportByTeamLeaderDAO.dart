@@ -1,15 +1,15 @@
 import 'package:sm_app/model_dto/stock.dart';
 
-class StockControlReportByTeamLeader{
+class StockControlReportByTeamLeaderDAO{
   String _team;
   String _date;
   Stock _stock;
 
-  StockControlReportByTeamLeader(){
+  StockControlReportByTeamLeaderDAO(){
     stock = new Stock();
   }
 
-  StockControlReportByTeamLeader.fromJson(Map json){
+  StockControlReportByTeamLeaderDAO.fromJson(Map json){
     team = json['team_no'];
     date = json['date'];
     stock.initialStockInHandForTeamLeader = json['initial_stock_in_hand_for_team_leader'];
