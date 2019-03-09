@@ -89,6 +89,10 @@ class _TeamInfoState extends State<TeamInfo> {
               ),
             ),
             InputField.buildTextField(
+                controller: _controllerDate,
+                label: StringRes.date
+            ),
+            InputField.buildTextField(
                 controller: _controllerAgentName,
                 label: StringRes.agentName+" (Eng)"
             ),

@@ -201,7 +201,7 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
       ..retailerPhone = _controllerRetailerPhone.text
     ;
 
-    NetworkService.insertDRMapping(data).then((value){
+    NetworkService.insertDailyRetailerMapping(data).then((value){
       Navigator.pop(context);
     }).catchError((err){
       Navigator.pop(context);

@@ -1,24 +1,24 @@
 import 'package:sm_app/model_dto/stock.dart';
 
-class StockControlReportByTeamLeader{
+class StockControlReportByTeamLeaderDAO{
   String _team;
   String _date;
   Stock _stock;
 
-  StockControlReportByTeamLeader(){
+  StockControlReportByTeamLeaderDAO(){
     stock = new Stock();
   }
 
-  StockControlReportByTeamLeader.fromJson(Map json){
+  StockControlReportByTeamLeaderDAO.fromJson(Map json){
     team = json['team_no'];
     date = json['date'];
-    stock.initialStockInHandForTeamLeader = json['initial_stock_in_hand_for_team_leader'];
-    stock.remainStockTeamLeaderFromYesterday = json['reamining_stock_at_team_leader_from_yesterday'];
-    stock.simStockReceivedByAssistant = json['sim_stock_received_by_assistant'];
-    stock.stockDeliveredBackToAssistant = json['stock_delivered_back_to_assistant'];
-    stock.totalStockAllocatedToAllAgent = json['total_stock_allocated_to_all_agent'];
-    stock.totalStockReturnTeamLeaderTakingBackToday = json['total_stock_team_leader_taking_back_today'];
-    stock.remainStockTeamLeaderForToday = json['remaining_stock_at_team_leader_for_today'];
+    stock.initialStockInHandForTeamLeader = json['initial_stock_in_hand_for_team_leader'] + 0.0;
+    stock.remainStockTeamLeaderFromYesterday = json['reamining_stock_at_team_leader_from_yesterday'] + 0.0;
+    stock.simStockReceivedByAssistant = json['sim_stock_received_by_assistant'] + 0.0;
+    stock.stockDeliveredBackToAssistant = json['stock_delivered_back_to_assistant'] + 0.0;
+    stock.totalStockAllocatedToAllAgent = json['total_stock_allocated_to_all_agent'] + 0.0;
+    stock.totalStockReturnTeamLeaderTakingBackToday = json['total_stock_team_leader_taking_back_today'] + 0.0;
+    stock.remainStockTeamLeaderForToday = json['remaining_stock_at_team_leader_for_today'] + 0.0;
   }
 
   Map toJson() => {

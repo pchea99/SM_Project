@@ -6,6 +6,7 @@ import 'package:sm_app/model_dao/dailyFeedbackDAO.dart';
 import 'package:sm_app/model_dao/dailyRetailerMappingDAO.dart';
 import 'package:sm_app/model_dao/dailySummaryDAO.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
+import 'package:sm_app/model_dao/stockControlReportByTeamLeaderDAO.dart';
 import 'package:sm_app/model_dao/teamInfoDAO.dart';
 import 'package:sm_app/model_dto/agent.dart';
 import 'package:sm_app/model_dto/stock.dart';
@@ -20,6 +21,7 @@ class NetworkService{
   static final String userDB = "user";
   static final String dailySummaryDB = "daily_summary";
   static final String stockControlHistoryByAgentDB = "stock_control_history_by_agent";
+  static final String stockControlReportByTeamLeaderDB = "stock_control_report_by_team_leader";
 
   static final DatabaseReference db = FirebaseDatabase.instance.reference();
 
@@ -47,13 +49,38 @@ class NetworkService{
         .child(NetworkService.stockControlHistoryByAgentDB)
         .orderByChild("date").equalTo(date)
         .once().then((snaphot){
-      snaphot.value.forEach((key, value){
-        StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO.fromJson(value);
-        if(stock.agent.agentNo == agentNo && stock.team == teamNo) {
-          completer.complete(stock);
-          return;
-        }
-      });
+          if(snaphot != null && snaphot.value != null) {
+            snaphot.value.forEach((key, value) {
+              StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO
+                  .fromJson(value);
+              if (stock.agent.agentNo == agentNo && stock.team == teamNo) {
+                completer.complete(stock);
+                return;
+              }
+            });
+          }
+    }).catchError((err){
+      completer.completeError(err);
+    });
+
+    return completer.future;
+  }
+
+  static Future getStockControlReportTeamLeader(String date, String teamNo){
+    var completer = new Completer<StockControlReportByTeamLeaderDAO>();
+    NetworkService.db.reference()
+        .child(NetworkService.stockControlReportByTeamLeaderDB)
+        .orderByChild("date").equalTo(date)
+        .once().then((snaphot){
+      if(snaphot != null && snaphot.value != null) {
+        snaphot.value.forEach((key, value) {
+          StockControlReportByTeamLeaderDAO stock = StockControlReportByTeamLeaderDAO.fromJson(value);
+          if (stock.team == teamNo) {
+            completer.complete(stock);
+            return;
+          }
+        });
+      }
     }).catchError((err){
       completer.completeError(err);
     });
@@ -106,7 +133,7 @@ class NetworkService{
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.dailyDistributionDB)
-        .child(data.date)
+        .child(data.date +"-"+ data.team +"-"+ data.agent.agentNo)
         .set(data.toJson()).then((_){
       completer.complete("success");
     }).catchError((err){
@@ -116,11 +143,11 @@ class NetworkService{
     return completer.future;
   }
 
-  static Future insertStockByTeamAgent(StockControlHistoryByAgentDAO data){
+  static Future insertStockHistoryByAgent(StockControlHistoryByAgentDAO data){
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.stockControlHistoryByAgentDB)
-        .child(data.date +"-"+ data.team+"-"+data.agent.agentNo)
+        .child(data.date +"-"+ data.team +"-"+ data.agent.agentNo)
         .set(data.toJson()).then((_){
       completer.complete("success");
     }).catchError((err){
@@ -158,10 +185,24 @@ class NetworkService{
     return completer.future;
   }
 
-  static Future insertDRMapping(DailyRetailerMappingDAO data){
+  static Future insertDailyRetailerMapping(DailyRetailerMappingDAO data){
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.dailyRetailerMappingDB)
+        .child(data.date)
+        .set(data.toJson()).then((_){
+      completer.complete("success");
+    }).catchError((err){
+      completer.complete("failed");
+    });
+
+    return completer.future;
+  }
+
+  static Future insertStockControlReportByTeamLeader(StockControlReportByTeamLeaderDAO data){
+    var completer = new Completer<String>();
+    NetworkService.db.reference()
+        .child(NetworkService.stockControlReportByTeamLeaderDB)
         .child(data.date)
         .set(data.toJson()).then((_){
       completer.complete("success");

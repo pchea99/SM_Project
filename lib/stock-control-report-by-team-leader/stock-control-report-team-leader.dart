@@ -1,12 +1,12 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:sm_app/login/login.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
-import 'package:sm_app/utils/select-value.dart';
 import 'package:sm_app/utils/string-util.dart';
 
 class StockControlReportByTeamLeader extends StatefulWidget {
@@ -17,15 +17,13 @@ class StockControlReportByTeamLeader extends StatefulWidget {
 class _StockControlReportByTeamLeaderState extends State<StockControlReportByTeamLeader> {
   TextEditingController _controllerTeam;
   TextEditingController _controllerDate;
-  TextEditingController _controllerAgentNo;
-  TextEditingController _controllerAgentName;
-  TextEditingController _controllerSIMDistribution;
-  TextEditingController _controllerTopUp;
-  TextEditingController _controllerStockInHand;
-  TextEditingController _controllerStockTopUp;
-  TextEditingController _controllerStockTeamLeader;
-  TextEditingController _controllerRemainStock;
-  TextEditingController _controllerRemark;
+  TextEditingController _controllerInitialStockInHandForTeamLeader;
+  TextEditingController _controllerRemainingStockAtTeamLeaderFromYesterday;
+  TextEditingController _controllerSIMStockReceivedByAssistant;
+  TextEditingController _controllerStockDeliveredBackToAssistant;
+  TextEditingController _controllerTotalStockAllocatedToAllAgent;
+  TextEditingController _controllerTotalStockTeamLeaderTakingBackToday;
+  TextEditingController _controllerRemainingStockAtTeamLeaderForToday;
 
   @override
   void initState() {
@@ -33,6 +31,14 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
+    _controllerTeam = new TextEditingController(text: sharedUser.teamNo);
+    _controllerInitialStockInHandForTeamLeader = new TextEditingController();
+    _controllerRemainingStockAtTeamLeaderFromYesterday = new TextEditingController();
+    _controllerSIMStockReceivedByAssistant = new TextEditingController();
+    _controllerStockDeliveredBackToAssistant = new TextEditingController();
+    _controllerTotalStockAllocatedToAllAgent = new TextEditingController();
+    _controllerTotalStockTeamLeaderTakingBackToday = new TextEditingController();
+    _controllerRemainingStockAtTeamLeaderForToday = new TextEditingController();
   }
 
   @override
@@ -61,33 +67,33 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
                 label: StringRes.date
             ),
             InputField.buildTextField(
-                controller: _controllerAgentName,
+                controller: _controllerInitialStockInHandForTeamLeader,
                 label: StringRes.initialStock
             ),
             InputField.buildTextField(
-                controller: _controllerAgentName,
+                controller: _controllerRemainingStockAtTeamLeaderFromYesterday,
                 label: StringRes.remainingStockTeamLeadYesterday
             ),
             InputNumber.buildTextField(
-                controller: _controllerSIMDistribution,
+                controller: _controllerSIMStockReceivedByAssistant,
                 label: StringRes.simStockReceivedAssistant,
                 isEnable: true
             ),
             InputNumber.buildTextField(
-                controller: _controllerTopUp,
+                controller: _controllerStockDeliveredBackToAssistant,
                 label: StringRes.stockDeliveryBackAssistant,
                 isEnable: true
             ),
             InputNumber.buildTextField(
-                controller: _controllerStockInHand,
+                controller: _controllerTotalStockAllocatedToAllAgent,
                 label: StringRes.totalStockAllocate
             ),
             InputNumber.buildTextField(
-                controller: _controllerStockTopUp,
+                controller: _controllerTotalStockTeamLeaderTakingBackToday,
                 label: StringRes.totalStockTeamLeadTakingBackToday,
             ),
             InputNumber.buildTextField(
-                controller: _controllerStockTeamLeader,
+                controller: _controllerRemainingStockAtTeamLeaderForToday,
                 label: StringRes.remainingStockTeamLeaderToday,
             ),
           ],
@@ -98,4 +104,6 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
   void _onSave() {
 
   }
+
+
 }
