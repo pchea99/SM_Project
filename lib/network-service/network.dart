@@ -34,6 +34,7 @@ class NetworkService{
           snaphot.value.forEach((key, value){
             Agent agent = Agent.fromJson(value);
             agents.add(agent);
+            print("=== : $agent");
           });
           completer.complete(agents);
         }).catchError((err){

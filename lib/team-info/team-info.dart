@@ -109,10 +109,6 @@ class _TeamInfoState extends State<TeamInfo> {
               label: StringRes.team,
             ),
             InputField.buildTextField(
-                controller: _controllerDate,
-                label: StringRes.date
-            ),
-            InputField.buildTextField(
                 controller: _controllerProjectLeadName,
                 label: StringRes.projectLeadName,
             ),
