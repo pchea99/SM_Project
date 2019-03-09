@@ -36,7 +36,7 @@ class _LoginState extends State<Login> implements LoginView {
 
   Widget lblTitle(){
     return Text(
-      StringRes.login,
+      StringRes.labelLogin,
       style: TextStyle(
         color: Colors.teal,
         fontSize: FontSizeRes.title,
