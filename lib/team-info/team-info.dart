@@ -2,7 +2,6 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
-import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
@@ -17,7 +16,6 @@ class TeamInfo extends StatefulWidget {
 class _TeamInfoState extends State<TeamInfo> {
   TextEditingController _controllerTeam;
   TextEditingController _controllerDate;
-  TextEditingController _controllerAgentNo;
   TextEditingController _controllerAgentName;
   TextEditingController _controllerSIMDistribution;
   TextEditingController _controllerTopUp;
@@ -135,9 +133,5 @@ class _TeamInfoState extends State<TeamInfo> {
           ],
         )
     );
-  }
-
-  void _onSave() {
-
   }
 }
