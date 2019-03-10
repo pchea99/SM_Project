@@ -7,7 +7,6 @@ import 'package:sm_app/utils/spinner-dialog.dart';
 
 class ListViewAgent extends StatefulWidget {
   final String teamNo;
-
   ListViewAgent({this.teamNo});
 
   @override
@@ -54,9 +53,13 @@ class _ListViewAgentState extends State<ListViewAgent> {
       _agents = agentsDB;
       _isLoading = false;
       _onSetState();
+      print("===T : $_agents");
+
     }).catchError((err){
       _isLoading = false;
       _onSetState();
+      print("===C : $_agents");
+
     });
   }
 

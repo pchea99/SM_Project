@@ -1,10 +1,12 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:sm_app/list-view/list-view-agent.dart';
+import 'package:sm_app/login/login.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
-import 'package:sm_app/utils/input-number.dart';
+import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/select-value.dart';
 import 'package:sm_app/utils/string-util.dart';
 
@@ -15,15 +17,27 @@ class TeamInfo extends StatefulWidget {
 
 class _TeamInfoState extends State<TeamInfo> {
   TextEditingController _controllerTeam;
+  TextEditingController _controllerSex;
   TextEditingController _controllerDate;
   TextEditingController _controllerAgentName;
-  TextEditingController _controllerSIMDistribution;
-  TextEditingController _controllerTopUp;
-  TextEditingController _controllerStockInHand;
-  TextEditingController _controllerStockTopUp;
-  TextEditingController _controllerStockTeamLeader;
-  TextEditingController _controllerRemainStock;
-  TextEditingController _controllerRemark;
+  TextEditingController _controllerAgentNameKh;
+  TextEditingController _controllerProjectLeadName;
+  TextEditingController _controllerTeamLeaderName;
+  TextEditingController _controllerDriverName;
+  TextEditingController _controllerDriverID;
+  TextEditingController _controllerPlaqueNumber;
+  TextEditingController _controllerPosition;
+  TextEditingController _controllerPersonalPhone;
+  TextEditingController _controllerSlaveSIMPassword;
+  TextEditingController _controllerIDNumber;
+  TextEditingController _controllerEntryDate;
+  TextEditingController _controllerMasterSIM;
+  TextEditingController _controllerMasterSIMPassword;
+  TextEditingController _controllerRegisteredSIM;
+  TextEditingController _controllerSlaveSIM;
+
+
+  String _txtAgentNo;
 
   @override
   void initState() {
@@ -31,6 +45,25 @@ class _TeamInfoState extends State<TeamInfo> {
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
+    _controllerTeam = new TextEditingController();
+    _controllerSex = new TextEditingController();
+    _controllerAgentName = new TextEditingController();
+    _controllerAgentNameKh = new TextEditingController();
+    _controllerProjectLeadName = new TextEditingController();
+    _controllerTeamLeaderName = new TextEditingController();
+    _controllerDriverName = new TextEditingController();
+    _controllerDriverID = new TextEditingController();
+    _controllerPlaqueNumber = new TextEditingController();
+    _controllerPosition = new TextEditingController();
+    _controllerPersonalPhone = new TextEditingController();
+    _controllerSlaveSIMPassword = new TextEditingController();
+    _controllerIDNumber = new TextEditingController();
+    _controllerEntryDate = new TextEditingController();
+    _controllerMasterSIM = new TextEditingController();
+    _controllerMasterSIMPassword = new TextEditingController();
+    _controllerRegisteredSIM = new TextEditingController();
+    _controllerSlaveSIM = new TextEditingController();
+
   }
 
   @override
@@ -51,7 +84,8 @@ class _TeamInfoState extends State<TeamInfo> {
               padding: const EdgeInsets.only(top: 8.0),
               child: SelectValue.selectView(
                   label: StringRes.agentNo,
-                  callback: null
+                  value: _txtAgentNo,
+                  callback: _onTabAgentNo
               ),
             ),
             InputField.buildTextField(
@@ -63,75 +97,114 @@ class _TeamInfoState extends State<TeamInfo> {
                 label: StringRes.agentName+" (Eng)"
             ),
             InputField.buildTextField(
-                controller: _controllerAgentName,
+                controller: _controllerAgentNameKh,
                 label: StringRes.agentName+" (Khmer)"
             ),
             InputField.buildTextField(
-              controller: _controllerTeam,
+              controller: _controllerSex,
               label: StringRes.sex,
             ),
             InputField.buildTextField(
               controller: _controllerTeam,
               label: StringRes.team,
             ),
-            InputNumber.buildTextField(
-                controller: _controllerSIMDistribution,
+            InputField.buildTextField(
+                controller: _controllerProjectLeadName,
                 label: StringRes.projectLeadName,
             ),
-            InputNumber.buildTextField(
-                controller: _controllerTopUp,
+            InputField.buildTextField(
+                controller: _controllerTeamLeaderName,
                 label: StringRes.teamLeadName,
             ),
-            InputNumber.buildTextField(
-                controller: _controllerStockInHand,
+            InputField.buildTextField(
+                controller: _controllerDriverName,
                 label: StringRes.vanDriverName
             ),
-            InputNumber.buildTextField(
-                controller: _controllerStockTopUp,
+            InputField.buildTextField(
+                controller: _controllerDriverID,
                 label: StringRes.vanDriverID,
             ),
-            InputNumber.buildTextField(
-                controller: _controllerStockTeamLeader,
+            InputField.buildTextField(
+                controller: _controllerPlaqueNumber,
                 label: StringRes.vanPlaqueNumber,
             ),
-            InputNumber.buildTextField(
-                controller: _controllerRemainStock,
+            InputField.buildTextField(
+                controller: _controllerPosition,
                 label: StringRes.position
             ),
             InputField.buildTextField(
-                controller: _controllerRemark,
+                controller: _controllerIDNumber,
                 label: StringRes.idNumber,
             ),
             InputField.buildTextField(
-              controller: _controllerRemark,
+              controller: _controllerEntryDate,
               label: StringRes.entryDate,
             ),
             InputField.buildTextField(
-              controller: _controllerRemark,
+              controller: _controllerPersonalPhone,
               label: StringRes.personalPhone,
             ),
             InputField.buildTextField(
-              controller: _controllerRemark,
+              controller: _controllerMasterSIM,
               label: StringRes.masterSIM,
             ),
             InputField.buildTextField(
-              controller: _controllerRemark,
+              controller: _controllerMasterSIMPassword,
               label: StringRes.masterSIMPassword,
             ),
             InputField.buildTextField(
-              controller: _controllerRemark,
+              controller: _controllerRegisteredSIM,
               label: StringRes.registeredSIM,
             ),
             InputField.buildTextField(
-              controller: _controllerRemark,
+              controller: _controllerSlaveSIM,
               label: StringRes.slaveSIM,
             ),
             InputField.buildTextField(
-              controller: _controllerRemark,
+              controller: _controllerSlaveSIMPassword,
               label: StringRes.slaveSIMPassword,
             ),
           ],
         )
     );
+  }
+
+
+  void _onSetState(){
+    if(!mounted){
+      return;
+    }
+
+    setState(() {});
+  }
+
+  void _onTabAgentNo() async {
+    var callback = await NavigateTo.navigateTo(
+        context: context,
+        route: ListViewAgent(teamNo: sharedUser.teamNo)
+    );
+    if(callback != null){
+      _txtAgentNo = callback.agentNo;
+      _controllerTeam.text = callback.agentTeamNo;
+      _controllerAgentName.text = callback.agentNameEn;
+      _controllerAgentNameKh.text = callback.agentNameKh;
+      _controllerSex.text = callback.sex;
+      _controllerPosition.text = callback.position;
+      _controllerProjectLeadName.text = callback.projectLeadName;
+      _controllerTeamLeaderName.text = callback.teamLeaderName;
+      _controllerDriverName.text = callback.driverName;
+      _controllerDriverID.text = callback.driverID;
+      _controllerPlaqueNumber.text = callback.plaqueNumber;
+      _controllerIDNumber.text = callback.idNumber;
+      _controllerEntryDate.text = callback.entryDate;
+      _controllerPersonalPhone.text = callback.personalPhone;
+      _controllerMasterSIM.text = callback.masterSim;
+      _controllerMasterSIMPassword.text = callback.masterSimPwd;
+      _controllerRegisteredSIM.text = callback.registerSim;
+      _controllerSlaveSIM.text = callback.slaveSim;
+      _controllerSlaveSIMPassword.text = callback.slaveSimPwd;
+      //_province = callback.province;
+      _onSetState();
+    }
   }
 }

@@ -9,15 +9,15 @@ class ListViewProvince extends StatefulWidget {
 
 class _ListViewProvinceState extends State<ListViewProvince> {
   List _provinces = [
-    'Phnom Penh', 'Banteay Meanchey',
-    'Battambang', 'Kompong Cham',
-    'Kampong Chhnang', 'Kampong Speu',
-    'Kampong Thom', 'Kampot', 'Kandal',
-    'Koh Kong', 'Kep', 'Kratie', 'Mondulkiri',
-    'Oddar Meanchey', 'Pailin', 'Sihanoukville',
-    'Preah Vihear', 'Pursat', 'Prey Veng',
-    'Ratanakiri', 'Siem Reap', 'Stung Treng',
-    'Svay Rieng', 'Takeo', 'Tbong Khmum'
+    'ភ្នំពេញ', 'បន្ទាយមានជ័យ',
+    'បាត់ដំបង', 'កំពង់ចាម',
+    'កំពង់ឆ្នាំង', 'កំពង់ស្ពឺ',
+    'កំពង់ធំ', 'កំពត', 'កណ្តាល',
+    'កោះកុង', 'កែប', 'ក្រចេះ', 'មណ្ឌលគីរី',
+    'ឧត្តរមានជ័យ', 'ប៉ៃលិន', 'ព្រះសីហនុ',
+    'ព្រះវិហារ', 'ពោធិសាត់', 'ព្រៃវែង',
+    'រតនៈគីរី', 'សៀមរាប', 'ស្ទឹងត្រែង',
+    'ស្វាយរៀង', 'តាកែវ', 'ត្បូងឃ្មុំ'
   ];
 
   @override
