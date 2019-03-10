@@ -139,6 +139,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
         _stockCRTL = data;
         _initData();
       }
+
       _onSetState();
     });
   }
