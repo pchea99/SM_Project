@@ -103,5 +103,4 @@ class StringRes{
   static final String villageRequired = "សូមបំពេញ ឈ្មោះភូមិ";
   static final String retailerNameRequired = "សូមបំពេញ ឈ្មោះអ្នកលក់";
   static final String retailerPhoneRequired = "សូមបំពេញ លេខទូរស័ព្ទអ្នកលក់";
-
 }
