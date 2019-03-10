@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/routePlanDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
@@ -27,17 +28,19 @@ class _RoutePlanState extends State<RoutePlan> {
 
   int _radioValue;
   DateTime _date;
+  RoutePlanDAO _data;
 
   @override
   void initState() {
     super.initState();
     _radioValue = 0;
     _date = DateTime.now();
-    _controllerTeamNo = new TextEditingController();
+    _controllerTeamNo = new TextEditingController(text: sharedUser.teamNo);
     _controllerPlannedProvince = new TextEditingController();
     _controllerPlannedDistrict = new TextEditingController();
     _controllerPlannedCommune = new TextEditingController();
     _controllerPlannedVillage = new TextEditingController();
+    _getRoutePlan();
   }
 
   @override
@@ -71,15 +74,15 @@ class _RoutePlanState extends State<RoutePlan> {
                 controller: _controllerPlannedProvince,
                 label: StringRes.plannedProvince
             ),
-            InputNumber.buildTextField(
+            InputField.buildTextField(
                 controller: _controllerPlannedDistrict,
                 label: StringRes.plannedDistrict,
             ),
-            InputNumber.buildTextField(
+            InputField.buildTextField(
                 controller: _controllerPlannedCommune,
                 label: StringRes.plannedCommune,
             ),
-            InputNumber.buildTextField(
+            InputField.buildTextField(
                 controller: _controllerPlannedVillage,
                 label: StringRes.plannedVillage
             ),
@@ -91,7 +94,7 @@ class _RoutePlanState extends State<RoutePlan> {
   void _onSave() {
     SpinnerDialog.onSpinner(context);
 
-    RoutePlanDAO data = new RoutePlanDAO()
+    _data = new RoutePlanDAO()
       ..team = _controllerTeamNo.text
       ..date = StringUtil.dateToDB(_date)
       ..address.province = _controllerPlannedProvince.text
@@ -101,11 +104,30 @@ class _RoutePlanState extends State<RoutePlan> {
       ..actualVisitVs_Plan = _radioValue == 0 ? 'yes' : 'no'
     ;
 
-    NetworkService.insertRoutePlan(data).then((value){
+    NetworkService.insertRoutePlan(_data).then((value){
       Navigator.pop(context);
     }).catchError((err){
       Navigator.pop(context);
     });
+  }
+
+  void _getRoutePlan(){
+    NetworkService.getRoutePlan(
+        StringUtil.dateToDB(_date),
+        sharedUser.teamNo
+    ).then((data){
+      if(data != null) {
+        _data = data;
+        _initData();
+      }
+    });
+  }
+
+  void _initData(){
+    _controllerPlannedProvince.text = _data.address.province;
+    _controllerPlannedDistrict.text = _data.address.district;
+    _controllerPlannedCommune.text = _data.address.commune;
+    _controllerPlannedVillage.text = _data.address.village;
   }
 
   void _handleRadioValueChange(int value) {
@@ -115,6 +137,7 @@ class _RoutePlanState extends State<RoutePlan> {
 
   void onSelectedDate(value) {
     _date = value;
+    _getRoutePlan();
   }
 
   void _onSetState(){

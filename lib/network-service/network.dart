@@ -28,19 +28,18 @@ class NetworkService{
   static Future getTeamInfo(String teamNo) {
     var completer = new Completer<List<Agent>>();
     NetworkService.db.reference()
-        .child(NetworkService.teamInfoDB).orderByChild("team_no").equalTo(
-        teamNo)
+        .child(NetworkService.teamInfoDB).orderByChild("team_no")
+        .equalTo(teamNo)
         .once().then((snapshot) {
+      List<Agent> agents = [];
       if (snapshot != null && snapshot.value != null) {
-        List<Agent> agents = [];
         snapshot.value.forEach((key, value) {
           Agent agent = Agent.fromJson(value);
           agents.add(agent);
         });
-        completer.complete(agents);
       }
 
-      completer.complete(null);
+      completer.complete(agents);
     }).catchError((err) {
       completer.completeError(err);
     });
@@ -54,18 +53,18 @@ class NetworkService{
         .child(NetworkService.stockControlHistoryByAgentDB)
         .orderByChild("date").equalTo(date)
         .once().then((snapshot){
+      StockControlHistoryByAgentDAO stockDAO;
           if(snapshot != null && snapshot.value != null) {
             snapshot.value.forEach((key, value) {
-              StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO
-                  .fromJson(value);
+              StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO.fromJson(value);
               if (stock.agent.agentNo == agentNo && stock.team == teamNo) {
-                completer.complete(stock);
+                stockDAO = stock;
                 return;
               }
             });
           }
 
-          completer.complete(null);
+      completer.complete(stockDAO);
     }).catchError((err){
       completer.completeError(err);
     });
@@ -79,17 +78,18 @@ class NetworkService{
         .child(NetworkService.stockControlReportByTeamLeaderDB)
         .orderByChild("date").equalTo(date)
         .once().then((snapshot){
+      StockControlReportByTeamLeaderDAO stockDAO;
       if(snapshot != null && snapshot.value != null) {
         snapshot.value.forEach((key, value) {
           StockControlReportByTeamLeaderDAO stock = StockControlReportByTeamLeaderDAO.fromJson(value);
           if (stock.team == teamNo) {
-            completer.complete(stock);
+            stockDAO = stock;
             return;
           }
         });
       }
 
-      completer.complete(null);
+      completer.complete(stockDAO);
     }).catchError((err){
       completer.completeError(err);
     });
@@ -103,17 +103,42 @@ class NetworkService{
         .child(NetworkService.dailySummaryDB)
         .orderByChild("date").equalTo(date)
         .once().then((snapshot) {
+      DailySummaryDAO summaryDAO;
       if(snapshot != null && snapshot.value != null) {
         snapshot.value.forEach((key, value) {
-          DailySummaryDAO summaryDAO = DailySummaryDAO.fromJson(value);
-          if (summaryDAO.team == teamNo) {
-            completer.complete(summaryDAO);
+          DailySummaryDAO summary = DailySummaryDAO.fromJson(value);
+          if (summary.team == teamNo) {
+            summaryDAO = summary;
             return;
           }
         });
       }
 
-      completer.complete(null);
+      completer.complete(summaryDAO);
+    }).catchError((err){
+      completer.completeError(err);
+    });
+
+    return completer.future;
+  }
+
+  static Future getRoutePlan(String date, String teamNo){
+    var completer = new Completer<RoutePlanDAO>();
+    NetworkService.db.reference()
+        .child(NetworkService.routePlanDB)
+        .orderByChild("date").equalTo(date)
+        .once().then((snapshot) {
+      RoutePlanDAO routePlanDAO;
+      if(snapshot != null && snapshot.value != null) {
+        snapshot.value.forEach((key, value) {
+          RoutePlanDAO routePlan = RoutePlanDAO.fromJson(value);
+          if (routePlan.team == teamNo) {
+            routePlanDAO = routePlan;
+            return;
+          }
+        });
+      }
+      completer.complete(routePlanDAO);
     }).catchError((err){
       completer.completeError(err);
     });

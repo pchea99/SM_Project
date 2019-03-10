@@ -12,6 +12,8 @@ class RoutePlanDAO{
   }
 
   RoutePlanDAO.fromJson(Map json) {
+    address = new Address();
+
     actualVisitVs_Plan = json['actual_visit_vs_plan'];
     date = json['date'];
     address.commune= json['planned_commune'];
