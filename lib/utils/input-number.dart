@@ -5,7 +5,8 @@ class InputNumber{
   static Widget buildTextField({
     TextEditingController controller,
     String label,
-    bool isEnable
+    bool isEnable,
+    ValueChanged onChanged
   }) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
@@ -17,6 +18,7 @@ class InputNumber{
         style: TextStyle(
             fontSize: FontSizeRes.normal
         ),
+        onChanged: onChanged,
         decoration: InputDecoration(
           labelText: label,
           labelStyle: TextStyle(

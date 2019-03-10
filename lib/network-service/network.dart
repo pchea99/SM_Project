@@ -23,21 +23,25 @@ class NetworkService{
 
   static final DatabaseReference db = FirebaseDatabase.instance.reference();
 
-  static Future getTeamInfo(String teamNo){
+  static Future getTeamInfo(String teamNo) {
     var completer = new Completer<List<Agent>>();
     NetworkService.db.reference()
-        .child(NetworkService.teamInfoDB).orderByChild("team_no").equalTo(teamNo)
-        .once().then((snaphot){
-          List<Agent> agents = [];
-          snaphot.value.forEach((key, value){
-            Agent agent = Agent.fromJson(value);
-            agents.add(agent);
-            print("===network=== : $agent");
-          });
-          completer.complete(agents);
-        }).catchError((err){
-          completer.completeError(err);
+        .child(NetworkService.teamInfoDB).orderByChild("team_no").equalTo(
+        teamNo)
+        .once().then((snapshot) {
+      if (snapshot != null && snapshot.value != null) {
+        List<Agent> agents = [];
+        snapshot.value.forEach((key, value) {
+          Agent agent = Agent.fromJson(value);
+          agents.add(agent);
         });
+        completer.complete(agents);
+      }
+
+      completer.complete(null);
+    }).catchError((err) {
+      completer.completeError(err);
+    });
 
     return completer.future;
   }
@@ -47,9 +51,9 @@ class NetworkService{
     NetworkService.db.reference()
         .child(NetworkService.stockControlHistoryByAgentDB)
         .orderByChild("date").equalTo(date)
-        .once().then((snaphot){
-          if(snaphot != null && snaphot.value != null) {
-            snaphot.value.forEach((key, value) {
+        .once().then((snapshot){
+          if(snapshot != null && snapshot.value != null) {
+            snapshot.value.forEach((key, value) {
               StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO
                   .fromJson(value);
               if (stock.agent.agentNo == agentNo && stock.team == teamNo) {
@@ -58,6 +62,8 @@ class NetworkService{
               }
             });
           }
+
+          completer.complete(null);
     }).catchError((err){
       completer.completeError(err);
     });
@@ -70,9 +76,9 @@ class NetworkService{
     NetworkService.db.reference()
         .child(NetworkService.stockControlReportByTeamLeaderDB)
         .orderByChild("date").equalTo(date)
-        .once().then((snaphot){
-      if(snaphot != null && snaphot.value != null) {
-        snaphot.value.forEach((key, value) {
+        .once().then((snapshot){
+      if(snapshot != null && snapshot.value != null) {
+        snapshot.value.forEach((key, value) {
           StockControlReportByTeamLeaderDAO stock = StockControlReportByTeamLeaderDAO.fromJson(value);
           if (stock.team == teamNo) {
             completer.complete(stock);
@@ -80,27 +86,8 @@ class NetworkService{
           }
         });
       }
-    }).catchError((err){
-      completer.completeError(err);
-    });
 
-    return completer.future;
-  }
-
-  static Future getSummaryByDateTeamAgent(String date, String teamNo, String agentNo){
-    var completer = new Completer<DailySummaryDAO>();
-    NetworkService.db.reference()
-        .child(NetworkService.dailySummaryDB)
-        .orderByChild("date").equalTo(date)
-        .once().then((snaphot) {
-      if (snaphot.value == null) {
-        completer.complete(null);
-        return;
-      }
-
-      Map json = new Map.from(snaphot.value);
-      DailySummaryDAO summaryDAO = DailySummaryDAO.fromJson(json.values.first);
-      completer.complete(summaryDAO);
+      completer.complete(null);
     }).catchError((err){
       completer.completeError(err);
     });
@@ -113,14 +100,18 @@ class NetworkService{
     NetworkService.db.reference()
         .child(NetworkService.dailySummaryDB)
         .orderByChild("date").equalTo(date)
-        .once().then((snaphot) {
-      if (snaphot.value == null) {
-        completer.complete(null);
-        return;
+        .once().then((snapshot) {
+      if(snapshot != null && snapshot.value != null) {
+        snapshot.value.forEach((key, value) {
+          DailySummaryDAO summaryDAO = DailySummaryDAO.fromJson(value);
+          if (summaryDAO.team == teamNo) {
+            completer.complete(summaryDAO);
+            return;
+          }
+        });
       }
-      Map json = new Map.from(snaphot.value);
-      DailySummaryDAO summaryDAO = DailySummaryDAO.fromJson(json.values.first);
-      completer.complete(summaryDAO);
+
+      completer.complete(null);
     }).catchError((err){
       completer.completeError(err);
     });

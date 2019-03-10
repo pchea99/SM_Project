@@ -339,8 +339,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
   void _getDailySummary() {
     _dailySummary = null;
-    NetworkService.getSummaryByDateTeamAgent(
-        StringUtil.dateToDB(_date), _controllerTeam.text, _txtAgentNo
+    NetworkService.getSummaryByTeam(
+        StringUtil.dateToDB(_date), _controllerTeam.text
     ).then((data){
       if(data != null){
         _dailySummary = data;
@@ -370,7 +370,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   void _getStockControlReportTeamLeader(){
     _stockControlReportByTeamLeaderDAO = null;
     NetworkService.getStockControlReportTeamLeader(
-        StringUtil.dateToDB(_date.subtract(const Duration(days: 1))),
+        StringUtil.dateToDB(_date),
         _controllerTeam.text
     ).then((data){
       if(data != null){
