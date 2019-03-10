@@ -192,4 +192,5 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     }
     return amt;
   }
+
 }
