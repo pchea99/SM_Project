@@ -6,6 +6,7 @@ import 'package:sm_app/model_dao/dailyFeedbackDAO.dart';
 import 'package:sm_app/model_dao/dailyRetailerMappingDAO.dart';
 import 'package:sm_app/model_dao/dailySummaryDAO.dart';
 import 'package:sm_app/model_dao/marketAuditReportDAO.dart';
+import 'package:sm_app/model_dao/routePlanDAO.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
 import 'package:sm_app/model_dao/stockControlReportByTeamLeaderDAO.dart';
 import 'package:sm_app/model_dto/agent.dart';
@@ -208,6 +209,20 @@ class NetworkService{
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.marketAuditReportDB)
+        .child(data.date)
+        .set(data.toJson()).then((_){
+      completer.complete("success");
+    }).catchError((err){
+      completer.complete("failed");
+    });
+
+    return completer.future;
+  }
+
+  static Future insertRoutePlan(RoutePlanDAO data){
+    var completer = new Completer<String>();
+    NetworkService.db.reference()
+        .child(NetworkService.routePlanDB)
         .child(data.date)
         .set(data.toJson()).then((_){
       completer.complete("success");
