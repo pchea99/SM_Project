@@ -26,14 +26,14 @@ class _RoutePlanState extends State<RoutePlan> {
   TextEditingController _controllerPlannedCommune;
   TextEditingController _controllerPlannedVillage;
 
-  int _radioValue;
+  int _groupValue;
   DateTime _date;
   RoutePlanDAO _data;
 
   @override
   void initState() {
     super.initState();
-    _radioValue = 0;
+    _groupValue = 0;
     _date = DateTime.now();
     _controllerTeamNo = new TextEditingController(text: sharedUser.teamNo);
     _controllerPlannedProvince = new TextEditingController();
@@ -62,7 +62,7 @@ class _RoutePlanState extends State<RoutePlan> {
           children: <Widget>[
             DatePicker.datePicker(onSelectedDate),
             SelectBox.selectBox(
-                radioValue: _radioValue,
+                groupValue: _groupValue,
                 onChanged: _handleRadioValueChange,
                 label: StringRes.actualVisitPlan
             ),
@@ -101,7 +101,7 @@ class _RoutePlanState extends State<RoutePlan> {
       ..address.district = _controllerPlannedDistrict.text
       ..address.commune = _controllerPlannedCommune.text
       ..address.village = _controllerPlannedVillage.text
-      ..actualVisitVs_Plan = _radioValue == 0 ? 'yes' : 'no'
+      ..actualVisitVs_Plan = _groupValue == 0 ? 'yes' : 'no'
     ;
 
     NetworkService.insertRoutePlan(_data).then((value){
@@ -130,14 +130,22 @@ class _RoutePlanState extends State<RoutePlan> {
     _controllerPlannedVillage.text = _data.address.village;
   }
 
+  void _clear(){
+    _controllerPlannedProvince.text = "";
+    _controllerPlannedDistrict.text = "";
+    _controllerPlannedCommune.text = "";
+    _controllerPlannedVillage.text = "";
+  }
+
   void _handleRadioValueChange(int value) {
-    _radioValue = value;
+    _groupValue = value;
     _onSetState();
   }
 
   void onSelectedDate(value) {
     _date = value;
     _getRoutePlan();
+    _clear();
   }
 
   void _onSetState(){
