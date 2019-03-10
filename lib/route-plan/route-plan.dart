@@ -33,7 +33,6 @@ class _RoutePlanState extends State<RoutePlan> {
   @override
   void initState() {
     super.initState();
-    _groupValue = 0;
     _date = DateTime.now();
     _controllerTeamNo = new TextEditingController(text: sharedUser.teamNo);
     _controllerPlannedProvince = new TextEditingController();
@@ -135,6 +134,8 @@ class _RoutePlanState extends State<RoutePlan> {
     _controllerPlannedDistrict.text = "";
     _controllerPlannedCommune.text = "";
     _controllerPlannedVillage.text = "";
+    _groupValue = null;
+    _onSetState();
   }
 
   void _handleRadioValueChange(int value) {
