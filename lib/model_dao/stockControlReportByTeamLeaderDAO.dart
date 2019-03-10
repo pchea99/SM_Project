@@ -10,22 +10,24 @@ class StockControlReportByTeamLeaderDAO{
   }
 
   StockControlReportByTeamLeaderDAO.fromJson(Map json){
+    stock = new Stock();
+
     team = json['team_no'];
     date = json['date'];
-    stock.initialStockInHandForTeamLeader = json['initial_stock_in_hand_for_team_leader'] + 0.0;
-    stock.remainStockTeamLeaderFromYesterday = json['remaining_stock_at_team_leader_from_yesterday'] + 0.0;
+    stock.initialStockInHandForTeamLeader = json['initial_stocks_in_hand_for_team_leader'] + 0.0;
+    stock.remainStockTeamLeaderFromYesterday = json['remaining_stocks_at_team_leader_from_yesterday'] + 0.0;
     stock.simStockReceivedByAssistant = json['sim_stock_received_by_assistant'] + 0.0;
     stock.stockDeliveredBackToAssistant = json['stock_delivered_back_to_assistant'] + 0.0;
-    stock.totalStockAllocatedToAllAgent = json['total_stock_allocated_to_all_agent'] + 0.0;
-    stock.totalStockReturnTeamLeaderTakingBackToday = json['total_stock_team_leader_taking_back_today'] + 0.0;
+    stock.totalStockAllocatedToAllAgent = json['total_stocks_allocated_to_all_agent'] + 0.0;
+    stock.totalStockReturnTeamLeaderTakingBackToday = json['total_stocks_team_leader_taking_back_today'] + 0.0;
     stock.remainStockTeamLeaderForToday = json['remaining_stock_at_team_leader_for_today'] + 0.0;
   }
 
   Map toJson() => {
     'team_no': team,
     'date': date,
-    'initial_stock_in_hand_for_team_leader': stock.initialStockInHandForTeamLeader,
-    'remaining_stock_at_team_leader_from_yesterday': stock.remainStockTeamLeaderFromYesterday,
+    'initial_stocks_in_hand_for_team_leader': stock.initialStockInHandForTeamLeader,
+    'remaining_stocks_at_team_leader_from_yesterday': stock.remainStockTeamLeaderFromYesterday,
     'sim_stock_received_by_assistant': stock.simStockReceivedByAssistant,
     'stock_delivered_back_to_assistant': stock.stockDeliveredBackToAssistant,
     'total_stocks_allocated_to_all_agent': stock.totalStockAllocatedToAllAgent,

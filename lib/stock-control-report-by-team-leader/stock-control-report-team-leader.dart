@@ -1,6 +1,7 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:sm_app/login/login.dart';
+import 'package:sm_app/model_dao/dailySummaryDAO.dart';
 import 'package:sm_app/model_dao/stockControlReportByTeamLeaderDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
@@ -9,6 +10,7 @@ import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
+import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
 
 class StockControlReportByTeamLeader extends StatefulWidget {
@@ -28,6 +30,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
   TextEditingController _controllerRemainingStockAtTeamLeaderForToday;
 
   StockControlReportByTeamLeaderDAO _stockCRTL;
+  DailySummaryDAO _dailySummary;
   DateTime _date;
 
   @override
@@ -46,6 +49,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     _controllerTotalStockTeamLeaderTakingBackToday = new TextEditingController();
     _controllerRemainingStockAtTeamLeaderForToday = new TextEditingController();
     _getStockControlReportTeamLeader();
+    _getDailySummary();
   }
 
   @override
@@ -73,23 +77,29 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
                 controller: _controllerDate,
                 label: StringRes.date
             ),
-            InputField.buildTextField(
+            InputNumber.buildTextField(
                 controller: _controllerInitialStockInHandForTeamLeader,
                 label: StringRes.initialStock
             ),
-            InputField.buildTextField(
+            InputNumber.buildTextField(
                 controller: _controllerRemainingStockAtTeamLeaderFromYesterday,
                 label: StringRes.remainingStockTeamLeadYesterday
             ),
             InputNumber.buildTextField(
                 controller: _controllerSIMStockReceivedByAssistant,
                 label: StringRes.simStockReceivedAssistant,
-                isEnable: true
+                isEnable: true,
+                onChanged: (value){
+                  _remainStockToday();
+                }
             ),
             InputNumber.buildTextField(
                 controller: _controllerStockDeliveredBackToAssistant,
                 label: StringRes.stockDeliveryBackAssistant,
-                isEnable: true
+                isEnable: true,
+                onChanged: (value){
+                  _remainStockToday();
+                }
             ),
             InputNumber.buildTextField(
                 controller: _controllerTotalStockAllocatedToAllAgent,
@@ -113,14 +123,16 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
         && _controllerSIMStockReceivedByAssistant.text.isNotEmpty
     && _controllerStockDeliveredBackToAssistant.text != null
     && _controllerStockDeliveredBackToAssistant.text.isNotEmpty){
+      SpinnerDialog.onSpinner(context);
       _saveStockControlReportTeamLeader();
+      _saveDailySummary();
     }
   }
 
   void _getStockControlReportTeamLeader(){
     _stockCRTL = null;
     NetworkService.getStockControlReportTeamLeader(
-        StringUtil.dateToDB(_date.subtract(const Duration(days: 1))),
+        StringUtil.dateToDB(_date),
         _controllerTeam.text
     ).then((data){
       if(data != null){
@@ -139,7 +151,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     _controllerRemainingStockAtTeamLeaderForToday.text = _stockCRTL.stock.remainStockTeamLeaderForToday.toString();
   }
 
-  void _saveStockControlReportTeamLeader() {
+  void _saveStockControlReportTeamLeader() async {
     if(_stockCRTL == null){
       _stockCRTL = new StockControlReportByTeamLeaderDAO()
         ..date = StringUtil.dateToDB(_date)
@@ -159,20 +171,53 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
         ..stock.remainStockTeamLeaderFromYesterday =
             _stockCRTL.stock.remainStockTeamLeaderFromYesterday
         ..stock.simStockReceivedByAssistant =
-            _stockCRTL.stock.simStockReceivedByAssistant
+        double.parse(_controllerSIMStockReceivedByAssistant.text)
         ..stock.stockDeliveredBackToAssistant =
-            _stockCRTL.stock.stockDeliveredBackToAssistant
+        double.parse(_controllerStockDeliveredBackToAssistant.text)
         ..stock.totalStockAllocatedToAllAgent =
             _stockCRTL.stock.totalStockAllocatedToAllAgent
         ..stock.totalStockReturnTeamLeaderTakingBackToday =
             _stockCRTL.stock.totalStockReturnTeamLeaderTakingBackToday
-        ..stock.remainStockTeamLeaderForToday = _remainStockToday()
+        ..stock.remainStockTeamLeaderForToday = double.parse(_controllerRemainingStockAtTeamLeaderForToday.text)
       ;
 
       _stockCRTL = stockReport;
     }
 
-    NetworkService.insertStockControlReportByTeamLeader(_stockCRTL);
+    await NetworkService.insertStockControlReportByTeamLeader(_stockCRTL);
+    Navigator.pop(context);
+  }
+
+  void _saveDailySummary() {
+    if(_dailySummary == null){
+      _dailySummary = new DailySummaryDAO()
+        ..date = StringUtil.dateToDB(_date)
+        ..team = _controllerTeam.text
+//        ..address.province = _province
+        ..agentNumber = 1
+        ..stock.totalTopup = 0.0
+        ..stock.totalDistribution = 0.0
+        ..stock.remainStockAgent = 0.0
+        ..stock.remainStockTeamLeader = 0.0
+        ..stock.totalRemainStock = double.parse(_controllerRemainingStockAtTeamLeaderForToday.text.toString())
+      ;
+    }else{
+      DailySummaryDAO summary = new DailySummaryDAO()
+        ..date = StringUtil.dateToDB(_date)
+        ..team = _controllerTeam.text
+//        ..address.province = _province
+        ..agentNumber = _dailySummary.agentNumber
+        ..stock.totalTopup = _dailySummary.stock.totalTopup
+        ..stock.totalDistribution = _dailySummary.stock.totalDistribution
+        ..stock.remainStockAgent = _dailySummary.stock.totalRemainStock
+        ..stock.remainStockTeamLeader = double.parse(_controllerRemainingStockAtTeamLeaderForToday.text.toString())
+        ..stock.totalRemainStock = _dailySummary.stock.totalRemainStock
+      ;
+
+      _dailySummary = summary;
+    }
+
+    NetworkService.insertDailySummary(_dailySummary);
   }
 
   void _onSetState() {
@@ -183,14 +228,30 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     setState(() {});
   }
 
-  double _remainStockToday() {
+  void _remainStockToday() {
     double amt = 0.0;
-    if(_stockCRTL != null){
-      amt = _stockCRTL.stock.initialStockInHandForTeamLeader + _stockCRTL.stock.remainStockTeamLeaderFromYesterday
-          + double.parse(_controllerSIMStockReceivedByAssistant.text) - double.parse(_controllerStockDeliveredBackToAssistant.text)
-          - _stockCRTL.stock.totalStockAllocatedToAllAgent + _stockCRTL.stock.totalStockReturnTeamLeaderTakingBackToday;
+    if (_stockCRTL != null) {
+      amt = _stockCRTL.stock.initialStockInHandForTeamLeader
+          + _stockCRTL.stock.remainStockTeamLeaderFromYesterday
+          + (_controllerSIMStockReceivedByAssistant.text == null || _controllerSIMStockReceivedByAssistant.text.isEmpty
+              ? 0 : double.parse(_controllerSIMStockReceivedByAssistant.text))
+          - (_controllerStockDeliveredBackToAssistant.text == null || _controllerStockDeliveredBackToAssistant.text.isEmpty
+              ? 0 :double.parse(_controllerStockDeliveredBackToAssistant.text))
+          - _stockCRTL.stock.totalStockAllocatedToAllAgent
+          + _stockCRTL.stock.totalStockReturnTeamLeaderTakingBackToday;
     }
-    return amt;
+    _controllerRemainingStockAtTeamLeaderForToday.text = amt.toString();
+    _onSetState();
   }
 
+  void _getDailySummary() {
+    _dailySummary = null;
+    NetworkService.getSummaryByTeam(
+        StringUtil.dateToDB(_date), _controllerTeam.text
+    ).then((data){
+      if(data != null){
+        _dailySummary = data;
+      }
+    });
+  }
 }
