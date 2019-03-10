@@ -269,7 +269,9 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.simStockReceivedByAssistant = 0.0
         ..stock.stockDeliveredBackToAssistant = 0.0
         ..stock.totalStockAllocatedToAllAgent = _sumTotalStockAllocatedToAllAgent()
-        ..stock.totalStockReturnTeamLeaderTakingBackToday =_sumTotalStockReturnTeamLeaderTakingBackToday();
+        ..stock.totalStockReturnTeamLeaderTakingBackToday =_sumTotalStockReturnTeamLeaderTakingBackToday()
+        ..stock.remainStockTeamLeaderForToday = 0.0
+       ;
     }else{
       StockControlReportByTeamLeaderDAO stockReport = new StockControlReportByTeamLeaderDAO()
         ..date = StringUtil.dateToDB(_date)
@@ -288,6 +290,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.totalStockReturnTeamLeaderTakingBackToday =
             _stockControlReportByTeamLeaderDAO.stock.totalStockReturnTeamLeaderTakingBackToday
                 + _sumTotalStockReturnTeamLeaderTakingBackToday()
+        ..stock.remainStockTeamLeaderForToday = 0.0
       ;
 
       _stockControlReportByTeamLeaderDAO = stockReport;

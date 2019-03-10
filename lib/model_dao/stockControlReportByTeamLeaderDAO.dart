@@ -13,7 +13,7 @@ class StockControlReportByTeamLeaderDAO{
     team = json['team_no'];
     date = json['date'];
     stock.initialStockInHandForTeamLeader = json['initial_stock_in_hand_for_team_leader'] + 0.0;
-    stock.remainStockTeamLeaderFromYesterday = json['reamining_stock_at_team_leader_from_yesterday'] + 0.0;
+    stock.remainStockTeamLeaderFromYesterday = json['remaining_stock_at_team_leader_from_yesterday'] + 0.0;
     stock.simStockReceivedByAssistant = json['sim_stock_received_by_assistant'] + 0.0;
     stock.stockDeliveredBackToAssistant = json['stock_delivered_back_to_assistant'] + 0.0;
     stock.totalStockAllocatedToAllAgent = json['total_stock_allocated_to_all_agent'] + 0.0;
@@ -25,7 +25,7 @@ class StockControlReportByTeamLeaderDAO{
     'team_no': team,
     'date': date,
     'initial_stock_in_hand_for_team_leader': stock.initialStockInHandForTeamLeader,
-    'reamining_stock_at_team_leader_from_yesterday': stock.remainStockTeamLeaderFromYesterday,
+    'remaining_stock_at_team_leader_from_yesterday': stock.remainStockTeamLeaderFromYesterday,
     'sim_stock_received_by_assistant': stock.simStockReceivedByAssistant,
     'stock_delivered_back_to_assistant': stock.stockDeliveredBackToAssistant,
     'total_stocks_allocated_to_all_agent': stock.totalStockAllocatedToAllAgent,
