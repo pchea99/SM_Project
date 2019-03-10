@@ -1,4 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:sm_app/model_dto/agent.dart';
 import 'package:sm_app/model_dto/stock.dart';
 
