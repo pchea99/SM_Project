@@ -1,8 +1,9 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sm_app/market-audit-report/market-audit-service.dart';
+import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/marketAuditReportDAO.dart';
+import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
@@ -24,20 +25,20 @@ class _MarketAuditReportState extends State<MarketAuditReport> {
   TextEditingController _controllerRemarkSystem;
   TextEditingController _controllerOtherIssue;
 
-  String _date;
+  DateTime _date;
 
   @override
   void initState() {
     super.initState();
-    _controllerDate = new TextEditingController(
-        text: formatDate(new DateTime.now(), StringUtil.dateFormats())
-    );
-    _controllerTeamNo = new TextEditingController();
+    _date = DateTime.now();
+    _controllerTeamNo = new TextEditingController(text: sharedUser.teamNo);
     _controllerRemarkAgent = new TextEditingController();
     _controllerRemarkVisit = new TextEditingController();
     _controllerRemarkSystem = new TextEditingController();
     _controllerOtherIssue = new TextEditingController();
-    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+    _controllerDate = new TextEditingController(
+        text: formatDate(_date, StringUtil.dateFormats())
+    );
   }
 
   @override
@@ -95,14 +96,14 @@ class _MarketAuditReportState extends State<MarketAuditReport> {
 
     MarketAuditReportDAO data = new MarketAuditReportDAO()
       ..team = _controllerTeamNo.text
-      ..date = _date
+      ..date = StringUtil.dateToDB(_date)
       ..remark.agentPerformance = _controllerRemarkAgent.text
       ..remark.visitedLocation = _controllerRemarkVisit.text
       ..remark.systemIssue = _controllerRemarkSystem.text
       ..remark.otherIssue = _controllerOtherIssue.text
     ;
 
-    MarketAuditService.insertMarketAudit(data).then((value){
+    NetworkService.insertMarketAudit(data).then((value){
       Navigator.pop(context);
     }).catchError((err){
       Navigator.pop(context);

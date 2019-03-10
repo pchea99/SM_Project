@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/routePlanDAO.dart';
+import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
-import 'package:sm_app/route-plan/route-plan-service.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
@@ -11,6 +12,7 @@ import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
 import 'package:sm_app/utils/select-box.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
+import 'package:sm_app/utils/string-util.dart';
 
 class RoutePlan extends StatefulWidget {
   @override
@@ -24,19 +26,20 @@ class _RoutePlanState extends State<RoutePlan> {
   TextEditingController _controllerPlannedCommune;
   TextEditingController _controllerPlannedVillage;
 
-  int _radioValue;
-  String _date;
+  int _groupValue;
+  DateTime _date;
+  RoutePlanDAO _data;
 
   @override
   void initState() {
     super.initState();
-    _radioValue = 0;
-    _controllerTeamNo = new TextEditingController();
+    _date = DateTime.now();
+    _controllerTeamNo = new TextEditingController(text: sharedUser.teamNo);
     _controllerPlannedProvince = new TextEditingController();
     _controllerPlannedDistrict = new TextEditingController();
     _controllerPlannedCommune = new TextEditingController();
     _controllerPlannedVillage = new TextEditingController();
-    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+    _getRoutePlan();
   }
 
   @override
@@ -58,7 +61,7 @@ class _RoutePlanState extends State<RoutePlan> {
           children: <Widget>[
             DatePicker.datePicker(onSelectedDate),
             SelectBox.selectBox(
-                radioValue: _radioValue,
+                groupValue: _groupValue,
                 onChanged: _handleRadioValueChange,
                 label: StringRes.actualVisitPlan
             ),
@@ -70,15 +73,15 @@ class _RoutePlanState extends State<RoutePlan> {
                 controller: _controllerPlannedProvince,
                 label: StringRes.plannedProvince
             ),
-            InputNumber.buildTextField(
+            InputField.buildTextField(
                 controller: _controllerPlannedDistrict,
                 label: StringRes.plannedDistrict,
             ),
-            InputNumber.buildTextField(
+            InputField.buildTextField(
                 controller: _controllerPlannedCommune,
                 label: StringRes.plannedCommune,
             ),
-            InputNumber.buildTextField(
+            InputField.buildTextField(
                 controller: _controllerPlannedVillage,
                 label: StringRes.plannedVillage
             ),
@@ -90,32 +93,67 @@ class _RoutePlanState extends State<RoutePlan> {
   void _onSave() {
     SpinnerDialog.onSpinner(context);
 
-    RoutePlanDAO data = new RoutePlanDAO()
+    _data = new RoutePlanDAO()
       ..team = _controllerTeamNo.text
-      ..date = _date
+      ..date = StringUtil.dateToDB(_date)
       ..address.province = _controllerPlannedProvince.text
       ..address.district = _controllerPlannedDistrict.text
       ..address.commune = _controllerPlannedCommune.text
       ..address.village = _controllerPlannedVillage.text
-      ..actualVisitVs_Plan = _radioValue == 0 ? 'yes' : 'no'
+      ..actualVisitVs_Plan = _groupValue == 0 ? 'yes' : 'no'
     ;
 
-    RoutePlanService.insertRoutePlan(data).then((value){
+    NetworkService.insertRoutePlan(_data).then((value){
       Navigator.pop(context);
     }).catchError((err){
       Navigator.pop(context);
     });
   }
 
-  void _handleRadioValueChange(int value) {
-    _radioValue = value;
-    setState(() {
-
+  void _getRoutePlan(){
+    NetworkService.getRoutePlan(
+        StringUtil.dateToDB(_date),
+        sharedUser.teamNo
+    ).then((data){
+      if(data != null) {
+        _data = data;
+        _initData();
+      }
     });
   }
 
+  void _initData(){
+    _controllerPlannedProvince.text = _data.address.province;
+    _controllerPlannedDistrict.text = _data.address.district;
+    _controllerPlannedCommune.text = _data.address.commune;
+    _controllerPlannedVillage.text = _data.address.village;
+  }
+
+  void _clear(){
+    _controllerPlannedProvince.text = "";
+    _controllerPlannedDistrict.text = "";
+    _controllerPlannedCommune.text = "";
+    _controllerPlannedVillage.text = "";
+    _groupValue = null;
+    _onSetState();
+  }
+
+  void _handleRadioValueChange(int value) {
+    _groupValue = value;
+    _onSetState();
+  }
+
   void onSelectedDate(value) {
-    _date = DateFormat('dd-MM-yyyy').format(value.toLocal())
-        +" "+DateFormat('hh:mm:ss').add_j().format(DateTime.now());
+    _date = value;
+    _getRoutePlan();
+    _clear();
+  }
+
+  void _onSetState(){
+    if(!mounted){
+      return;
+    }
+
+    setState(() {});
   }
 }

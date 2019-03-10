@@ -82,7 +82,7 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
                   ),
                 ),
                 SelectBox.selectBox(
-                    radioValue: _radioValue,
+                    groupValue: _radioValue,
                     onChanged: _handleRadioValueChange,
                     label: StringRes.anotherRetailer
                 ),

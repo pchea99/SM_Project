@@ -3,9 +3,9 @@ import 'package:sm_app/res/string-res.dart';
 
 class SelectBox{
   static Widget selectBox({
-    int radioValue,
+    int groupValue,
     ValueChanged<int> onChanged,
-    String label
+    String label,
   }) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
@@ -21,21 +21,26 @@ class SelectBox{
               bottom: 1.0,
               right: 8.0
           ),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Expanded(child: Text(label)),
-              new Radio(
-                value: 0,
-                groupValue: radioValue,
-                onChanged: onChanged,
-              ),
-              Text(StringRes.yes),
-              new Radio(
-                value: 1,
-                groupValue: radioValue,
-                onChanged: onChanged,
-              ),
-              Text(StringRes.no)
+              Text(label),
+              Row(
+                children: <Widget>[
+                  new Radio(
+                    value: 0,
+                    groupValue: groupValue,
+                    onChanged: onChanged,
+                  ),
+                  Text(StringRes.yes),
+                  new Radio(
+                    value: 1,
+                    groupValue: groupValue,
+                    onChanged: onChanged,
+                  ),
+                  Text(StringRes.no)
+                ],
+              )
             ],
           ),
         ),

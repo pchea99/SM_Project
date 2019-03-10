@@ -142,52 +142,52 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                     isEnable: true
                 ),
                 SelectBox.selectBox(
-                    radioValue: _radioValueFeedback,
+                    groupValue: _radioValueFeedback,
                     onChanged: _handleRadioFeedbackValueChange,
                     label: StringRes.anotherFeedback
                 ),
                 SelectBox.selectBox(
-                    radioValue: _radioValueIssue,
+                    groupValue: _radioValueIssue,
                     onChanged: _handleRadioIssueValueChange,
                     label: StringRes.issue
                 ),
                 SelectBox.selectBox(
-                    radioValue: _radioValueBrokenPhone,
+                    groupValue: _radioValueBrokenPhone,
                     onChanged: _handleRadioBrokenPhoneValueChange,
                     label: StringRes.brokenPhone
                 ),
                 SelectBox.selectBox(
-                    radioValue: _radioValueSlowPhone,
+                    groupValue: _radioValueSlowPhone,
                     onChanged: _handleRadioSlowPhoneValueChange,
                     label: StringRes.slowPhone
                 ),
                 SelectBox.selectBox(
-                    radioValue: _radioValueBrokenApp,
+                    groupValue: _radioValueBrokenApp,
                     onChanged: _handleRadioBrokenAppValueChange,
                     label: StringRes.brokenApp
                 ),
                 SelectBox.selectBox(
-                    radioValue: _radioValueNoCoverage,
+                    groupValue: _radioValueNoCoverage,
                     onChanged: _handleRadioNoCoverageValueChange,
                     label: StringRes.noCoverage
                 ),
                 SelectBox.selectBox(
-                    radioValue: _radioValueUnrecognizeSIM,
+                    groupValue: _radioValueUnrecognizeSIM,
                     onChanged: _handleRadioUnrecognizeSIMValueChange,
                     label: StringRes.unrecognizedSIM
                 ),
                 SelectBox.selectBox(
-                    radioValue: _radioValueWeather,
+                    groupValue: _radioValueWeather,
                     onChanged: _handleRadioWeatherValueChange,
                     label: StringRes.weather
                 ),
                 SelectBox.selectBox(
-                    radioValue: _radioValueNoPeople,
+                    groupValue: _radioValueNoPeople,
                     onChanged: _handleRadioNoPeopleValueChange,
                     label: StringRes.noPeople
                 ),
                 SelectBox.selectBox(
-                    radioValue: _radioValueOverVisited,
+                    groupValue: _radioValueOverVisited,
                     onChanged: _handleRadioOverVisitValueChange,
                     label: StringRes.overVisited
                 ),
