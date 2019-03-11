@@ -8,6 +8,7 @@ import 'package:sm_app/model_dto/user.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/navigate-to.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 
 User sharedUser;
@@ -26,6 +27,14 @@ class _LoginState extends State<Login> implements LoginView {
   @override
   void initState() {
     super.initState();
+    _getUserLogin();
+  }
+
+  void _getUserLogin() async {
+    sharedUser = await SharedPreferenceUtils.getUser();
+    if(sharedUser != null){
+      _navigateTo();
+    }
   }
 
   _LoginState(){
@@ -196,14 +205,19 @@ class _LoginState extends State<Login> implements LoginView {
         +"-"+_user.password).then((userDB) async {
       if(userDB.position == _user.position && userDB.password == _user.password){
         sharedUser = userDB;
-        await NavigateTo.navigateTo(context: context, route: Menu());
-        exit(0);
+        SharedPreferenceUtils.setUser(userDB);
+        await _navigateTo();
       }
       Navigator.pop(context);
     }).catchError((err){
       print("err: $err");
       Navigator.pop(context);
     });
+  }
+
+  Future _navigateTo() async {
+    await NavigateTo.navigateTo(context: context, route: Menu());
+    exit(0);
   }
 
   @override

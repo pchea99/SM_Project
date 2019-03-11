@@ -1,6 +1,5 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/marketAuditReportDAO.dart';
 import 'package:sm_app/network-service/network.dart';
