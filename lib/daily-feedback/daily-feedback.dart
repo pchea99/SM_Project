@@ -51,19 +51,7 @@ class _DailyFeedbackState extends State<DailyFeedback> {
   @override
   void initState() {
     super.initState();
-    _radioValueFeedback = 0;
-    _radioValueIssue = 0;
-    _radioValueBrokenPhone = 0;
-    _radioValueSlowPhone = 0;
-    _radioValueBrokenApp = 0;
-    _radioValueNoCoverage = 0;
-    _radioValueUnrecognizeSIM = 0;
-    _radioValueWeather = 0;
-    _radioValueNoPeople = 0;
-    _radioValueOverVisited = 0;
-
     _date = DateTime.now();
-
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
