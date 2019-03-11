@@ -26,6 +26,8 @@ class SelectBox{
             children: <Widget>[
               Text(label),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   new Radio(
                     value: 0,

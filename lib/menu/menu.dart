@@ -21,7 +21,7 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  List<String> _menus = [
+  List<String> _menusTeamLeader = [
     StringRes.distributionTopup,
     StringRes.dailyRetailerMapping,
     StringRes.dailyFeedback,
@@ -30,6 +30,13 @@ class _MenuState extends State<Menu> {
     StringRes.stockControlReportTeamLeader,
     StringRes.routePlan,
     StringRes.marketAuditReport,
+    StringRes.teamInfo,
+  ];
+
+  List<String> _menusAgent = [
+    StringRes.distributionTopup,
+    StringRes.stockControlHistoryAgent,
+    StringRes.routePlan,
     StringRes.teamInfo,
   ];
 
@@ -59,31 +66,61 @@ class _MenuState extends State<Menu> {
         padding: const EdgeInsets.only(top: 6.0),
         child: ListView(
           shrinkWrap: true,
-          children: _menus.map((menu)=>
-              Container(
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                            color: Colors.grey[100]
-                        )
-                    )
-                ),
-                child: ListTile(
-                  title: Text(menu),
-                  onTap: (){
-                    _click(menu);
-                  },
-                  trailing: Icon(
-                    Icons.navigate_next,
-                    color: Colors.grey,
-                  ),
-                ),
-              )
-          ).toList(),
+          children: sharedUser.position.toLowerCase() == 'Team Leader'.toLowerCase()
+              ? _buildMenuTeamLeader() : _buildMenuAgent(),
         ),
       ),
     );
   }
+
+  List<Container> _buildMenuTeamLeader() {
+    return _menusTeamLeader.map((menu) =>
+        Container(
+          decoration: BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+                      color: Colors.grey[100]
+                  )
+              )
+          ),
+          child: ListTile(
+            title: Text(menu),
+            onTap: () {
+              _click(menu);
+            },
+            trailing: Icon(
+              Icons.navigate_next,
+              color: Colors.grey,
+            ),
+          ),
+        )
+    ).toList();
+  }
+
+  List<Container> _buildMenuAgent() {
+    return _menusAgent.map((menu) =>
+        Container(
+          decoration: BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+                      color: Colors.grey[100]
+                  )
+              )
+          ),
+          child: ListTile(
+            title: Text(menu),
+            onTap: () {
+              _click(menu);
+            },
+            trailing: Icon(
+              Icons.navigate_next,
+              color: Colors.grey,
+            ),
+          ),
+        )
+    ).toList();
+  }
+
   Widget _buildIconLogout() {
     return IconButton(
       icon: Icon(

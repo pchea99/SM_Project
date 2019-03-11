@@ -41,7 +41,6 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
   @override
   void initState() {
     super.initState();
-    _radioValue = 0;
     _date = DateTime.now();
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.dateFormats())
@@ -202,6 +201,7 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
     ;
 
     NetworkService.insertDailyRetailerMapping(data).then((value){
+      Navigator.pop(context);
       Navigator.pop(context);
     }).catchError((err){
       Navigator.pop(context);
