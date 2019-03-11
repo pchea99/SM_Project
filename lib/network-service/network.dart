@@ -9,7 +9,9 @@ import 'package:sm_app/model_dao/marketAuditReportDAO.dart';
 import 'package:sm_app/model_dao/routePlanDAO.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
 import 'package:sm_app/model_dao/stockControlReportByTeamLeaderDAO.dart';
+import 'package:sm_app/model_dao/teamInfoDAO.dart';
 import 'package:sm_app/model_dto/agent.dart';
+import 'package:sm_app/model_dto/stock.dart';
 
 class NetworkService{
   static final String dailyDistributionDB = "daily_distribution";
