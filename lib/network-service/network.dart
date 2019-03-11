@@ -108,6 +108,7 @@ class NetworkService{
       DailySummaryDAO summaryDAO;
       if(snapshot != null && snapshot.value != null) {
         snapshot.value.forEach((key, value) {
+          print("value $value");
           DailySummaryDAO summary = DailySummaryDAO.fromJson(value);
           if (summary.team == teamNo) {
             summaryDAO = summary;

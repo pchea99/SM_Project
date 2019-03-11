@@ -21,11 +21,11 @@ class DailySummaryDAO{
     agentNumber = json['agent_no'];
     date = json['date'];
     address.province = json['province'];
-    stock.remainStockAgent = json['remaining_stocks_at_agent'] + 0.0;
-    stock.remainStockTeamLeader = json['remaining_stocks_at_team_leader'] + 0.0;
+    stock.remainStockAgent = json['remaining_stocks_at_agent'] == null ? 0.0 : json['remaining_stocks_at_agent'] + 0.0;
+    stock.remainStockTeamLeader = json['remaining_stocks_at_team_leader'] == null ? 0.0 : json['remaining_stocks_at_team_leader'] + 0.0;
     team = json['team_no'];
-    stock.totalDistribution = json['total_distribution'] + 0.0;
-    stock.totalTopup = json['total_top_up'] + 0.0;
+    stock.totalDistribution = json['total_distribution'] == null ? 0.0 : json['total_distribution'] + 0.0;
+    stock.totalTopup = json['total_top_up'] == null ? 0.0 : json['total_top_up'] + 0.0;
   }
 
   Map<String, dynamic> toJson() =>

@@ -185,9 +185,9 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
       _stockCRTL = stockReport;
     }
 
-    await NetworkService.insertStockControlReportByTeamLeader(_stockCRTL);
+//    await NetworkService.insertStockControlReportByTeamLeader(_stockCRTL);
     Navigator.pop(context);
-    Navigator.pop(context);
+//    Navigator.pop(context);
   }
 
   void _saveDailySummary() {
@@ -219,7 +219,9 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
       _dailySummary = summary;
     }
 
-    NetworkService.insertDailySummary(_dailySummary);
+    print("ooooo $_dailySummary");
+
+//    NetworkService.insertDailySummary(_dailySummary);
   }
 
   void _onSetState() {
@@ -251,6 +253,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     NetworkService.getSummaryByTeam(
         StringUtil.dateToDB(_date), _controllerTeam.text
     ).then((data){
+      print("get $data");
       if(data != null){
         _dailySummary = data;
       }
