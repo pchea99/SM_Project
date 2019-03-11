@@ -202,11 +202,11 @@ class _LoginState extends State<Login> implements LoginView {
   void onLoginSuccess(String msg) {
     SpinnerDialog.onSpinner(context);
     LoginService.getUserLogin(_user.firstName.trim().toLowerCase().replaceAll(" ", '')
-        +"-"+_user.password).then((userDB) {
+        +"-"+_user.password).then((userDB) async {
       if(userDB.position == _user.position && userDB.password == _user.password){
         sharedUser = userDB;
         SharedPreferenceUtils.setUser(userDB);
-        _navigateTo();
+        await _navigateTo();
       }
       Navigator.pop(context);
     }).catchError((err){

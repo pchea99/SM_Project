@@ -12,6 +12,7 @@ import 'package:sm_app/stock-control-history-agent/stock-control-history-agent.d
 import 'package:sm_app/stock-control-report-by-team-leader/stock-control-report-team-leader.dart';
 import 'package:sm_app/team-info/team-info.dart';
 import 'package:sm_app/utils/navigate-to.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sweetalert/sweetalert.dart';
 
 class Menu extends StatefulWidget {
@@ -124,6 +125,7 @@ class _MenuState extends State<Menu> {
         showCancelButton: true,
         onPress: (bool isConfirm) {
           if (isConfirm) {
+            SharedPreferenceUtils.clear();
             Navigator.pop(context);
             _navigateTo(Login());
             return false;

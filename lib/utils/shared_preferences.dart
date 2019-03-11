@@ -11,7 +11,17 @@ class SharedPreferenceUtils{
 
   static Future getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    User user = User.fromJson(json.decode(prefs.getString('user')));
+    String userJson = prefs.getString('user');
+    if(userJson == null){
+      return null;
+    }
+
+    User user = User.fromJson(json.decode(userJson));
     return user;
+  }
+
+  static void clear() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 }
