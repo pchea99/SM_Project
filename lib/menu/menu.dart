@@ -66,7 +66,7 @@ class _MenuState extends State<Menu> {
         padding: const EdgeInsets.only(top: 6.0),
         child: ListView(
           shrinkWrap: true,
-          children: sharedUser.position.toLowerCase() == 'Team Leader'
+          children: sharedUser.position.toLowerCase() == 'Team Leader'.toLowerCase()
               ? _buildMenuTeamLeader() : _buildMenuAgent(),
         ),
       ),
