@@ -308,6 +308,7 @@ class _DailyFeedbackState extends State<DailyFeedback> {
 
     NetworkService.insertDailyFeedback(data).then((value){
       Navigator.pop(context);
+      Navigator.pop(context);
     }).catchError((err){
       Navigator.pop(context);
     });

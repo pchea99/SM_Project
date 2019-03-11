@@ -187,6 +187,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
 
     await NetworkService.insertStockControlReportByTeamLeader(_stockCRTL);
     Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   void _saveDailySummary() {

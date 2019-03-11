@@ -202,6 +202,7 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
 
     NetworkService.insertDailyRetailerMapping(data).then((value){
       Navigator.pop(context);
+      Navigator.pop(context);
     }).catchError((err){
       Navigator.pop(context);
     });
