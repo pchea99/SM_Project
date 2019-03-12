@@ -53,21 +53,24 @@ class _LoginState extends State<Login> implements LoginView {
   }
 
   Widget btnLogin(){
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        onPressed: submit,
-        padding: EdgeInsets.all(12),
-        color: Colors.teal,
-        child: Text(
-            StringRes.login,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: FontSizeRes.button
-            )
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
+        child: RaisedButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          onPressed: submit,
+          padding: EdgeInsets.all(12),
+          color: Colors.teal,
+          child: Text(
+              StringRes.login,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: FontSizeRes.button
+              )
+          ),
         ),
       ),
     );
@@ -166,26 +169,31 @@ class _LoginState extends State<Login> implements LoginView {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: ListView(
-        padding: const EdgeInsets.only(
-          top: 115.0,
-          left: 8.0,
-          right: 8.0
-        ),
-        shrinkWrap: true,
-        children: <Widget>[
-          lblTitle(),
-          SizedBox(height: 48.0),
-          txtUsername(),
-          SizedBox(height: 8.0),
-          txtPassword(),
-          SizedBox(height: 8.0),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 16,
+            left: 8.0,
+            right: 8.0
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                lblTitle(),
+                SizedBox(height: 48.0),
+                txtUsername(),
+                SizedBox(height: 8.0),
+                txtPassword(),
+//          SizedBox(height: 8.0),
 //          txtPosition(),
-          SizedBox(height: 24.0),
-          btnLogin(),
-          lblCopyRight(),
-          lblError()
-        ],
+                SizedBox(height: 24.0),
+                btnLogin(),
+                lblCopyRight(),
+                lblError()
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -266,6 +274,7 @@ class _LoginState extends State<Login> implements LoginView {
   void submit() {
     _errorMsg = "";
     clearFocus();
+    _onSetSate();
     _loginPresenter.doLogin(_user.firstName, _user.password, _user.position);
   }
 
