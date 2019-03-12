@@ -95,7 +95,6 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         print("err: $err");
       });
     }
-
   }
 
   @override
