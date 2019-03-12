@@ -62,7 +62,8 @@ class _RoutePlanState extends State<RoutePlan> {
             SelectBox.selectBox(
                 groupValue: _groupValue,
                 onChanged: _handleRadioValueChange,
-                label: StringRes.actualVisitPlan
+                label: StringRes.actualVisitPlan,
+                isEnable: SharedPreferenceUtils.isTeamLeader()
             ),
             InputField.buildTextField(
               controller: _controllerTeamNo,
@@ -126,6 +127,9 @@ class _RoutePlanState extends State<RoutePlan> {
     _controllerPlannedDistrict.text = _data.address.district;
     _controllerPlannedCommune.text = _data.address.commune;
     _controllerPlannedVillage.text = _data.address.village;
+    _groupValue = _data.actualVisitVs_Plan.toLowerCase() == 'yes' ? 0 : 1;
+
+    _onSetState();
   }
 
   void _clear(){
