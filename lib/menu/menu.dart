@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:sm_app/daily-distribution-topup/daily-distribution-topup.dart';
 import 'package:sm_app/daily-feedback/daily-feedback.dart';
@@ -14,6 +16,8 @@ import 'package:sm_app/team-info/team-info.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sweetalert/sweetalert.dart';
+import 'package:location/location.dart';
+import 'package:flutter/services.dart';
 
 class Menu extends StatefulWidget {
   @override
@@ -21,6 +25,10 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  LocationData _currentLocation;
+
+  Location location = new Location();
+
   List<String> _menusTeamLeader = [
     StringRes.distributionTopup,
     StringRes.dailyRetailerMapping,
@@ -43,6 +51,7 @@ class _MenuState extends State<Menu> {
   @override
   void initState() {
     super.initState();
+    initPlatformState();
   }
 
   @override
@@ -174,16 +183,21 @@ class _MenuState extends State<Menu> {
     NavigateTo.navigateTo(context: context, route: route);
   }
 
-  /*Future<Position> locateUser() async {
-    return Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((location) {
-      if (location != null) {
-        print("Location: ${location.latitude},${location.longitude}");
-        locationRepository.store(location);
+  void initPlatformState() async {
+    try{
+      _currentLocation = await location.getLocation();
+    } on PlatformException catch(e){
+      if(e.code == 'PERMISSION_DENIED'){
+        print("err: PERMISSION_DENIED");
+      }else if(e.code == 'PERMISSION_DENIED_NEVER_ASK'){
+        print("err: PERMISSION_DENIED_NEVER_ASK");
       }
-      return location;
-    });
-  }*/
+
+      _currentLocation = null;
+    }
+
+    print("ooooo ${_currentLocation.latitude}, ${_currentLocation.longitude}");
+
+  }
 }
 
