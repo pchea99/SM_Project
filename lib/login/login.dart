@@ -11,8 +11,6 @@ import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 
-User sharedUser;
-
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -31,8 +29,8 @@ class _LoginState extends State<Login> implements LoginView {
   }
 
   void _getUserLogin() async {
-    sharedUser = await SharedPreferenceUtils.getUser();
-    if(sharedUser != null){
+    SharedPreferenceUtils.sharedUser = await SharedPreferenceUtils.getUser();
+    if(SharedPreferenceUtils.sharedUser != null){
       _navigateTo();
     }
   }
@@ -182,7 +180,7 @@ class _LoginState extends State<Login> implements LoginView {
           SizedBox(height: 8.0),
           txtPassword(),
           SizedBox(height: 8.0),
-          txtPosition(),
+//          txtPosition(),
           SizedBox(height: 24.0),
           btnLogin(),
           lblCopyRight(),
@@ -195,7 +193,7 @@ class _LoginState extends State<Login> implements LoginView {
   @override
   void onLoginError(String error) {
     _errorMsg = error;
-    onSetSate();
+    _onSetSate();
   }
 
   @override
@@ -203,15 +201,18 @@ class _LoginState extends State<Login> implements LoginView {
     SpinnerDialog.onSpinner(context);
     LoginService.getUserLogin(_user.firstName.trim().toLowerCase().replaceAll(" ", '')
         +"-"+_user.password).then((userDB) async {
-      if(userDB.position == _user.position && userDB.password == _user.password){
-        sharedUser = userDB;
+      if(/*userDB.position == _user.position &&*/ userDB.password == _user.password){
         SharedPreferenceUtils.setUser(userDB);
         await _navigateTo();
+      }else{
+        _errorMsg = "Username/Password is incorrect!";
+        _onSetSate();
       }
       Navigator.pop(context);
     }).catchError((err){
-      print("err: $err");
       Navigator.pop(context);
+      _errorMsg = "Username/Password is incorrect!";
+      _onSetSate();
     });
   }
 
@@ -227,7 +228,7 @@ class _LoginState extends State<Login> implements LoginView {
     clearFocus();
     _focus['pwd'] = fpwd;
     _errorMsg = error;
-    onSetSate();
+    _onSetSate();
   }
 
   @override
@@ -237,7 +238,7 @@ class _LoginState extends State<Login> implements LoginView {
     _errorMsg = error;
     clearFocus();
     _focus['pos'] = fpos;
-    onSetSate();
+    _onSetSate();
   }
 
   @override
@@ -247,7 +248,7 @@ class _LoginState extends State<Login> implements LoginView {
     clearFocus();
     _focus['un'] = fun;
     _errorMsg = error;
-    onSetSate();
+    _onSetSate();
   }
 
   void clearFocus() {
@@ -268,7 +269,7 @@ class _LoginState extends State<Login> implements LoginView {
     _loginPresenter.doLogin(_user.firstName, _user.password, _user.position);
   }
 
-  void onSetSate(){
+  void _onSetSate(){
     if(!mounted){
       return;
     }

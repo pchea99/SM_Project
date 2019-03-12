@@ -1,13 +1,13 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:sm_app/list-view/list-view-agent.dart';
-import 'package:sm_app/login/login.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/string-util.dart';
 
 class TeamInfo extends StatefulWidget {
@@ -181,7 +181,8 @@ class _TeamInfoState extends State<TeamInfo> {
   void _onTabAgentNo() async {
     var callback = await NavigateTo.navigateTo(
         context: context,
-        route: ListViewAgent(teamNo: sharedUser.teamNo)
+        route: ListViewAgent(
+            teamNo: SharedPreferenceUtils.sharedUser.teamNo)
     );
     if(callback != null){
       _txtAgentNo = callback.agentNo;

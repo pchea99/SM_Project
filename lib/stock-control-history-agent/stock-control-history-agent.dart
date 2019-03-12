@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sm_app/list-view/list-view-agent.dart';
-import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
@@ -11,6 +10,7 @@ import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/string-util.dart';
 
 class StockControlHistoryByAgent extends StatefulWidget {
@@ -35,7 +35,8 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
   void initState() {
     super.initState();
     _date = DateTime.now();
-    _controllerTeam = new TextEditingController(text: sharedUser.teamNo);
+    _controllerTeam = new TextEditingController(
+        text: SharedPreferenceUtils.sharedUser.teamNo);
     _controllerAgentName = new TextEditingController();
     _controllerSIMDistribution = new TextEditingController();
     _controllerTopUp = new TextEditingController();
@@ -138,7 +139,8 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
   void _selectAgentNo() async {
     var callback = await NavigateTo.navigateTo(
         context: context,
-        route: ListViewAgent(teamNo: sharedUser.teamNo)
+        route: ListViewAgent(
+            teamNo: SharedPreferenceUtils.sharedUser.teamNo)
     );
     if(callback != null){
       _txtAgentNo = callback.agentNo;

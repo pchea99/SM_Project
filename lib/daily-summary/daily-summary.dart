@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailySummaryDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
@@ -8,6 +7,7 @@ import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/date-picker.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/input-number.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/string-util.dart';
 
 class DailySummary extends StatefulWidget {
@@ -29,7 +29,8 @@ class _DailySummaryState extends State<DailySummary> {
   void initState() {
     super.initState();
     _date = DateTime.now();
-    _controllerTeam = new TextEditingController(text: sharedUser.teamNo);
+    _controllerTeam = new TextEditingController(
+        text: SharedPreferenceUtils.sharedUser.teamNo);
     _controllerProvince = new TextEditingController();
     _controllerAgentNo = new TextEditingController();
     _controllerTotalDistribution = new TextEditingController();

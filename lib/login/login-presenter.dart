@@ -13,10 +13,10 @@ class LoginPresenter {
 
   doLogin(String username, String password, String position) {
     bool isError = false;
-    if(position == null || position.isEmpty){
+    /*if(position == null || position.isEmpty){
       _view.onPositionError("Position is required!");
       isError = true;
-    }
+    }*/
     if(password == null || password.isEmpty){
       _view.onPassword("Password is required!");
       isError = true;

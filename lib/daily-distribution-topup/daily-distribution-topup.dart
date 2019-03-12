@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sm_app/list-view/list-view-agent.dart';
-import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailyDistributionTopUpDAO.dart';
 import 'package:sm_app/model_dao/dailySummaryDAO.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
@@ -16,6 +15,7 @@ import 'package:sm_app/utils/input-number.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/safe-value.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/snackbar.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
@@ -54,7 +54,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
     _date = DateTime.now();
-    _controllerTeam = new TextEditingController(text: sharedUser.teamNo);
+    _controllerTeam = new TextEditingController(
+        text: SharedPreferenceUtils.sharedUser.teamNo);
     _controllerAgentName = new TextEditingController();
     _controllerSIMDistribution = new TextEditingController()..addListener((){
       _remainStock();
@@ -324,7 +325,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   void _onTabAgentNo() async {
     var callback = await NavigateTo.navigateTo(
         context: context,
-        route: ListViewAgent(teamNo: sharedUser.teamNo)
+        route: ListViewAgent(
+            teamNo: SharedPreferenceUtils.sharedUser.teamNo)
     );
     if(callback != null){
       _txtAgentNo = callback.agentNo;
