@@ -43,12 +43,6 @@ class Stock{
 
   Map<String, dynamic> toJson() => _$StockToJson(this);
 
-  double get remainStockFTWWA => _remainingStockForTomorrowWorkByAgent;
-
-  set remainStockFTWWA(double value) {
-    _remainingStockForTomorrowWorkByAgent = value;
-  }
-
   double get totalRemainStock => _totalRemainStock;
 
   set totalRemainStock(double value) {
@@ -61,10 +55,10 @@ class Stock{
     _remainStockTeamLeader = value;
   }
 
-  double get remainingStockForTomorrowWorkByAgent => _remainStockAgent;
+  double get remainingStockForTomorrowWorkByAgent => _remainingStockForTomorrowWorkByAgent;
 
   set remainingStockForTomorrowWorkByAgent(double value) {
-    _remainStockAgent = value;
+    _remainingStockForTomorrowWorkByAgent = value;
   }
 
   double get totalTopup => _totalTopup;

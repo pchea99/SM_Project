@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sm_app/res/font-size-res.dart';
 
 class SelectValue{
-  static Widget selectView({String label, String value, VoidCallback callback}){
+  static Widget selectView({
+    String label, String value, VoidCallback callback, bool isEnable
+  }){
     return InkWell(
-      onTap: callback,
+      onTap: isEnable == null || isEnable ? callback : null,
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(color: Colors.black45),

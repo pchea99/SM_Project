@@ -32,10 +32,9 @@ Stock _$StockFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$StockToJson(Stock instance) => <String, dynamic>{
-      'remainStockFTWWA': instance.remainStockFTWWA,
+      'remainStockFTWWA': instance.remainingStockForTomorrowWorkByAgent,
       'totalRemainStock': instance.totalRemainStock,
       'remainStockTeamLeader': instance.stockTeamLeaderTakingBackFromByAgent,
-      'remainStockAgent': instance.remainingStockForTomorrowWorkByAgent,
       'totalTopup': instance.totalTopup,
       'totalDistribution': instance.totalDistribution,
       'remainStockTLFT': instance.remainStockTeamLeaderForToday,

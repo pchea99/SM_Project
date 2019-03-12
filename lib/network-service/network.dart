@@ -146,6 +146,30 @@ class NetworkService{
     return completer.future;
   }
 
+  static Future<DailyDistributionTopUpDAO> getDailyDistributionTopUp(String date, String teamNo, String agentNo){
+    var completer = new Completer<DailyDistributionTopUpDAO>();
+    NetworkService.db.reference()
+        .child(NetworkService.dailyDistributionDB)
+        .orderByChild("date").equalTo(date)
+        .once().then((snapshot) {
+      DailyDistributionTopUpDAO data;
+      if(snapshot != null && snapshot.value != null) {
+        snapshot.value.forEach((key, value) {
+          DailyDistributionTopUpDAO tempData = DailyDistributionTopUpDAO.fromJson(value);
+          if (tempData.team == teamNo && tempData.agent.agentNo == agentNo) {
+            data = tempData;
+            return;
+          }
+        });
+      }
+      completer.complete(data);
+    }).catchError((err){
+      completer.completeError(err);
+    });
+
+    return completer.future;
+  }
+
   static Future insertDailyDistributionTopUp(DailyDistributionTopUpDAO data){
     var completer = new Completer<String>();
     NetworkService.db.reference()
