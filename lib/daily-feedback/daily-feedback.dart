@@ -1,5 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:sm_app/list-view/list-view-province.dart';
 import 'package:sm_app/model_dao/dailyFeedbackDAO.dart';
 import 'package:sm_app/network-service/network.dart';
@@ -15,6 +16,7 @@ import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/snackbar.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
+import 'package:flutter/services.dart';
 
 class DailyFeedback extends StatefulWidget {
   @override
@@ -47,6 +49,7 @@ class _DailyFeedbackState extends State<DailyFeedback> {
 
   String _txtProvince;
   DateTime _date;
+  Location location = new Location();
 
   @override
   void initState() {
@@ -65,6 +68,8 @@ class _DailyFeedbackState extends State<DailyFeedback> {
     _controllerVillage = new TextEditingController();
     _controllerLatitude = new TextEditingController();
     _controllerLongtitude = new TextEditingController();
+
+    initPlatformState();
   }
 
   @override
@@ -77,6 +82,24 @@ class _DailyFeedbackState extends State<DailyFeedback> {
         ],
         layout: _buildForm()
     );
+  }
+
+  void initPlatformState() async {
+    LocationData _currentLocation;
+    try{
+      _currentLocation = await location.getLocation();
+    } on PlatformException catch(e){
+      if(e.code == 'PERMISSION_DENIED'){
+        print("err: PERMISSION_DENIED");
+      }else if(e.code == 'PERMISSION_DENIED_NEVER_ASK'){
+        print("err: PERMISSION_DENIED_NEVER_ASK");
+      }
+
+      _currentLocation = null;
+    }
+
+    _controllerLatitude.text = _currentLocation.latitude.toString();
+    _controllerLongtitude.text = _currentLocation.longitude.toString();
   }
 
   SingleChildScrollView _buildForm() {

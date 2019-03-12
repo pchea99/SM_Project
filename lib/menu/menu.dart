@@ -25,8 +25,7 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  Map<String, double> currentLocation = new Map();
-  StreamSubscription<Map<String, double>> locationSubscription;
+  LocationData _currentLocation;
 
   Location location = new Location();
 
@@ -52,12 +51,7 @@ class _MenuState extends State<Menu> {
   @override
   void initState() {
     super.initState();
-
-    currentLocation['lat'] = 0.0;
-    currentLocation['long'] = 0.0;
-
     initPlatformState();
-    Stream<Map<String,double>> currentLoc = location.onLocationChanged();
   }
 
   @override
@@ -190,9 +184,8 @@ class _MenuState extends State<Menu> {
   }
 
   void initPlatformState() async {
-    Map<String, double> current;
     try{
-      current = await location.getLocation();
+      _currentLocation = await location.getLocation();
     } on PlatformException catch(e){
       if(e.code == 'PERMISSION_DENIED'){
         print("err: PERMISSION_DENIED");
@@ -200,12 +193,11 @@ class _MenuState extends State<Menu> {
         print("err: PERMISSION_DENIED_NEVER_ASK");
       }
 
-      current = null;
+      _currentLocation = null;
     }
 
-    print("ooooo $current");
+    print("ooooo ${_currentLocation.latitude}, ${_currentLocation.longitude}");
 
-    currentLocation = current;
   }
 }
 
