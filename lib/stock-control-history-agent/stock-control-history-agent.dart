@@ -44,7 +44,14 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
     _controllerStockTopUp = new TextEditingController();
     _controllerStockTeamLeader = new TextEditingController();
     _controllerRemainStock = new TextEditingController();
-    _loadData();
+
+    if(SharedPreferenceUtils.isAgent()){
+      _txtAgentNo = SharedPreferenceUtils.sharedUser.agentNo;
+      _controllerAgentName.text = SharedPreferenceUtils.sharedUser.firstName +" "+
+          SharedPreferenceUtils.sharedUser.lastName;
+
+      _loadData();
+    }
   }
 
   @override
@@ -66,7 +73,8 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
               child: SelectValue.selectView(
                   label: StringRes.agentNo,
                   value: _txtAgentNo,
-                  callback: _selectAgentNo
+                  callback: _selectAgentNo,
+                  isEnable: SharedPreferenceUtils.isTeamLeader()
               ),
             ),
             DatePicker.datePicker(onSelectedDate),
