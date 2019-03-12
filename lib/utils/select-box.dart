@@ -6,6 +6,7 @@ class SelectBox{
     int groupValue,
     ValueChanged<int> onChanged,
     String label,
+    bool isEnable
   }) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
@@ -32,13 +33,13 @@ class SelectBox{
                   new Radio(
                     value: 0,
                     groupValue: groupValue,
-                    onChanged: onChanged,
+                    onChanged: isEnable == null || isEnable ? onChanged : null,
                   ),
                   Text(StringRes.yes),
                   new Radio(
                     value: 1,
                     groupValue: groupValue,
-                    onChanged: onChanged,
+                    onChanged: isEnable == null || isEnable ? onChanged : null,
                   ),
                   Text(StringRes.no)
                 ],

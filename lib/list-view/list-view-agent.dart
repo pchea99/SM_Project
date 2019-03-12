@@ -49,17 +49,14 @@ class _ListViewAgentState extends State<ListViewAgent> {
   }
 
   void _getAgents(){
-    NetworkService.getTeamInfo(widget.teamNo).then((agentsDB){
+    NetworkService.getTeamInfos(widget.teamNo).then((agentsDB){
       _agents = agentsDB;
       _isLoading = false;
       _onSetState();
-      print("===T : $_agents");
 
     }).catchError((err){
       _isLoading = false;
       _onSetState();
-      print("===C : $_agents");
-
     });
   }
 

@@ -4,9 +4,12 @@ import 'package:sm_app/model_dto/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceUtils{
+  static User sharedUser;
+
   static void setUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('user', json.encode(user.toJson()));
+    sharedUser = user;
   }
 
   static Future getUser() async {
@@ -16,12 +19,21 @@ class SharedPreferenceUtils{
       return null;
     }
 
-    User user = User.fromJson(json.decode(userJson));
-    return user;
+    sharedUser = User.fromJson(json.decode(userJson));
+    return sharedUser;
   }
 
   static void clear() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
+  }
+
+  static bool isTeamLeader(){
+    return sharedUser.position.trim().toLowerCase() == 'teamleader' ||
+        sharedUser.position.trim().toLowerCase() == 'team leader';
+  }
+
+  static bool isAgent(){
+    return sharedUser.position.trim().toLowerCase() == 'agent';
   }
 }

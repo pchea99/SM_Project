@@ -11,8 +11,6 @@ import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 
-User sharedUser;
-
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -31,8 +29,8 @@ class _LoginState extends State<Login> implements LoginView {
   }
 
   void _getUserLogin() async {
-    sharedUser = await SharedPreferenceUtils.getUser();
-    if(sharedUser != null){
+    SharedPreferenceUtils.sharedUser = await SharedPreferenceUtils.getUser();
+    if(SharedPreferenceUtils.sharedUser != null){
       _navigateTo();
     }
   }
@@ -55,21 +53,24 @@ class _LoginState extends State<Login> implements LoginView {
   }
 
   Widget btnLogin(){
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        onPressed: submit,
-        padding: EdgeInsets.all(12),
-        color: Colors.teal,
-        child: Text(
-            StringRes.login,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: FontSizeRes.button
-            )
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
+        child: RaisedButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          onPressed: submit,
+          padding: EdgeInsets.all(12),
+          color: Colors.teal,
+          child: Text(
+              StringRes.login,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: FontSizeRes.button
+              )
+          ),
         ),
       ),
     );
@@ -168,26 +169,31 @@ class _LoginState extends State<Login> implements LoginView {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: ListView(
-        padding: const EdgeInsets.only(
-          top: 115.0,
-          left: 8.0,
-          right: 8.0
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 16,
+            left: 8.0,
+            right: 8.0
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                lblTitle(),
+                SizedBox(height: 48.0),
+                txtUsername(),
+                SizedBox(height: 8.0),
+                txtPassword(),
+//          SizedBox(height: 8.0),
+//          txtPosition(),
+                SizedBox(height: 24.0),
+                btnLogin(),
+                lblCopyRight(),
+                lblError()
+              ],
+            ),
+          ),
         ),
-        shrinkWrap: true,
-        children: <Widget>[
-          lblTitle(),
-          SizedBox(height: 48.0),
-          txtUsername(),
-          SizedBox(height: 8.0),
-          txtPassword(),
-          SizedBox(height: 8.0),
-          txtPosition(),
-          SizedBox(height: 24.0),
-          btnLogin(),
-          lblCopyRight(),
-          lblError()
-        ],
       ),
     );
   }
@@ -195,7 +201,7 @@ class _LoginState extends State<Login> implements LoginView {
   @override
   void onLoginError(String error) {
     _errorMsg = error;
-    onSetSate();
+    _onSetSate();
   }
 
   @override
@@ -203,15 +209,18 @@ class _LoginState extends State<Login> implements LoginView {
     SpinnerDialog.onSpinner(context);
     LoginService.getUserLogin(_user.firstName.trim().toLowerCase().replaceAll(" ", '')
         +"-"+_user.password).then((userDB) async {
-      if(userDB.position == _user.position && userDB.password == _user.password){
-        sharedUser = userDB;
+      if(/*userDB.position == _user.position &&*/ userDB.password == _user.password){
         SharedPreferenceUtils.setUser(userDB);
         await _navigateTo();
+      }else{
+        _errorMsg = "Username/Password is incorrect!";
+        _onSetSate();
       }
       Navigator.pop(context);
     }).catchError((err){
-      print("err: $err");
       Navigator.pop(context);
+      _errorMsg = "Username/Password is incorrect!";
+      _onSetSate();
     });
   }
 
@@ -227,7 +236,7 @@ class _LoginState extends State<Login> implements LoginView {
     clearFocus();
     _focus['pwd'] = fpwd;
     _errorMsg = error;
-    onSetSate();
+    _onSetSate();
   }
 
   @override
@@ -237,7 +246,7 @@ class _LoginState extends State<Login> implements LoginView {
     _errorMsg = error;
     clearFocus();
     _focus['pos'] = fpos;
-    onSetSate();
+    _onSetSate();
   }
 
   @override
@@ -247,7 +256,7 @@ class _LoginState extends State<Login> implements LoginView {
     clearFocus();
     _focus['un'] = fun;
     _errorMsg = error;
-    onSetSate();
+    _onSetSate();
   }
 
   void clearFocus() {
@@ -265,10 +274,11 @@ class _LoginState extends State<Login> implements LoginView {
   void submit() {
     _errorMsg = "";
     clearFocus();
+    _onSetSate();
     _loginPresenter.doLogin(_user.firstName, _user.password, _user.position);
   }
 
-  void onSetSate(){
+  void _onSetSate(){
     if(!mounted){
       return;
     }

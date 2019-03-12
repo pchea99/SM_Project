@@ -1,13 +1,14 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:sm_app/list-view/list-view-agent.dart';
-import 'package:sm_app/login/login.dart';
+import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/string-util.dart';
 
 class TeamInfo extends StatefulWidget {
@@ -63,6 +64,11 @@ class _TeamInfoState extends State<TeamInfo> {
     _controllerMasterSIMPassword = new TextEditingController();
     _controllerRegisteredSIM = new TextEditingController();
     _controllerSlaveSIM = new TextEditingController();
+
+    if(SharedPreferenceUtils.isAgent()){
+      _txtAgentNo = SharedPreferenceUtils.sharedUser.agentNo;
+      _getAgents();
+    }
 
   }
 
@@ -181,30 +187,50 @@ class _TeamInfoState extends State<TeamInfo> {
   void _onTabAgentNo() async {
     var callback = await NavigateTo.navigateTo(
         context: context,
-        route: ListViewAgent(teamNo: sharedUser.teamNo)
+        route: ListViewAgent(
+            teamNo: SharedPreferenceUtils.sharedUser.teamNo)
     );
+
     if(callback != null){
-      _txtAgentNo = callback.agentNo;
-      _controllerTeam.text = callback.agentTeamNo;
-      _controllerAgentName.text = callback.agentNameEn;
-      _controllerAgentNameKh.text = callback.agentNameKh;
-      _controllerSex.text = callback.sex;
-      _controllerPosition.text = callback.position;
-      _controllerProjectLeadName.text = callback.projectLeadName;
-      _controllerTeamLeaderName.text = callback.teamLeaderName;
-      _controllerDriverName.text = callback.driverName;
-      _controllerDriverID.text = callback.driverID;
-      _controllerPlaqueNumber.text = callback.plaqueNumber;
-      _controllerIDNumber.text = callback.idNumber;
-      _controllerEntryDate.text = callback.entryDate;
-      _controllerPersonalPhone.text = callback.personalPhone;
-      _controllerMasterSIM.text = callback.masterSim;
-      _controllerMasterSIMPassword.text = callback.masterSimPwd;
-      _controllerRegisteredSIM.text = callback.registerSim;
-      _controllerSlaveSIM.text = callback.slaveSim;
-      _controllerSlaveSIMPassword.text = callback.slaveSimPwd;
-      //_province = callback.province;
-      _onSetState();
+      _setData(callback);
     }
+  }
+
+  void _getAgents(){
+    NetworkService
+        .getTeamInfo(SharedPreferenceUtils.sharedUser.teamNo, _txtAgentNo)
+        .then((agentDB){
+          if(agentDB != null) {
+            _setData(agentDB);
+            _onSetState();
+          }
+
+    }).catchError((err){
+      print("err: $err");
+    });
+  }
+
+  void _setData(callback) {
+    _txtAgentNo = callback.agentNo;
+    _controllerTeam.text = callback.agentTeamNo;
+    _controllerAgentName.text = callback.agentNameEn;
+    _controllerAgentNameKh.text = callback.agentNameKh;
+    _controllerSex.text = callback.sex;
+    _controllerPosition.text = callback.position;
+    _controllerProjectLeadName.text = callback.projectLeadName;
+    _controllerTeamLeaderName.text = callback.teamLeaderName;
+    _controllerDriverName.text = callback.driverName;
+    _controllerDriverID.text = callback.driverID;
+    _controllerPlaqueNumber.text = callback.plaqueNumber;
+    _controllerIDNumber.text = callback.idNumber;
+    _controllerEntryDate.text = callback.entryDate;
+    _controllerPersonalPhone.text = callback.personalPhone;
+    _controllerMasterSIM.text = callback.masterSim;
+    _controllerMasterSIMPassword.text = callback.masterSimPwd;
+    _controllerRegisteredSIM.text = callback.registerSim;
+    _controllerSlaveSIM.text = callback.slaveSim;
+    _controllerSlaveSIMPassword.text = callback.slaveSimPwd;
+    //_province = callback.province;
+    _onSetState();
   }
 }

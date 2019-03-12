@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sm_app/list-view/list-view-agent.dart';
-import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailyDistributionTopUpDAO.dart';
 import 'package:sm_app/model_dao/dailySummaryDAO.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
@@ -16,6 +15,7 @@ import 'package:sm_app/utils/input-number.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/safe-value.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/snackbar.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
@@ -49,12 +49,12 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   @override
   void initState() {
     super.initState();
-
     _controllerDate = new TextEditingController(
       text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
     _date = DateTime.now();
-    _controllerTeam = new TextEditingController(text: sharedUser.teamNo);
+    _controllerTeam = new TextEditingController(
+        text: SharedPreferenceUtils.sharedUser.teamNo);
     _controllerAgentName = new TextEditingController();
     _controllerSIMDistribution = new TextEditingController()..addListener((){
       _remainStock();
@@ -70,6 +70,32 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     _controllerRemainStock = new TextEditingController(text: '0.0');
     _controllerRemark = new TextEditingController();
     _controllerTopUpAmount = new TextEditingController();
+
+    if(SharedPreferenceUtils.isAgent()){
+      _txtAgentNo = SharedPreferenceUtils.sharedUser.agentNo;
+      _controllerAgentName.text = SharedPreferenceUtils.sharedUser.firstName +" "+
+          SharedPreferenceUtils.sharedUser.lastName;
+
+      NetworkService.getDailyDistributionTopUp(
+        StringUtil.dateToDB(_date),
+        SharedPreferenceUtils.sharedUser.teamNo,
+        _txtAgentNo
+      ).then((data){
+        _controllerSIMDistribution.text = data.stock.simDistribution.toString();
+        _controllerTopUp.text = data.stock.topup.toString();
+        _controllerTopUpAmount.text = data.stock.topUpAmount.toString();
+        _controllerStockInHand.text = data.stock.stockInHandBeforeTodayWork.toString();
+        _controllerStockTopUp.text = data.stock.stockTopUpDuringTodayWork.toString();
+        _controllerStockTeamLeader.text = data.stock.stockTeamLeaderTakingBackFromByAgent.toString();
+        _controllerRemainStock.text = data.stock.remainingStockForTomorrowWorkByAgent.toString();
+        _controllerRemark.text = data.remark;
+
+        _onSetState();
+      }).catchError((err){
+        print("err: $err");
+      });
+    }
+
   }
 
   @override
@@ -78,7 +104,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       scaffoldKey: _scaffoldKey,
       title: StringRes.distributionTopup,
       actions: <Widget>[
-        ButtonSave.buttonSave(_onSave)
+        SharedPreferenceUtils.isTeamLeader()
+            ? ButtonSave.buttonSave(_onSave) : Container()
       ],
       layout: SingleChildScrollView(
         child: _buildForm(),
@@ -95,7 +122,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
             child: SelectValue.selectView(
                 label: StringRes.agentNo,
                 value: _txtAgentNo,
-                callback: _onTabAgentNo
+                callback: _onTabAgentNo,
+                isEnable: SharedPreferenceUtils.isTeamLeader()
             ),
           ),
           InputField.buildTextField(
@@ -113,17 +141,17 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
           InputNumber.buildTextField(
               controller: _controllerSIMDistribution,
               label: StringRes.simDistribution,
-              isEnable: true
+              isEnable: SharedPreferenceUtils.isTeamLeader()
           ),
           InputNumber.buildTextField(
               controller: _controllerTopUp,
               label: StringRes.topUp,
-              isEnable: true
+              isEnable: SharedPreferenceUtils.isTeamLeader()
           ),
           InputNumber.buildTextField(
               controller: _controllerTopUpAmount,
               label: StringRes.topUpAmount,
-              isEnable: true
+              isEnable: SharedPreferenceUtils.isTeamLeader()
           ),
           InputNumber.buildTextField(
               controller: _controllerStockInHand,
@@ -132,12 +160,12 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
           InputNumber.buildTextField(
               controller: _controllerStockTopUp,
               label: StringRes.stockTopUpDTW,
-              isEnable: true
+              isEnable: SharedPreferenceUtils.isTeamLeader()
           ),
           InputNumber.buildTextField(
               controller: _controllerStockTeamLeader,
               label: StringRes.stockTeamLeaderTBFAT,
-              isEnable: true
+              isEnable: SharedPreferenceUtils.isTeamLeader()
           ),
           InputNumber.buildTextField(
               controller: _controllerRemainStock,
@@ -146,7 +174,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
           InputField.buildTextField(
               controller: _controllerRemark,
               label: StringRes.remark,
-              isEnable: true
+              isEnable: SharedPreferenceUtils.isTeamLeader()
           ),
         ],
       )
@@ -324,7 +352,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   void _onTabAgentNo() async {
     var callback = await NavigateTo.navigateTo(
         context: context,
-        route: ListViewAgent(teamNo: sharedUser.teamNo)
+        route: ListViewAgent(
+            teamNo: SharedPreferenceUtils.sharedUser.teamNo)
     );
     if(callback != null){
       _txtAgentNo = callback.agentNo;

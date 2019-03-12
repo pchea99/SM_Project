@@ -1,7 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:sm_app/list-view/list-view-province.dart';
-import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailyFeedbackDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
@@ -12,6 +11,7 @@ import 'package:sm_app/utils/input-field.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/select-box.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/snackbar.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
@@ -55,7 +55,8 @@ class _DailyFeedbackState extends State<DailyFeedback> {
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
-    _controllerTeamNo = new TextEditingController(text: sharedUser.teamNo);
+    _controllerTeamNo = new TextEditingController(
+        text: SharedPreferenceUtils.sharedUser.teamNo);
     _controllerAnotherIssue = new TextEditingController();
     _controllerSmartDownload = new TextEditingController();
     _controllerSmartUpload = new TextEditingController();

@@ -1,6 +1,5 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/marketAuditReportDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
@@ -8,6 +7,7 @@ import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
 import 'package:sm_app/utils/container-form.dart';
 import 'package:sm_app/utils/input-field.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
 
@@ -30,7 +30,8 @@ class _MarketAuditReportState extends State<MarketAuditReport> {
   void initState() {
     super.initState();
     _date = DateTime.now();
-    _controllerTeamNo = new TextEditingController(text: sharedUser.teamNo);
+    _controllerTeamNo = new TextEditingController(
+        text: SharedPreferenceUtils.sharedUser.teamNo);
     _controllerRemarkAgent = new TextEditingController();
     _controllerRemarkVisit = new TextEditingController();
     _controllerRemarkSystem = new TextEditingController();

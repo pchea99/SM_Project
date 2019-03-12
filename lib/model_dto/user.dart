@@ -1,5 +1,6 @@
 class User{
   String _teamNo;
+  String _agentNo;
   String _firstName;
   String _lastName;
   String _sex;
@@ -19,6 +20,7 @@ class User{
     firstName = json['first_name'];
     password = json['password'].toString();
     teamNo = json['team_no'];
+    agentNo = json['agent_no'];
   }
 
   Map<String, dynamic> toJson() => {
@@ -29,8 +31,15 @@ class User{
     'last_name': lastName,
     'first_name': firstName,
     'team_no': teamNo,
-    'password': password
+    'password': password,
+    'agent_no': agentNo
   };
+
+  String get agentNo => _agentNo;
+
+  set agentNo(String value) {
+    _agentNo = value;
+  }
 
   String get password => _password;
 
@@ -82,7 +91,6 @@ class User{
 
   @override
   String toString() {
-    return 'User{_userNo: $_teamNo, _firstName: $_firstName, _lastName: $_lastName, _sex: $_sex, _idNumber: $_idNumber, _position: $_position, _personalPhone: $_personalPhone}';
+    return 'User{_teamNo: $_teamNo, _agentNo: $_agentNo, _firstName: $_firstName, _lastName: $_lastName, _sex: $_sex, _idNumber: $_idNumber, _position: $_position, _personalPhone: $_personalPhone, _password: $_password}';
   }
-
 }

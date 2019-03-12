@@ -1,7 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:sm_app/list-view/list-view-province.dart';
-import 'package:sm_app/login/login.dart';
 import 'package:sm_app/model_dao/dailyRetailerMappingDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
@@ -13,6 +12,7 @@ import 'package:sm_app/utils/input-phone.dart';
 import 'package:sm_app/utils/navigate-to.dart';
 import 'package:sm_app/utils/select-box.dart';
 import 'package:sm_app/utils/select-value.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/snackbar.dart';
 import 'package:sm_app/utils/spinner-dialog.dart';
 import 'package:sm_app/utils/string-util.dart';
@@ -45,7 +45,8 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
     _controllerDate = new TextEditingController(
         text: formatDate(new DateTime.now(), StringUtil.dateFormats())
     );
-    _controllerTeam = new TextEditingController(text: sharedUser.teamNo);
+    _controllerTeam = new TextEditingController(
+        text: SharedPreferenceUtils.sharedUser.teamNo);
     _controllerDistrict = new TextEditingController();
     _controllerCommune = new TextEditingController();
     _controllerVillage = new TextEditingController();

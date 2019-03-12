@@ -25,7 +25,7 @@ class NetworkService{
 
   static final DatabaseReference db = FirebaseDatabase.instance.reference();
 
-  static Future getTeamInfo(String teamNo) {
+  static Future<List<Agent>> getTeamInfos(String teamNo) {
     var completer = new Completer<List<Agent>>();
     NetworkService.db.reference()
         .child(NetworkService.teamInfoDB).orderByChild("team_no")
@@ -40,6 +40,31 @@ class NetworkService{
       }
 
       completer.complete(agents);
+    }).catchError((err) {
+      completer.completeError(err);
+    });
+
+    return completer.future;
+  }
+
+  static Future<Agent> getTeamInfo(String teamNo, String agentNo) {
+    var completer = new Completer<Agent>();
+    NetworkService.db.reference()
+        .child(NetworkService.teamInfoDB).orderByChild("team_no")
+        .equalTo(teamNo)
+        .once().then((snapshot) {
+      Agent agent;
+      if (snapshot != null && snapshot.value != null) {
+        snapshot.value.forEach((key, value) {
+          Agent tempAgent = Agent.fromJson(value);
+          if(tempAgent.agentNo == agentNo) {
+            agent = tempAgent;
+            return;
+          }
+        });
+      }
+
+      completer.complete(agent);
     }).catchError((err) {
       completer.completeError(err);
     });
@@ -122,7 +147,7 @@ class NetworkService{
     return completer.future;
   }
 
-  static Future getRoutePlan(String date, String teamNo){
+  static Future<RoutePlanDAO> getRoutePlan(String date, String teamNo){
     var completer = new Completer<RoutePlanDAO>();
     NetworkService.db.reference()
         .child(NetworkService.routePlanDB)
@@ -139,6 +164,30 @@ class NetworkService{
         });
       }
       completer.complete(routePlanDAO);
+    }).catchError((err){
+      completer.completeError(err);
+    });
+
+    return completer.future;
+  }
+
+  static Future<DailyDistributionTopUpDAO> getDailyDistributionTopUp(String date, String teamNo, String agentNo){
+    var completer = new Completer<DailyDistributionTopUpDAO>();
+    NetworkService.db.reference()
+        .child(NetworkService.dailyDistributionDB)
+        .orderByChild("date").equalTo(date)
+        .once().then((snapshot) {
+      DailyDistributionTopUpDAO data;
+      if(snapshot != null && snapshot.value != null) {
+        snapshot.value.forEach((key, value) {
+          DailyDistributionTopUpDAO tempData = DailyDistributionTopUpDAO.fromJson(value);
+          if (tempData.team == teamNo && tempData.agent.agentNo == agentNo) {
+            data = tempData;
+            return;
+          }
+        });
+      }
+      completer.complete(data);
     }).catchError((err){
       completer.completeError(err);
     });
