@@ -328,22 +328,22 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   }
 
   double _sumTotalStockAllocatedToAllAgent() {
-    return (double.parse(_controllerStockTopUp.text) -
+    return (double.parse(_controllerStockTopUp.text) /*-
         double.parse(_controllerSIMDistribution.text)
-        + double.parse(_controllerTopUp.text));
+        + double.parse(_controllerTopUp.text)*/);
   }
 
   double _sumTotalStockReturnTeamLeaderTakingBackToday() {
-    return (double.parse(_controllerStockTeamLeader.text) -
+    return (double.parse(_controllerStockTeamLeader.text) /*-
         double.parse(_controllerSIMDistribution.text)
-        + double.parse(_controllerTopUp.text));
+        + double.parse(_controllerTopUp.text)*/);
   }
 
   _remainStock(){
     double remain = 0.0;
     remain = SafeValue.getSafeDouble(_controllerStockInHand.text) +
         SafeValue.getSafeDouble(_controllerStockTopUp.text) -
-        SafeValue.getSafeDouble(_controllerSIMDistribution.text) -
+       /* SafeValue.getSafeDouble(_controllerSIMDistribution.text) -*/
         SafeValue.getSafeDouble(_controllerStockTeamLeader.text);
     _controllerRemainStock.text = remain.toString();
     _onSetState();
