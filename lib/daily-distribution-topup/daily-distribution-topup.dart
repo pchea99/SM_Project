@@ -221,7 +221,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       ..stock.stockInHandBeforeTodayWork = SafeValue.getSafeDouble(_controllerStockInHand.text)
       ..stock.stockTopUpDuringTodayWork = SafeValue.getSafeDouble(_controllerStockTopUp.text)
       ..stock.stockTeamLeaderTakingBackFromByAgent = SafeValue.getSafeDouble(_controllerStockTeamLeader.text)
-      ..stock.remainStockForTomorrowWorkAgent = SafeValue.getSafeDouble(_controllerRemainStock.text)
+      ..stock.remainingStockForTomorrowWorkByAgent = SafeValue.getSafeDouble(_controllerRemainStock.text)
       ..remark = _controllerRemark.text
     ;
 
@@ -275,9 +275,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..agentNumber = _dailySummary.agentNumber + distribution
         ..stock.totalTopup = double.parse(_controllerTopUp.text) + _dailySummary.stock.totalTopup
         ..stock.totalDistribution = double.parse(_controllerSIMDistribution.text) + _dailySummary.stock.totalDistribution
-        ..stock.remainStockAgent = double.parse(_controllerRemainStock.text) + _dailySummary.stock.totalRemainStock
-        ..stock.remainStockTeamLeader = double.parse("0.0")
-        ..stock.totalRemainStock = double.parse(_controllerRemainStock.text) + _dailySummary.stock.totalRemainStock
+        ..stock.remainStockAgent = double.parse(_controllerRemainStock.text) + _dailySummary.stock.remainStockAgent
+        ..stock.remainStockTeamLeader = 0.0
       ;
 
       _dailySummary = summary;

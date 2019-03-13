@@ -121,15 +121,22 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
       _controllerTeam.text,
       _txtAgentNo
     ).then((data){
-      _clearData();
-      StockControlHistoryByAgentDAO stock = data;
-      _controllerSIMDistribution.text = stock.stock.simDistribution.toString();
-      _controllerTopUp.text = stock.stock.topup.toString();
-      _controllerStockInHand.text = stock.stock.stockInHandBeforeTodayWork.toString();
-      _controllerStockTopUp.text = stock.stock.stockTopUpDuringTodayWork.toString();
-      _controllerStockTeamLeader.text = stock.stock.stockTeamLeaderTakingBackFromByAgent.toString();
-      _controllerRemainStock.text = stock.stock.remainingStockForTomorrowWorkByAgent.toString();
-      _onSetState();
+      if(data != null) {
+        StockControlHistoryByAgentDAO stock = data;
+        _controllerSIMDistribution.text =
+            stock.stock.simDistribution.toString();
+        _controllerTopUp.text = stock.stock.topup.toString();
+        _controllerStockInHand.text =
+            stock.stock.stockInHandBeforeTodayWork.toString();
+        _controllerStockTopUp.text =
+            stock.stock.stockTopUpDuringTodayWork.toString();
+        _controllerStockTeamLeader.text =
+            stock.stock.stockTeamLeaderTakingBackFromByAgent.toString();
+        _controllerRemainStock.text =
+            stock.stock.remainingStockForTomorrowWorkByAgent.toString();
+
+        _onSetState();
+      }
     });
   }
 
@@ -139,6 +146,7 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
   }
 
   void _loadData() {
+    _clearData();
     if(_date != null && _txtAgentNo != null && _txtAgentNo.isNotEmpty){
       _getStockControlHistory();
     }
@@ -150,10 +158,10 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
         route: ListViewAgent(
             teamNo: SharedPreferenceUtils.sharedUser.teamNo)
     );
+
     if(callback != null){
       _txtAgentNo = callback.agentNo;
       _controllerAgentName.text = callback.agentNameEn;
-      _onSetState();
       _loadData();
     }
   }
@@ -167,14 +175,12 @@ class _StockControlHistoryByAgentState extends State<StockControlHistoryByAgent>
   }
 
   void _clearData(){
-    _date = null;
     _controllerSIMDistribution.text = "";
     _controllerTopUp.text = "";
     _controllerStockInHand.text = "";
     _controllerStockTopUp.text = "";
     _controllerStockTeamLeader.text = "";
     _controllerRemainStock.text = "";
-
   }
 
 }
