@@ -85,7 +85,7 @@ class _DailyFeedbackState extends State<DailyFeedback> {
   }
 
   void initPlatformState() async {
-    LocationData _currentLocation;
+    Map<String, double> _currentLocation;
     try{
       _currentLocation = await location.getLocation();
     } on PlatformException catch(e){
@@ -98,8 +98,8 @@ class _DailyFeedbackState extends State<DailyFeedback> {
       _currentLocation = null;
     }
 
-    _controllerLatitude.text = _currentLocation.latitude.toString();
-    _controllerLongtitude.text = _currentLocation.longitude.toString();
+    _controllerLatitude.text = _currentLocation['latitude'].toString();
+    _controllerLongtitude.text = _currentLocation['longitude'].toString();
   }
 
   SingleChildScrollView _buildForm() {
