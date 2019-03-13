@@ -327,10 +327,12 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
   _remainStock(){
     double remain = 0.0;
-    remain = SafeValue.getSafeDouble(_controllerStockInHand.text) +
-        SafeValue.getSafeDouble(_controllerStockTopUp.text) -
-        SafeValue.getSafeDouble(_controllerStockTeamLeader.text) -
-        SafeValue.getSafeDouble(_controllerSIMDistribution.text)
+    remain =
+        (SafeValue.getSafeDouble(_controllerStockInHand.text)
+            - SafeValue.getSafeDouble(_controllerSIMDistribution.text)
+        ) + (SafeValue.getSafeDouble(_controllerSIMDistribution.text)
+            - SafeValue.getSafeDouble(_controllerStockTeamLeader.text)
+        )
     ;
     _controllerRemainStock.text = remain.toString();
 
