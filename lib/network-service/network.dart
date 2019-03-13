@@ -27,11 +27,11 @@ class NetworkService{
 
   static Future<List<Agent>> getTeamInfos(String teamNo) {
     var completer = new Completer<List<Agent>>();
+    List<Agent> agents = [];
     NetworkService.db.reference()
         .child(NetworkService.teamInfoDB).orderByChild("team_no")
         .equalTo(teamNo)
         .once().then((snapshot) {
-      List<Agent> agents = [];
       if (snapshot != null && snapshot.value != null) {
         snapshot.value.forEach((key, value) {
           Agent agent = Agent.fromJson(value);

@@ -36,7 +36,6 @@ class Agent{
     _agentNameEn = value;
   }
 
-
   String get registerSim => _registerSim;
 
   set registerSim(String value) {

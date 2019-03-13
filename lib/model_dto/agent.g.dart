@@ -8,25 +8,25 @@ part of 'agent.dart';
 
 Agent _$AgentFromJson(Map json) {
   return Agent()
-    ..agentNo = json['agent_no'] as String
-    ..agentTeamNo = json['team_no'] as String
-    ..agentNameEn = json['agent_name_en'] as String
-    ..agentNameKh = json['agent_name_kh'] as String
-    ..sex = json['sex'] as String
-    ..position = json['position'] as String
-    ..projectLeadName = json['project_lead_name'] as String
-    ..teamLeaderName = json['team_lead_name'] as String
-    ..driverName = json['van_driver_name'] as String
-    ..driverID = json['van_driver_id'] as String
-    ..plaqueNumber = json['van_plaque_number'] as String
-    ..idNumber = json['id_number'] as String
-    ..personalPhone = json['personal_phone'] as String
-    ..masterSim = json['master_sim'] as String
-    ..masterSimPwd = json['master_sim_password'] as String
-    ..registerSim = json['master_sim_password'] as String
-    ..slaveSim = json['slave_sim'] as String
-    ..slaveSimPwd = json['slave_sim_password'] as String
-    ..entryDate = json['entry_date'] as String
+    ..agentNo = json['agent_no'].toString()
+    ..agentTeamNo = json['team_no'].toString()
+    ..agentNameEn = json['agent_name_en'].toString()
+    ..agentNameKh = json['agent_name_kh'].toString()
+    ..sex = json['sex'].toString()
+    ..position = json['position'].toString()
+    ..projectLeadName = json['project_lead_name'].toString()
+    ..teamLeaderName = json['team_lead_name'].toString()
+    ..driverName = json['van_driver_name'].toString()
+    ..driverID = json['van_driver_id'].toString()
+    ..plaqueNumber = json['van_plaque_number'].toString()
+    ..idNumber = json['id_number'].toString()
+    ..personalPhone = json['personal_phone'].toString()
+    ..masterSim = json['master_sim'].toString()
+    ..masterSimPwd = json['master_sim_password'].toString()
+    ..registerSim = json['master_sim_password'].toString()
+    ..slaveSim = json['slave_sim'].toString()
+    ..slaveSimPwd = json['slave_sim_password'].toString()
+    ..entryDate = json['entry_date'].toString()
   ;
 
 }
