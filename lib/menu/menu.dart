@@ -23,7 +23,6 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  LocationData _currentLocation;
 
   Location location = new Location();
 
@@ -182,6 +181,8 @@ class _MenuState extends State<Menu> {
   }
 
   void initPlatformState() async {
+    LocationData _currentLocation;
+
     try{
       _currentLocation = await location.getLocation();
     } on PlatformException catch(e){
