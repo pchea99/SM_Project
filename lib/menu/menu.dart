@@ -25,7 +25,7 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  LocationData _currentLocation;
+  Map<String, double> _currentLocation;
 
   Location location = new Location();
 
@@ -179,7 +179,7 @@ class _MenuState extends State<Menu> {
         });
   }
 
-  void _navigateTo(Widget route) async {
+  void _navigateTo(Widget route) {
     NavigateTo.navigateTo(context: context, route: route);
   }
 
@@ -196,7 +196,7 @@ class _MenuState extends State<Menu> {
       _currentLocation = null;
     }
 
-    print("ooooo ${_currentLocation.latitude}, ${_currentLocation.longitude}");
+    print("ooooo $_currentLocation");
 
   }
 }
