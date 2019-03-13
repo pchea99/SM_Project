@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:sm_app/daily-distribution-topup/daily-distribution-topup.dart';
 import 'package:sm_app/daily-feedback/daily-feedback.dart';
@@ -195,9 +193,6 @@ class _MenuState extends State<Menu> {
 
       _currentLocation = null;
     }
-
-    print("ooooo ${_currentLocation.latitude}, ${_currentLocation.longitude}");
-
   }
 }
 
