@@ -295,8 +295,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.remainStockTeamLeaderFromYesterday = 0.0
         ..stock.simStockReceivedByAssistant = 0.0
         ..stock.stockDeliveredBackToAssistant = 0.0
-        ..stock.totalStockAllocatedToAllAgent = _sumTotalStockAllocatedToAllAgent()
-        ..stock.totalStockReturnTeamLeaderTakingBackToday =_sumTotalStockReturnTeamLeaderTakingBackToday()
+        ..stock.totalStockAllocatedToAllAgent = double.parse(_controllerStockTopUp.text)
+        ..stock.totalStockReturnTeamLeaderTakingBackToday = double.parse(_controllerStockTeamLeader.text)
         ..stock.remainStockTeamLeaderForToday = 0.0
        ;
     }else{
@@ -313,10 +313,10 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
             _stockControlReportByTeamLeaderDAO.stock.stockDeliveredBackToAssistant
         ..stock.totalStockAllocatedToAllAgent =
             _stockControlReportByTeamLeaderDAO.stock.totalStockAllocatedToAllAgent
-                + _sumTotalStockAllocatedToAllAgent()
+                + double.parse(_controllerStockTopUp.text)
         ..stock.totalStockReturnTeamLeaderTakingBackToday =
             _stockControlReportByTeamLeaderDAO.stock.totalStockReturnTeamLeaderTakingBackToday
-                + _sumTotalStockReturnTeamLeaderTakingBackToday()
+                + double.parse(_controllerStockTeamLeader.text)
         ..stock.remainStockTeamLeaderForToday = 0.0
       ;
 
@@ -326,25 +326,13 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
     NetworkService.insertStockControlReportByTeamLeader(_stockControlReportByTeamLeaderDAO);
   }
 
-  double _sumTotalStockAllocatedToAllAgent() {
-    return (double.parse(_controllerStockTopUp.text) /*-
-        double.parse(_controllerSIMDistribution.text)
-        + double.parse(_controllerTopUp.text)*/);
-  }
-
-  double _sumTotalStockReturnTeamLeaderTakingBackToday() {
-    return (double.parse(_controllerStockTeamLeader.text) /*-
-        double.parse(_controllerSIMDistribution.text)
-        + double.parse(_controllerTopUp.text)*/);
-  }
-
   _remainStock(){
     double remain = 0.0;
     remain = SafeValue.getSafeDouble(_controllerStockInHand.text) +
         SafeValue.getSafeDouble(_controllerStockTopUp.text) -
-       /* SafeValue.getSafeDouble(_controllerSIMDistribution.text) -*/
         SafeValue.getSafeDouble(_controllerStockTeamLeader.text);
     _controllerRemainStock.text = remain.toString();
+
     _onSetState();
   }
 
