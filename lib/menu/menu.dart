@@ -195,9 +195,7 @@ class _MenuState extends State<Menu> {
 
       _currentLocation = null;
     }
-
     print("ooooo $_currentLocation");
-
   }
 }
 
