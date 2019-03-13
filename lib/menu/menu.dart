@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:sm_app/daily-distribution-topup/daily-distribution-topup.dart';
 import 'package:sm_app/daily-feedback/daily-feedback.dart';
@@ -23,6 +25,7 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  Map<String, double> _currentLocation;
 
   Location location = new Location();
 
@@ -176,13 +179,11 @@ class _MenuState extends State<Menu> {
         });
   }
 
-  void _navigateTo(Widget route) async {
+  void _navigateTo(Widget route) {
     NavigateTo.navigateTo(context: context, route: route);
   }
 
   void initPlatformState() async {
-    LocationData _currentLocation;
-
     try{
       _currentLocation = await location.getLocation();
     } on PlatformException catch(e){
@@ -194,6 +195,7 @@ class _MenuState extends State<Menu> {
 
       _currentLocation = null;
     }
+    print("ooooo $_currentLocation");
   }
 }
 
