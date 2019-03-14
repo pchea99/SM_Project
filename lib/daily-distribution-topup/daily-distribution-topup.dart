@@ -227,7 +227,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       ..stock.stockInHandBeforeTodayWork = double.parse(_controllerRemainStock.text)
       ..stock.stockTopUpDuringTodayWork = double.parse(_controllerStockTopUp.text)
       ..stock.stockTeamLeaderTakingBackFromByAgent = double.parse(_controllerStockTeamLeader.text)
-      ..stock.remainStockForTomorrowWorkAgent = double.parse(_controllerRemainStock.text)
+      ..stock.remainingStockForTomorrowWorkByAgent = double.parse(_controllerRemainStock.text)
     ;
 
     NetworkService.insertStockHistoryByAgent(_stockControlHistoryByAgent);
@@ -263,9 +263,10 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       ;
 
       if(_txtAgentNo == _dailyDistributionTopUp.agent.agentNo){
+        summary.agentNumber -= 1;
         summary.stock.totalTopup -= _dailyDistributionTopUp.stock.topup;
         summary.stock.totalDistribution -= _dailyDistributionTopUp.stock.simDistribution;
-        summary.stock.remainStockAgent -= _dailyDistributionTopUp.stock.remainStockAgent;
+        summary.stock.remainStockAgent -= _dailyDistributionTopUp.stock.remainingStockForTomorrowWorkByAgent;
       }
 
       _dailySummary = summary;
@@ -419,7 +420,6 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         _onSetState();
       }else{
         _dailyDistributionTopUp = data;
-        print("DTU: $_dailyDistributionTopUp");
       }
     }).catchError((err){
       print("err: $err");

@@ -9,7 +9,6 @@ class Stock{
   double _stockInHandBeforetodayWork;
   double _stockTopUpDuringTodayWork;
   double _stockTeamLeaderTakingBackFromByAgent;
-  double _remainStockFTW;
   double _initialStockInHandFTL;
   double _remainStockTLFY;
   double _simStockReceivedBA;
@@ -49,10 +48,10 @@ class Stock{
     _totalRemainStock = value;
   }
 
-  double get stockTeamLeaderTakingBackFromByAgent => _remainStockTeamLeader;
+  double get stockTeamLeaderTakingBackFromByAgent => _stockTeamLeaderTakingBackFromByAgent;
 
   set stockTeamLeaderTakingBackFromByAgent(double value) {
-    _remainStockTeamLeader = value;
+    _stockTeamLeaderTakingBackFromByAgent = value;
   }
 
   double get remainingStockForTomorrowWorkByAgent => _remainingStockForTomorrowWorkByAgent;
@@ -115,12 +114,6 @@ class Stock{
     _initialStockInHandFTL = value;
   }
 
-  double get remainStockForTomorrowWorkAgent => _remainStockFTW;
-
-  set remainStockForTomorrowWorkAgent(double value) {
-    _remainStockFTW = value;
-  }
-
   double get stockReturnFromAgentToday => _stockTeamLeaderTakingBackFromByAgent;
 
   set stockReturnFromAgentToday(double value) {
@@ -151,12 +144,6 @@ class Stock{
     _simDistribution = value;
   }
 
-  double get remainStockFTW => _remainStockFTW;
-
-  set remainStockFTW(double value) {
-    _remainStockFTW = value;
-  }
-
   double get remainStockTeamLeader => _remainStockTeamLeader;
 
   set remainStockTeamLeader(double value) {
@@ -171,6 +158,7 @@ class Stock{
 
   @override
   String toString() {
-    return 'Stock{_simDistribution: $_simDistribution, _topup: $_topup, _stockInHandBTW: $_stockInHandBeforetodayWork, _stockTopupDTW: $_stockTopUpDuringTodayWork, _stockReturnFromAgentToday: $_stockTeamLeaderTakingBackFromByAgent, _remainStockFTW: $_remainStockFTW, _initialStockInHandFTL: $_initialStockInHandFTL, _remainStockTLFY: $_remainStockTLFY, _simStockReceivedBA: $_simStockReceivedBA, _stockDeliveredBTA: $_stockDeliveredBTA, _totalStockAllocatedTAA: $_totalStockAllocatedTAA, _totalStockReturnTLBT: $_totalStockReturnTLBT, _remainStockTLFT: $_remainStockTLFT, _totalDistribution: $_totalDistribution, _totalTopup: $_totalTopup, _remainStockAgent: $_remainStockAgent, _remainStockTeamLeader: $_remainStockTeamLeader, _totalRemainStock: $_totalRemainStock, _remainStockFTWWA: $_remainingStockForTomorrowWorkByAgent}';
+    return 'Stock{_simDistribution: $_simDistribution, _topup: $_topup, _stockInHandBeforetodayWork: $_stockInHandBeforetodayWork, _stockTopUpDuringTodayWork: $_stockTopUpDuringTodayWork, _stockTeamLeaderTakingBackFromByAgent: $_stockTeamLeaderTakingBackFromByAgent, _initialStockInHandFTL: $_initialStockInHandFTL, _remainStockTLFY: $_remainStockTLFY, _simStockReceivedBA: $_simStockReceivedBA, _stockDeliveredBTA: $_stockDeliveredBTA, _totalStockAllocatedTAA: $_totalStockAllocatedTAA, _totalStockReturnTLBT: $_totalStockReturnTLBT, _remainStockTLFT: $_remainStockTLFT, _totalDistribution: $_totalDistribution, _totalTopup: $_totalTopup, _remainStockAgent: $_remainStockAgent, _remainStockTeamLeader: $_remainStockTeamLeader, _totalRemainStock: $_totalRemainStock, _remainingStockForTomorrowWorkByAgent: $_remainingStockForTomorrowWorkByAgent, _topUpAmount: $_topUpAmount}';
   }
+
 }

@@ -75,7 +75,6 @@ class DailySummaryDAO{
 
   @override
   String toString() {
-    return 'DailySummary{_team: $_team, _date: $_date, _address: $_address, _agentNo: $_agentNumber, _stock: $_stock}';
+    return 'DailySummaryDAO{_team: $_team, _date: $_date, _address: $_address, _agentNumber: $_agentNumber, _stock: $_stock}';
   }
-
 }

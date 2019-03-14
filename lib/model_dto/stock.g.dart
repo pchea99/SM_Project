@@ -21,7 +21,6 @@ Stock _$StockFromJson(Map<String, dynamic> json) {
     ..simStockReceivedByAssistant = (json['simStockReceivedBA'] as num)?.toDouble()
     ..remainStockTeamLeaderFromYesterday = (json['remainStockTLFY'] as num)?.toDouble()
     ..initialStockInHandForTeamLeader = (json['initialStockInHandFTL'] as num)?.toDouble()
-    ..remainStockForTomorrowWorkAgent = (json['remainStockFTW'] as num)?.toDouble()
     ..stockReturnFromAgentToday =
         (json['stockReturnFromAgentToday'] as num)?.toDouble()
     ..stockTopUpDuringTodayWork = (json['stockTopupDTW'] as num)?.toDouble()
@@ -44,7 +43,6 @@ Map<String, dynamic> _$StockToJson(Stock instance) => <String, dynamic>{
       'simStockReceivedBA': instance.simStockReceivedByAssistant,
       'remainStockTLFY': instance.remainStockTeamLeaderFromYesterday,
       'initialStockInHandFTL': instance.initialStockInHandForTeamLeader,
-      'remainStockFTW': instance.remainStockForTomorrowWorkAgent,
       'stockReturnFromAgentToday': instance.stockReturnFromAgentToday,
       'stockTopupDTW': instance.stockTopUpDuringTodayWork,
       'stockInHandBTW': instance.stockInHandBeforeTodayWork,
