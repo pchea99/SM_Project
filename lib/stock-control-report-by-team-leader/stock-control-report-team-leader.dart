@@ -151,6 +151,8 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     _controllerTotalStockAllocatedToAllAgent.text = _stockCRTL.stock.totalStockAllocatedToAllAgent.toString();
     _controllerTotalStockTeamLeaderTakingBackToday.text = _stockCRTL.stock.totalStockReturnTeamLeaderTakingBackToday.toString();
     _controllerRemainingStockAtTeamLeaderForToday.text = _stockCRTL.stock.remainStockTeamLeaderForToday.toString();
+    _controllerSIMStockReceivedByAssistant.text = _stockCRTL.stock.simStockReceivedByAssistant.toString();
+    _controllerStockDeliveredBackToAssistant.text = _stockCRTL.stock.stockDeliveredBackToAssistant.toString();
   }
 
   void _saveStockControlReportTeamLeader() async {
@@ -196,7 +198,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
       _dailySummary = new DailySummaryDAO()
         ..date = StringUtil.dateToDB(_date)
         ..team = _controllerTeam.text
-//        ..address.province = _province
+        ..address.province = ""
         ..agentNumber = 1
         ..stock.totalTopup = 0.0
         ..stock.totalDistribution = 0.0
@@ -208,7 +210,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
       DailySummaryDAO summary = new DailySummaryDAO()
         ..date = StringUtil.dateToDB(_date)
         ..team = _controllerTeam.text
-//        ..address.province = _province
+        ..address.province = _dailySummary.address.province
         ..agentNumber = _dailySummary.agentNumber
         ..stock.totalTopup = _dailySummary.stock.totalTopup
         ..stock.totalDistribution = _dailySummary.stock.totalDistribution
