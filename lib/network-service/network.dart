@@ -254,7 +254,6 @@ class NetworkService{
 
   static Future insertDailyRetailerMapping(DailyRetailerMappingDAO data){
     var completer = new Completer<String>();
-    print("ooooo ${data.toJson()}");
     NetworkService.db.reference()
         .child(NetworkService.dailyRetailerMappingDB)
         .child(StringUtil.dateChildDB(DateTime.now()))
