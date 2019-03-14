@@ -10,6 +10,7 @@ class MarketAuditReportDAO{
 
   MarketAuditReportDAO(){
     remark = new Remark();
+    gps = new Gps();
   }
 
   MarketAuditReportDAO.fromJson(Map json) {
