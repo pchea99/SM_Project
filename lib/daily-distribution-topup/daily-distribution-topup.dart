@@ -44,7 +44,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   StockControlHistoryByAgentDAO _stockControlHistoryByAgent;
   DailySummaryDAO _dailySummary;
   StockControlReportByTeamLeaderDAO _stockControlReportByTeamLeaderDAO;
-  DailyDistributionTopUpDAO _dailyDistributionTopUpDAO;
+  DailyDistributionTopUpDAO _dailyDistributionTopUp;
 
   @override
   void initState() {
@@ -262,10 +262,10 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.remainStockTeamLeader = 0.0
       ;
 
-      if(_txtAgentNo == _dailyDistributionTopUpDAO.agent.agentNo){
-        summary.stock.totalTopup -= _dailyDistributionTopUpDAO.stock.totalTopup;
-        summary.stock.totalDistribution -= _dailyDistributionTopUpDAO.stock.totalDistribution;
-        summary.stock.remainStockAgent -= _dailyDistributionTopUpDAO.stock.remainStockAgent;
+      if(_txtAgentNo == _dailyDistributionTopUp.agent.agentNo){
+        summary.stock.totalTopup -= _dailyDistributionTopUp.stock.topup;
+        summary.stock.totalDistribution -= _dailyDistributionTopUp.stock.simDistribution;
+        summary.stock.remainStockAgent -= _dailyDistributionTopUp.stock.remainStockAgent;
       }
 
       _dailySummary = summary;
@@ -308,9 +308,11 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.remainStockTeamLeaderForToday = 0.0
       ;
 
-      if(_txtAgentNo == _dailyDistributionTopUpDAO.agent.agentNo){
-        stockReport.stock.totalStockAllocatedToAllAgent -= _dailyDistributionTopUpDAO.stock.totalStockAllocatedToAllAgent;
-        stockReport.stock.totalStockReturnTeamLeaderTakingBackToday -= _dailyDistributionTopUpDAO.stock.totalStockReturnTeamLeaderTakingBackToday;
+      if(_txtAgentNo == _dailyDistributionTopUp.agent.agentNo){
+        stockReport.stock.totalStockAllocatedToAllAgent -=
+            _dailyDistributionTopUp.stock.stockTopUpDuringTodayWork;
+        stockReport.stock.totalStockReturnTeamLeaderTakingBackToday -=
+            _dailyDistributionTopUp.stock.stockTeamLeaderTakingBackFromByAgent;
       }
 
       _stockControlReportByTeamLeaderDAO = stockReport;
@@ -416,7 +418,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
         _onSetState();
       }else{
-        _dailyDistributionTopUpDAO = data;
+        _dailyDistributionTopUp = data;
+        print("DTU: $_dailyDistributionTopUp");
       }
     }).catchError((err){
       print("err: $err");
