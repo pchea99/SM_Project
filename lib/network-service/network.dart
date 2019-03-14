@@ -10,6 +10,7 @@ import 'package:sm_app/model_dao/routePlanDAO.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
 import 'package:sm_app/model_dao/stockControlReportByTeamLeaderDAO.dart';
 import 'package:sm_app/model_dto/agent.dart';
+import 'package:sm_app/utils/string-util.dart';
 
 class NetworkService{
   static final String dailyDistributionDB = "daily_distribution";
@@ -72,7 +73,7 @@ class NetworkService{
     return completer.future;
   }
 
-  static Future getStockByTeamAgent(String date, String teamNo, String agentNo){
+  static Future<StockControlHistoryByAgentDAO> getStockByTeamAgent(String date, String teamNo, String agentNo){
     var completer = new Completer<StockControlHistoryByAgentDAO>();
     NetworkService.db.reference()
         .child(NetworkService.stockControlHistoryByAgentDB)
@@ -241,7 +242,7 @@ class NetworkService{
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.dailyFeedbacksDB)
-        .child(data.feedback.date)
+        .child(StringUtil.dateChildDB(DateTime.now()))
         .set(data.toJson()).then((_){
       completer.complete("success");
     }).catchError((err){
@@ -255,7 +256,7 @@ class NetworkService{
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.dailyRetailerMappingDB)
-        .child(data.date)
+        .child(StringUtil.dateChildDB(DateTime.now()))
         .set(data.toJson()).then((_){
       completer.complete("success");
     }).catchError((err){

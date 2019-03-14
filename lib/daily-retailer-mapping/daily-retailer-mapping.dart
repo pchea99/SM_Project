@@ -208,28 +208,29 @@ class _DailyRetailerMappingState extends State<DailyRetailerMapping> {
   }
 
   void _saveToDB() {
-    SpinnerDialog.onSpinner(context);
-//    _date = DateFormat('dd-MM-yyyy hh:mm:ss').add_j().format(DateTime.now());
+    if(_radioValue == 0) {
+      SpinnerDialog.onSpinner(context);
 
-    DailyRetailerMappingDAO data = new DailyRetailerMappingDAO()
-      ..teamNo = _controllerTeam.text
-      ..date = StringUtil.dateToDB(_date)
-      ..anotherRetailer = _radioValue == 0 ? 'yes' : 'no'
-      ..address.province = _txtProvince
-      ..address.district = _controllerDistrict.text
-      ..address.commune = _controllerCommune.text
-      ..address.village = _controllerVillage.text
-      ..latitude = _controllerLatitude.text
-      ..longtitude = _controllerLongtitude.text
-      ..retailerName = _controllerRetailerName.text
-      ..retailerPhone = _controllerRetailerPhone.text
-    ;
+      DailyRetailerMappingDAO data = new DailyRetailerMappingDAO()
+        ..teamNo = _controllerTeam.text
+        ..date = StringUtil.dateToDB(_date)
+        ..anotherRetailer = 'yes'
+        ..address.province = _txtProvince
+        ..address.district = _controllerDistrict.text
+        ..address.commune = _controllerCommune.text
+        ..address.village = _controllerVillage.text
+        ..gps.latitude = _controllerLatitude.text
+        ..gps.longtitude = _controllerLongtitude.text
+        ..retailerName = _controllerRetailerName.text
+        ..retailerPhone = _controllerRetailerPhone.text
+      ;
 
-    NetworkService.insertDailyRetailerMapping(data).then((value){
-      Navigator.pop(context);
-      Navigator.pop(context);
-    }).catchError((err){
-      Navigator.pop(context);
-    });
+      NetworkService.insertDailyRetailerMapping(data).then((value) {
+        Navigator.pop(context);
+        Navigator.pop(context);
+      }).catchError((err) {
+        Navigator.pop(context);
+      });
+    }
   }
 }

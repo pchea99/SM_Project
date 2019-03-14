@@ -17,4 +17,8 @@ class StringUtil{
   static String dateToDB(date){
     return DateFormat('dd-MM-yyyy').format(date);
   }
+
+  static String dateChildDB(date){
+    return DateFormat('yyyyMMddhhmmss').format(date);
+  }
 }

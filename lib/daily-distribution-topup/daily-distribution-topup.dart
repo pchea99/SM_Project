@@ -44,7 +44,6 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   StockControlHistoryByAgentDAO _stockControlHistoryByAgent;
   DailySummaryDAO _dailySummary;
   StockControlReportByTeamLeaderDAO _stockControlReportByTeamLeaderDAO;
-//  String _province;
 
   @override
   void initState() {
@@ -255,7 +254,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       _dailySummary = new DailySummaryDAO()
         ..date = StringUtil.dateToDB(_date)
         ..team = _controllerTeam.text
-//        ..address.province = _province
+        ..address.province = ""
         ..agentNumber = 1
         ..stock.totalTopup = double.parse(_controllerTopUp.text)
         ..stock.totalDistribution = double.parse(_controllerSIMDistribution.text)
@@ -271,7 +270,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       DailySummaryDAO summary = new DailySummaryDAO()
         ..date = StringUtil.dateToDB(_date)
         ..team = _controllerTeam.text
-//        ..address.province = _province
+        ..address.province = _dailySummary.address.province
         ..agentNumber = _dailySummary.agentNumber + distribution
         ..stock.totalTopup = double.parse(_controllerTopUp.text) + _dailySummary.stock.totalTopup
         ..stock.totalDistribution = double.parse(_controllerSIMDistribution.text) + _dailySummary.stock.totalDistribution
@@ -328,11 +327,11 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   _remainStock(){
     double remain = 0.0;
     remain =
-        (SafeValue.getSafeDouble(_controllerStockInHand.text)
+        SafeValue.getSafeDouble(_controllerStockInHand.text)
+            + SafeValue.getSafeDouble(_controllerStockTopUp.text)
             - SafeValue.getSafeDouble(_controllerSIMDistribution.text)
-        ) + (SafeValue.getSafeDouble(_controllerSIMDistribution.text)
             - SafeValue.getSafeDouble(_controllerStockTeamLeader.text)
-        )
+
     ;
     _controllerRemainStock.text = remain.toString();
 
@@ -345,10 +344,10 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         route: ListViewAgent(
             teamNo: SharedPreferenceUtils.sharedUser.teamNo)
     );
+
     if(callback != null){
       _txtAgentNo = callback.agentNo;
       _controllerAgentName.text = callback.agentNameEn;
-      //_province = callback.province;
       _getStockInHand();
       _getDailySummary();
       _getStockControlReportTeamLeader();
@@ -381,7 +380,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         StringUtil.dateToDB(_date.subtract(const Duration(days: 1))),
         _controllerTeam.text, _txtAgentNo
     ).then((data){
-      _controllerStockInHand.text = data.stock.stockInHandBeforeTodayWork.toString();
+      _controllerStockInHand.text = data.stock.remainingStockForTomorrowWorkByAgent.toString();
       _onSetState();
     });
   }

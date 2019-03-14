@@ -304,37 +304,41 @@ class _DailyFeedbackState extends State<DailyFeedback> {
   }
 
   void _saveToDB() {
-    SpinnerDialog.onSpinner(context);
+    if(_radioValueFeedback == 0) {
+      SpinnerDialog.onSpinner(context);
 
-    DailyFeedbackDAO data = new DailyFeedbackDAO()
-      ..feedback.address.province = _txtProvince
-      ..feedback.team = _controllerTeamNo.text
-      ..feedback.date = StringUtil.dateToDB(_date)
-      ..feedback.address.district = _controllerDistrict.text
-      ..feedback.address.commune = _controllerCommune.text
-      ..feedback.address.village = _controllerVillage.text
-      ..feedback.smartCoverageDownload = _controllerSmartDownload.text
-      ..feedback.smartCoverageUpload = _controllerSmartUpload.text
-      ..feedback.otherIssueRemark = _controllerAnotherIssue.text
-      ..feedback.issue = _radioValueIssue == 0 ? 'yes' : 'no'
-      ..feedback.anotherFeedback = _radioValueFeedback == 0 ? 'yes' : 'no'
-      ..feedback.brokenPhone = _radioValueBrokenPhone == 0 ? 'yes' : 'no'
-      ..feedback.slowPhone = _radioValueSlowPhone == 0 ? 'yes' : 'no'
-      ..feedback.brokenApp = _radioValueBrokenApp == 0 ? 'yes' : 'no'
-      ..feedback.noCoverage = _radioValueNoCoverage == 0 ? 'yes' : 'no'
-      ..feedback.unrecognizedSIM = _radioValueUnrecognizeSIM == 0 ? 'yes' : 'no'
-      ..feedback.weather = _radioValueWeather == 0 ? 'yes' : 'no'
-      ..feedback.noPeople = _radioValueNoPeople == 0 ? 'yes' : 'no'
-      ..feedback.overVisited = _radioValueOverVisited == 0 ? 'yes' : 'no'
-      ..feedback.gps.latitude = _controllerLatitude.text
-      ..feedback.gps.longtitude = _controllerLongtitude.text
-    ;
+      DailyFeedbackDAO data = new DailyFeedbackDAO()
+        ..feedback.address.province = _txtProvince
+        ..feedback.team = _controllerTeamNo.text
+        ..feedback.date = StringUtil.dateToDB(_date)
+        ..feedback.address.district = _controllerDistrict.text
+        ..feedback.address.commune = _controllerCommune.text
+        ..feedback.address.village = _controllerVillage.text
+        ..feedback.smartCoverageDownload = _controllerSmartDownload.text
+        ..feedback.smartCoverageUpload = _controllerSmartUpload.text
+        ..feedback.otherIssueRemark = _controllerAnotherIssue.text
+        ..feedback.issue = _radioValueIssue == 0 ? 'yes' : 'no'
+        ..feedback.anotherFeedback = _radioValueFeedback == 0 ? 'yes' : 'no'
+        ..feedback.brokenPhone = _radioValueBrokenPhone == 0 ? 'yes' : 'no'
+        ..feedback.slowPhone = _radioValueSlowPhone == 0 ? 'yes' : 'no'
+        ..feedback.brokenApp = _radioValueBrokenApp == 0 ? 'yes' : 'no'
+        ..feedback.noCoverage = _radioValueNoCoverage == 0 ? 'yes' : 'no'
+        ..feedback.unrecognizedSIM = _radioValueUnrecognizeSIM == 0
+            ? 'yes'
+            : 'no'
+        ..feedback.weather = _radioValueWeather == 0 ? 'yes' : 'no'
+        ..feedback.noPeople = _radioValueNoPeople == 0 ? 'yes' : 'no'
+        ..feedback.overVisited = _radioValueOverVisited == 0 ? 'yes' : 'no'
+        ..feedback.gps.latitude = _controllerLatitude.text
+        ..feedback.gps.longtitude = _controllerLongtitude.text
+      ;
 
-    NetworkService.insertDailyFeedback(data).then((value){
-      Navigator.pop(context);
-      Navigator.pop(context);
-    }).catchError((err){
-      Navigator.pop(context);
-    });
+      NetworkService.insertDailyFeedback(data).then((value) {
+        Navigator.pop(context);
+        Navigator.pop(context);
+      }).catchError((err) {
+        Navigator.pop(context);
+      });
+    }
   }
 }

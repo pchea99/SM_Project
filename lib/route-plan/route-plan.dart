@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sm_app/model_dao/dailySummaryDAO.dart';
 import 'package:sm_app/model_dao/routePlanDAO.dart';
 import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/string-res.dart';
@@ -27,6 +28,7 @@ class _RoutePlanState extends State<RoutePlan> {
   int _groupValue;
   DateTime _date;
   RoutePlanDAO _data;
+  DailySummaryDAO _dailySummary;
 
   @override
   void initState() {
@@ -39,6 +41,7 @@ class _RoutePlanState extends State<RoutePlan> {
     _controllerPlannedCommune = new TextEditingController();
     _controllerPlannedVillage = new TextEditingController();
     _getRoutePlan();
+    _getDailySummary();
   }
 
   @override
@@ -104,6 +107,7 @@ class _RoutePlanState extends State<RoutePlan> {
     ;
 
     NetworkService.insertRoutePlan(_data).then((value){
+      _saveDailySummary();
       Navigator.pop(context);
     }).catchError((err){
       Navigator.pop(context);
@@ -149,7 +153,51 @@ class _RoutePlanState extends State<RoutePlan> {
   void onSelectedDate(value) {
     _date = value;
     _getRoutePlan();
+    _getDailySummary();
     _clear();
+  }
+
+  void _getDailySummary() {
+    _dailySummary = null;
+    NetworkService.getSummaryByTeam(
+        StringUtil.dateToDB(_date),
+        SharedPreferenceUtils.sharedUser.teamNo
+    ).then((data){
+      if(data != null){
+        _dailySummary = data;
+      }
+    });
+  }
+
+  void _saveDailySummary() {
+    if(_dailySummary == null){
+      _dailySummary = new DailySummaryDAO()
+        ..date = StringUtil.dateToDB(_date)
+        ..team = SharedPreferenceUtils.sharedUser.teamNo
+        ..address.province = ""
+        ..agentNumber = 1
+        ..stock.totalTopup = 0.0
+        ..stock.totalDistribution = 0.0
+        ..stock.remainStockAgent = 0.0
+        ..stock.remainStockTeamLeader = 0.0
+        ..stock.totalRemainStock = 0.0
+      ;
+    }else{
+      DailySummaryDAO summary = new DailySummaryDAO()
+        ..date = _dailySummary.date
+        ..team = _dailySummary.team
+        ..address.province = _dailySummary.address.province
+        ..agentNumber = _dailySummary.agentNumber
+        ..stock.totalTopup = _dailySummary.stock.totalTopup
+        ..stock.totalDistribution = _dailySummary.stock.totalDistribution
+        ..stock.remainStockAgent = _dailySummary.stock.remainStockAgent
+        ..stock.remainStockTeamLeader = 0.0
+      ;
+
+      _dailySummary = summary;
+    }
+
+    NetworkService.insertDailySummary(_dailySummary);
   }
 
   void _onSetState(){

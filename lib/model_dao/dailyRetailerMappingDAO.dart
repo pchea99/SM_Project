@@ -1,20 +1,24 @@
 import 'package:sm_app/model_dto/address.dart';
+import 'package:sm_app/model_dto/gps.dart';
 
 class DailyRetailerMappingDAO{
   String _date;
   String _anotherRetailer;
   String _teamNo;
-  String _latitude;
-  String _longtitude;
+  Gps _gps;
   Address _address;
   String _retailerName;
   String _retailerPhone;
 
   DailyRetailerMappingDAO(){
    address = new Address();
+   gps = new Gps();
   }
 
   DailyRetailerMappingDAO.fromJson(Map json){
+    address = new Address();
+    gps = new Gps();
+
     teamNo = json['team_no'];
     anotherRetailer = json['another_retailer'];
     date = json['date'];
@@ -22,8 +26,8 @@ class DailyRetailerMappingDAO{
     address.district = json['district'];
     address.commune = json['commune'];
     address.village = json['village'];
-    latitude = json['tatitude'];
-    longtitude = json['longtitude'];
+    gps.latitude = json['tatitude'];
+    gps.longtitude = json['longtitude'];
     retailerName = json['retailer_name'];
     retailerPhone = json['retailer_phone'];
   }
@@ -36,8 +40,8 @@ class DailyRetailerMappingDAO{
     'district': address.district,
     'commune': address.commune,
     'village': address.village,
-    'tatitude': latitude,
-    'longtitude': longtitude,
+    'tatitude': gps.latitude,
+    'longtitude': gps.longtitude,
     'retailer_name': retailerName,
     'retailer_phone': retailerPhone
   };
@@ -66,18 +70,6 @@ class DailyRetailerMappingDAO{
     _address = value;
   }
 
-  String get longtitude => _longtitude;
-
-  set longtitude(String value) {
-    _longtitude = value;
-  }
-
-  String get latitude => _latitude;
-
-  set latitude(String value) {
-    _latitude = value;
-  }
-
   String get teamNo => _teamNo;
 
   set teamNo(String value) {
@@ -88,6 +80,12 @@ class DailyRetailerMappingDAO{
 
   set retailerPhone(String value) {
     _retailerPhone = value;
+  }
+
+  Gps get gps => _gps;
+
+  set gps(Gps value) {
+    _gps = value;
   }
 
 
