@@ -44,6 +44,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   StockControlHistoryByAgentDAO _stockControlHistoryByAgent;
   DailySummaryDAO _dailySummary;
   StockControlReportByTeamLeaderDAO _stockControlReportByTeamLeaderDAO;
+  DailyDistributionTopUpDAO _dailyDistributionTopUpDAO;
 
   @override
   void initState() {
@@ -75,24 +76,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       _controllerAgentName.text = SharedPreferenceUtils.sharedUser.firstName +" "+
           SharedPreferenceUtils.sharedUser.lastName;
 
-      NetworkService.getDailyDistributionTopUp(
-        StringUtil.dateToDB(_date),
-        SharedPreferenceUtils.sharedUser.teamNo,
-        _txtAgentNo
-      ).then((data){
-        _controllerSIMDistribution.text = data.stock.simDistribution.toString();
-        _controllerTopUp.text = data.stock.topup.toString();
-        _controllerTopUpAmount.text = data.stock.topUpAmount.toString();
-        _controllerStockInHand.text = data.stock.stockInHandBeforeTodayWork.toString();
-        _controllerStockTopUp.text = data.stock.stockTopUpDuringTodayWork.toString();
-        _controllerStockTeamLeader.text = data.stock.stockTeamLeaderTakingBackFromByAgent.toString();
-        _controllerRemainStock.text = data.stock.remainingStockForTomorrowWorkByAgent.toString();
-        _controllerRemark.text = data.remark;
-
-        _onSetState();
-      }).catchError((err){
-        print("err: $err");
-      });
+      _getDailyDistributionAndTopUp();
     }
   }
 
@@ -278,6 +262,12 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.remainStockTeamLeader = 0.0
       ;
 
+      if(_txtAgentNo == _dailyDistributionTopUpDAO.agent.agentNo){
+        summary.stock.totalTopup -= _dailyDistributionTopUpDAO.stock.totalTopup;
+        summary.stock.totalDistribution -= _dailyDistributionTopUpDAO.stock.totalDistribution;
+        summary.stock.remainStockAgent -= _dailyDistributionTopUpDAO.stock.remainStockAgent;
+      }
+
       _dailySummary = summary;
     }
 
@@ -318,6 +308,11 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.remainStockTeamLeaderForToday = 0.0
       ;
 
+      if(_txtAgentNo == _dailyDistributionTopUpDAO.agent.agentNo){
+        stockReport.stock.totalStockAllocatedToAllAgent -= _dailyDistributionTopUpDAO.stock.totalStockAllocatedToAllAgent;
+        stockReport.stock.totalStockReturnTeamLeaderTakingBackToday -= _dailyDistributionTopUpDAO.stock.totalStockReturnTeamLeaderTakingBackToday;
+      }
+
       _stockControlReportByTeamLeaderDAO = stockReport;
     }
 
@@ -351,6 +346,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       _getStockInHand();
       _getDailySummary();
       _getStockControlReportTeamLeader();
+      _getDailyDistributionAndTopUp();
       _onSetState();
     }
   }
@@ -395,6 +391,35 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         _stockControlReportByTeamLeaderDAO = data;
       }
       _onSetState();
+    });
+  }
+
+  void _getDailyDistributionAndTopUp() {
+    NetworkService.getDailyDistributionTopUp(
+        StringUtil.dateToDB(_date),
+        SharedPreferenceUtils.sharedUser.teamNo,
+        _txtAgentNo
+    ).then((data){
+      if(SharedPreferenceUtils.isAgent()) {
+        _controllerSIMDistribution.text = data.stock.simDistribution.toString();
+        _controllerTopUp.text = data.stock.topup.toString();
+        _controllerTopUpAmount.text = data.stock.topUpAmount.toString();
+        _controllerStockInHand.text =
+            data.stock.stockInHandBeforeTodayWork.toString();
+        _controllerStockTopUp.text =
+            data.stock.stockTopUpDuringTodayWork.toString();
+        _controllerStockTeamLeader.text =
+            data.stock.stockTeamLeaderTakingBackFromByAgent.toString();
+        _controllerRemainStock.text =
+            data.stock.remainingStockForTomorrowWorkByAgent.toString();
+        _controllerRemark.text = data.remark;
+
+        _onSetState();
+      }else{
+        _dailyDistributionTopUpDAO = data;
+      }
+    }).catchError((err){
+      print("err: $err");
     });
   }
 }

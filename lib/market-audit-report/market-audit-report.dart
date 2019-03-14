@@ -44,6 +44,8 @@ class _MarketAuditReportState extends State<MarketAuditReport> {
     _controllerDate = new TextEditingController(
         text: formatDate(_date, StringUtil.dateFormats())
     );
+    _controllerLatitude = new TextEditingController();
+    _controllerLongtitude = new TextEditingController();
 
     initPlatformState();
   }
