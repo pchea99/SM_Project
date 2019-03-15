@@ -30,18 +30,24 @@ class SelectBox{
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  new Radio(
-                    value: 0,
-                    groupValue: groupValue,
-                    onChanged: isEnable == null || isEnable ? onChanged : null,
-                  ),
-                  Text(StringRes.yes),
-                  new Radio(
-                    value: 1,
-                    groupValue: groupValue,
-                    onChanged: isEnable == null || isEnable ? onChanged : null,
-                  ),
-                  Text(StringRes.no)
+                  Row(children: <Widget>[
+                    new Radio(
+                      value: 0,
+                      groupValue: groupValue,
+                      onChanged: isEnable == null || isEnable ? onChanged : null,
+                    ),
+                    Text(StringRes.yes),
+                  ],),
+                  Row(
+                    children: <Widget>[
+                      new Radio(
+                        value: 1,
+                        groupValue: groupValue,
+                        onChanged: isEnable == null || isEnable ? onChanged : null,
+                      ),
+                      Text(StringRes.no)
+                    ],
+                  )
                 ],
               )
             ],

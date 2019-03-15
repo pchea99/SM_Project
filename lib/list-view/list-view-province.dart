@@ -44,6 +44,7 @@ class _ListViewProvinceState extends State<ListViewProvince> {
           Navigator.pop(context, name);
         },
       ),
+      elevation: 8.0,
     );
   }
 

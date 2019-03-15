@@ -28,7 +28,7 @@ class StringRes{
   static final String topUp = "លក់កាតទូរស័ព្ទបាន";
   static final String topUpAmount = "លក់កាតទូរស័ព្ទបាន \$";
   static final String stockInHandBTW = "ស្តុកស៊ីមក្នុងដៃ មុនចេញធ្វើការថ្ងៃនេះ";
-  static final String stockTopUpDTW = "ស្តុកកាតបញ្ចូលលុយក្នុងដៃ មុនចេញធ្វើការថ្ងៃនេះ";
+  static final String stockTopUpDTW = "ស្តុកស៊ីមបន្ថែម មុនចេញធ្វើការថ្ងៃនេះ";
   static final String stockTeamLeaderTBFAT = "ស្តុកដែលមេក្រុមយកពី កូនក្រុមនេះ មកវិញថ្ងៃនេះ";
   static final String remainingStock = "ស្តុកដែលកូនក្រុមនេះសល់ក្នុងដៃ សម្រាប់ធ្វើការថ្ងៃស្អែក";
   static final String remark ="កំណត់សម្គាល់";

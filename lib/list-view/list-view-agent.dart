@@ -45,6 +45,7 @@ class _ListViewAgentState extends State<ListViewAgent> {
           );
         },
       ),
+      elevation: 8.0,
     );
   }
 

@@ -5,6 +5,7 @@ import 'package:sm_app/model_dao/dailySummaryDAO.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
 import 'package:sm_app/model_dao/stockControlReportByTeamLeaderDAO.dart';
 import 'package:sm_app/network-service/network.dart';
+import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/app-bar.dart';
 import 'package:sm_app/utils/button-save.dart';
