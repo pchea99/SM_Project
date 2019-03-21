@@ -77,7 +77,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       _controllerAgentName.text = SharedPreferenceUtils.sharedUser.firstName +" "+
           SharedPreferenceUtils.sharedUser.lastName;
 
-//      _getDailyDistributionAndTopUp();
+      _getDailyDistributionAndTopUp();
     }
   }
 
@@ -350,7 +350,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       _getStockInHand();
       _getDailySummary();
       _getStockControlReportTeamLeader();
-      _getDailyDistributionAndTopUp();
+//      _getDailyDistributionAndTopUp();
       _onSetState();
     }
   }
