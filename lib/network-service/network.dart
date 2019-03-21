@@ -73,6 +73,34 @@ class NetworkService{
     return completer.future;
   }
 
+  static Future<StockControlHistoryByAgentDAO> getStockStockInHand(String teamNo, String agentNo){
+    var completer = new Completer<StockControlHistoryByAgentDAO>();
+    NetworkService.db.reference()
+        .child(NetworkService.stockControlHistoryByAgentDB)
+        .orderByChild("team_no").equalTo(teamNo)
+        .once().then((snapshot){
+      StockControlHistoryByAgentDAO stockDAO;
+      if(snapshot != null && snapshot.value != null) {
+        List<StockControlHistoryByAgentDAO> stocks = [];
+        snapshot.value.forEach((key, value) {
+          StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO.fromJson(value);
+          if (stock.agent.agentNo == agentNo) {
+            stocks.add(stock);
+          }
+        });
+
+        stocks.sort((l, r)=> l.date.compareTo(r.date));
+        stockDAO = stocks.last;
+      }
+
+      completer.complete(stockDAO);
+    }).catchError((err){
+      completer.completeError(err);
+    });
+
+    return completer.future;
+  }
+
   static Future<StockControlHistoryByAgentDAO> getStockByTeamAgent(String date, String teamNo, String agentNo){
     var completer = new Completer<StockControlHistoryByAgentDAO>();
     NetworkService.db.reference()
@@ -270,7 +298,7 @@ class NetworkService{
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.stockControlReportByTeamLeaderDB)
-        .child(data.date)
+        .child(data.date+"-"+data.team)
         .set(data.toJson()).then((_){
       completer.complete("success");
     }).catchError((err){

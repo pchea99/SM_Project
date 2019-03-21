@@ -77,7 +77,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       _controllerAgentName.text = SharedPreferenceUtils.sharedUser.firstName +" "+
           SharedPreferenceUtils.sharedUser.lastName;
 
-      _getDailyDistributionAndTopUp();
+//      _getDailyDistributionAndTopUp();
     }
   }
 
@@ -263,12 +263,12 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.remainStockTeamLeader = 0.0
       ;
 
-      if(_txtAgentNo == _dailyDistributionTopUp.agent.agentNo){
+      /*if(_dailyDistributionTopUp != null && _txtAgentNo == _dailyDistributionTopUp.agent.agentNo){
         summary.agentNumber -= 1;
         summary.stock.totalTopup -= _dailyDistributionTopUp.stock.topup;
         summary.stock.totalDistribution -= _dailyDistributionTopUp.stock.simDistribution;
         summary.stock.remainStockAgent -= _dailyDistributionTopUp.stock.remainingStockForTomorrowWorkByAgent;
-      }
+      }*/
 
       _dailySummary = summary;
     }
@@ -310,12 +310,12 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..stock.remainStockTeamLeaderForToday = 0.0
       ;
 
-      if(_txtAgentNo == _dailyDistributionTopUp.agent.agentNo){
+      /*if(_dailyDistributionTopUp != null && _txtAgentNo == _dailyDistributionTopUp.agent.agentNo){
         stockReport.stock.totalStockAllocatedToAllAgent -=
             _dailyDistributionTopUp.stock.stockTopUpDuringTodayWork;
         stockReport.stock.totalStockReturnTeamLeaderTakingBackToday -=
             _dailyDistributionTopUp.stock.stockTeamLeaderTakingBackFromByAgent;
-      }
+      }*/
 
       _stockControlReportByTeamLeaderDAO = stockReport;
     }
@@ -376,10 +376,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
 
   void _getStockInHand(){
     _controllerStockInHand.text = "";
-    NetworkService.getStockByTeamAgent(
-        StringUtil.dateToDB(_date.subtract(const Duration(days: 1))),
-        _controllerTeam.text, _txtAgentNo
-    ).then((data){
+    NetworkService.getStockStockInHand(_controllerTeam.text, _txtAgentNo).then((data){
       _controllerStockInHand.text = data.stock.remainingStockForTomorrowWorkByAgent.toString();
       _onSetState();
     });
