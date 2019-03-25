@@ -169,8 +169,6 @@ class NetworkService{
               if (stock.team == teamNo) {
                 stocks.add(stock);
               }
-
-              stocks.add(stock);
             });
 
             stocks.sort((l, r) => l.date.compareTo(r.date));
