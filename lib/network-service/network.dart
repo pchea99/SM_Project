@@ -153,34 +153,33 @@ class NetworkService{
 
   static Future<StockControlReportByTeamLeaderDAO> getRemainingStockYesterday(String teamNo){
     var completer = new Completer<StockControlReportByTeamLeaderDAO>();
-    var date = DateTime.now().subtract(const Duration(days: 10));
+    var startDate = StringUtil.dateToDB(DateTime.now().subtract(const Duration(days: 10)));
+
     NetworkService.db.reference()
         .child(NetworkService.stockControlReportByTeamLeaderDB)
-        .orderByChild("team_no")
-        .equalTo(teamNo)
-        /*.startAt(date.toString())
-        .endAt(DateTime.now().toString())*/
-        .once().then((snapshot){
-      StockControlReportByTeamLeaderDAO stockDAO;
-      List<StockControlReportByTeamLeaderDAO> stocks = [];
-      if(snapshot != null && snapshot.value != null) {
-        snapshot.value.forEach((key, value) {
-          StockControlReportByTeamLeaderDAO stock = StockControlReportByTeamLeaderDAO.fromJson(value);
-          /*if (stock.team == teamNo) {
-            stocks.add(stock);
-          }*/
+        .startAt(startDate)
+        .orderByChild("date")
+        .once().then((snapshot) {
+          StockControlReportByTeamLeaderDAO stockDAO;
+          List<StockControlReportByTeamLeaderDAO> stocks = [];
+          if (snapshot != null && snapshot.value != null) {
+            snapshot.value.forEach((key, value) {
+              StockControlReportByTeamLeaderDAO stock = StockControlReportByTeamLeaderDAO.fromJson(value);
+              if (stock.team == teamNo) {
+                stocks.add(stock);
+              }
 
-          stocks.add(stock);
+              stocks.add(stock);
+            });
+
+            stocks.sort((l, r) => l.date.compareTo(r.date));
+            stockDAO = stocks.last;
+          }
+
+          completer.complete(stockDAO);
+        }).catchError((err){
+          completer.completeError(err);
         });
-
-        stocks.sort((l, r)=> l.date.compareTo(r.date));
-        stockDAO = stocks.last;
-      }
-
-      completer.complete(stockDAO);
-    }).catchError((err){
-      completer.completeError(err);
-    });
 
     return completer.future;
   }
