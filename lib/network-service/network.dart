@@ -133,21 +133,21 @@ class NetworkService{
         .child(NetworkService.stockControlReportByTeamLeaderDB)
         .orderByChild("date").equalTo(date)
         .once().then((snapshot){
-      StockControlReportByTeamLeaderDAO stockDAO;
-      if(snapshot != null && snapshot.value != null) {
-        snapshot.value.forEach((key, value) {
-          StockControlReportByTeamLeaderDAO stock = StockControlReportByTeamLeaderDAO.fromJson(value);
-          if (stock.team == teamNo) {
-            stockDAO = stock;
-            return;
+          StockControlReportByTeamLeaderDAO stockDAO;
+          if(snapshot != null && snapshot.value != null) {
+            snapshot.value.forEach((key, value) {
+              StockControlReportByTeamLeaderDAO stock = StockControlReportByTeamLeaderDAO.fromJson(value);
+              if (stock.team == teamNo) {
+                stockDAO = stock;
+                return;
+              }
+            });
           }
-        });
-      }
 
-      completer.complete(stockDAO);
-    }).catchError((err){
-      completer.completeError(err);
-    });
+          completer.complete(stockDAO);
+        }).catchError((err){
+          completer.completeError(err);
+        });
 
     return completer.future;
   }
