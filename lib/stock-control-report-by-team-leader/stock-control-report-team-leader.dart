@@ -148,7 +148,6 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
 
   void _initData(){
     _controllerInitialStockInHandForTeamLeader.text = _stockCRTL.stock.initialStockInHandForTeamLeader.toString();
-    _controllerRemainingStockAtTeamLeaderFromYesterday.text = _stockCRTL.stock.remainStockTeamLeaderFromYesterday.toString();
     _controllerTotalStockAllocatedToAllAgent.text = _stockCRTL.stock.totalStockAllocatedToAllAgent.toString();
     _controllerTotalStockTeamLeaderTakingBackToday.text = _stockCRTL.stock.totalStockReturnTeamLeaderTakingBackToday.toString();
     _controllerRemainingStockAtTeamLeaderForToday.text = _stockCRTL.stock.remainStockTeamLeaderForToday.toString();
@@ -229,7 +228,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     NetworkService.getRemainingStockYesterday(_controllerTeam.text).then((stock){
       if(stock != null) {
         _controllerRemainingStockAtTeamLeaderFromYesterday.text =
-            stock.stock.remainStockTeamLeaderFromYesterday.toString();
+            stock.stock.remainStockTeamLeaderForToday.toString();
       }
     });
   }
