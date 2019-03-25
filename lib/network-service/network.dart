@@ -75,16 +75,17 @@ class NetworkService{
 
   static Future<StockControlHistoryByAgentDAO> getStockStockInHand(String teamNo, String agentNo){
     var completer = new Completer<StockControlHistoryByAgentDAO>();
+    var startDate = StringUtil.dateToDB(DateTime.now().subtract(const Duration(days: 10)));
     NetworkService.db.reference()
         .child(NetworkService.stockControlHistoryByAgentDB)
-        .orderByChild("team_no").equalTo(teamNo)
+        .orderByChild("date").startAt(startDate)
         .once().then((snapshot){
       StockControlHistoryByAgentDAO stockDAO;
       if(snapshot != null && snapshot.value != null) {
         List<StockControlHistoryByAgentDAO> stocks = [];
         snapshot.value.forEach((key, value) {
           StockControlHistoryByAgentDAO stock = StockControlHistoryByAgentDAO.fromJson(value);
-          if (stock.agent.agentNo == agentNo) {
+          if (stock.agent.agentNo == agentNo && teamNo == stock.team) {
             stocks.add(stock);
           }
         });
