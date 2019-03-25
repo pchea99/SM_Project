@@ -51,6 +51,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     _controllerRemainingStockAtTeamLeaderForToday = new TextEditingController();
     _getStockControlReportTeamLeader();
     _getDailySummary();
+    _getStockFromYesterday();
   }
 
   @override
@@ -222,6 +223,15 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     }
 
     NetworkService.insertDailySummary(_dailySummary);
+  }
+
+  void _getStockFromYesterday(){
+    NetworkService.getRemainingStockYesterday(_controllerTeam.text).then((stock){
+      if(stock != null) {
+        _controllerRemainingStockAtTeamLeaderFromYesterday.text =
+            stock.stock.remainStockTeamLeaderFromYesterday.toString();
+      }
+    });
   }
 
   void _onSetState() {
