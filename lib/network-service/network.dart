@@ -166,7 +166,7 @@ class NetworkService{
           if (snapshot != null && snapshot.value != null) {
             snapshot.value.forEach((key, value) {
               StockControlReportByTeamLeaderDAO stock = StockControlReportByTeamLeaderDAO.fromJson(value);
-              if (stock.team == teamNo) {
+              if (stock.team == teamNo && stock.date != StringUtil.dateToDB(DateTime.now())) {
                 stocks.add(stock);
               }
             });
