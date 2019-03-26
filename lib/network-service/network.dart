@@ -39,7 +39,6 @@ class NetworkService{
           agents.add(agent);
         });
       }
-
       completer.complete(agents);
     }).catchError((err) {
       completer.completeError(err);
