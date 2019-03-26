@@ -318,11 +318,10 @@ class NetworkService{
         .child(NetworkService.dailyRetailerMappingDB)
         .child(StringUtil.dateChildDB(DateTime.now()))
         .set(data.toJson()).then((_){
-      completer.complete("success");
-    }).catchError((err){
-      completer.complete("failed");
-    });
-
+          completer.complete("success");
+        }).catchError((err){
+          completer.complete("failed");
+        });
     return completer.future;
   }
 
