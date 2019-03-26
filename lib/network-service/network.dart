@@ -288,7 +288,7 @@ class NetworkService{
     var completer = new Completer<String>();
     NetworkService.db.reference()
         .child(NetworkService.dailySummaryDB)
-        .child(data.date)
+        .child(data.date +"-"+ data.team)
         .set(data.toJson()).then((_){
       completer.complete("success");
     }).catchError((err){
