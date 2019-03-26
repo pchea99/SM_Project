@@ -331,11 +331,10 @@ class NetworkService{
         .child(NetworkService.stockControlReportByTeamLeaderDB)
         .child(data.date+"-"+data.team)
         .set(data.toJson()).then((_){
-      completer.complete("success");
-    }).catchError((err){
-      completer.complete("failed");
-    });
-
+          completer.complete("success");
+        }).catchError((err){
+          completer.complete("failed");
+        });
     return completer.future;
   }
 
