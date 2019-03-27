@@ -49,9 +49,13 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     _controllerTotalStockAllocatedToAllAgent = new TextEditingController();
     _controllerTotalStockTeamLeaderTakingBackToday = new TextEditingController();
     _controllerRemainingStockAtTeamLeaderForToday = new TextEditingController();
+    _getData();
+  }
+
+  void _getData() async {
+    await _getStockFromYesterday();
     _getStockControlReportTeamLeader();
     _getDailySummary();
-    _getStockFromYesterday();
   }
 
   @override
@@ -150,9 +154,9 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     _controllerInitialStockInHandForTeamLeader.text = _stockCRTL.stock.initialStockInHandForTeamLeader.toString();
     _controllerTotalStockAllocatedToAllAgent.text = _stockCRTL.stock.totalStockAllocatedToAllAgent.toString();
     _controllerTotalStockTeamLeaderTakingBackToday.text = _stockCRTL.stock.totalStockReturnTeamLeaderTakingBackToday.toString();
-    _controllerRemainingStockAtTeamLeaderForToday.text = _stockCRTL.stock.remainStockTeamLeaderForToday.toString();
     _controllerSIMStockReceivedByAssistant.text = _stockCRTL.stock.simStockReceivedByAssistant.toString();
     _controllerStockDeliveredBackToAssistant.text = _stockCRTL.stock.stockDeliveredBackToAssistant.toString();
+//    _controllerRemainingStockAtTeamLeaderForToday.text = _stockCRTL.stock.remainStockTeamLeaderForToday.toString();
 
     _remainStockToday();
   }
@@ -225,8 +229,8 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     NetworkService.insertDailySummary(_dailySummary);
   }
 
-  void _getStockFromYesterday(){
-    NetworkService.getRemainingStockYesterday(_controllerTeam.text).then((stock){
+  Future _getStockFromYesterday() async {
+    await NetworkService.getRemainingStockYesterday(_controllerTeam.text).then((stock){
       if(stock != null) {
         _controllerRemainingStockAtTeamLeaderFromYesterday.text =
             stock.stock.remainStockTeamLeaderForToday.toString();
@@ -254,6 +258,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
           - _stockCRTL.stock.totalStockAllocatedToAllAgent
           + _stockCRTL.stock.totalStockReturnTeamLeaderTakingBackToday;
     }
+
     _controllerRemainingStockAtTeamLeaderForToday.text = amt.toString();
     _onSetState();
   }
