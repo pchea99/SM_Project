@@ -268,4 +268,5 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
       }
     });
   }
+
 }
