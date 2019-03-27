@@ -153,6 +153,8 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     _controllerRemainingStockAtTeamLeaderForToday.text = _stockCRTL.stock.remainStockTeamLeaderForToday.toString();
     _controllerSIMStockReceivedByAssistant.text = _stockCRTL.stock.simStockReceivedByAssistant.toString();
     _controllerStockDeliveredBackToAssistant.text = _stockCRTL.stock.stockDeliveredBackToAssistant.toString();
+
+    _remainStockToday();
   }
 
   void _saveStockControlReportTeamLeader() async {
@@ -172,8 +174,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
         ..team = _controllerTeam.text
         ..stock.initialStockInHandForTeamLeader =
             _stockCRTL.stock.initialStockInHandForTeamLeader
-        ..stock.remainStockTeamLeaderFromYesterday =
-            _stockCRTL.stock.remainStockTeamLeaderFromYesterday
+        ..stock.remainStockTeamLeaderFromYesterday = double.parse(_controllerRemainingStockAtTeamLeaderFromYesterday.text)
         ..stock.simStockReceivedByAssistant =
         double.parse(_controllerSIMStockReceivedByAssistant.text)
         ..stock.stockDeliveredBackToAssistant =
@@ -245,7 +246,7 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     double amt = 0.0;
     if (_stockCRTL != null) {
       amt = _stockCRTL.stock.initialStockInHandForTeamLeader
-          + _stockCRTL.stock.remainStockTeamLeaderFromYesterday
+          + double.parse(_controllerRemainingStockAtTeamLeaderFromYesterday.text)
           + (_controllerSIMStockReceivedByAssistant.text == null || _controllerSIMStockReceivedByAssistant.text.isEmpty
               ? 0 : double.parse(_controllerSIMStockReceivedByAssistant.text))
           - (_controllerStockDeliveredBackToAssistant.text == null || _controllerStockDeliveredBackToAssistant.text.isEmpty
