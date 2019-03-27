@@ -235,6 +235,8 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
         _controllerRemainingStockAtTeamLeaderFromYesterday.text =
             stock.stock.remainStockTeamLeaderForToday.toString();
       }
+    }).catchError((e){
+      _controllerRemainingStockAtTeamLeaderFromYesterday.text = "0";
     });
   }
 
