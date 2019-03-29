@@ -29,6 +29,7 @@ class DailySummaryDAO{
     stock.totalDistribution = json['total_distribution'] == null
         ? 0.0 : json['total_distribution'] + 0.0;
     stock.totalTopup = json['total_top_up'] == null ? 0.0 : json['total_top_up'] + 0.0;
+    stock.topUpAmount = json['total_up_amount'] == null ? 0.0 : json['total_up_amount'] + 0.0;
   }
 
   Map<String, dynamic> toJson() =>
@@ -41,6 +42,7 @@ class DailySummaryDAO{
         'team_no': team,
         'total_distribution': stock.totalDistribution,
         'total_top_up': stock.totalTopup,
+        'total_up_amount': stock.topUpAmount
       };
 
   Stock get stock => _stock;

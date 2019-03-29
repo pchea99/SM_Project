@@ -60,14 +60,14 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       _remainStock();
     });
     _controllerTopUp = new TextEditingController();
-    _controllerStockInHand = new TextEditingController();
+    _controllerStockInHand = new TextEditingController(text: "0");
     _controllerStockTopUp = new TextEditingController()..addListener((){
       _remainStock();
     });
     _controllerStockTeamLeader = new TextEditingController()..addListener((){
       _remainStock();
     });
-    _controllerRemainStock = new TextEditingController(text: '0.0');
+    _controllerRemainStock = new TextEditingController(text: '0');
     _controllerRemark = new TextEditingController();
     _controllerTopUpAmount = new TextEditingController();
 
@@ -223,8 +223,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
       ..agent.agentNameEn = _controllerAgentName.text
       ..date = StringUtil.dateToDB(_date)
       ..stock.simDistribution = double.parse(_controllerSIMDistribution.text)
-      ..stock.topup = double.parse(_controllerTopUp.text)
-      ..stock.stockInHandBeforeTodayWork = double.parse(_controllerRemainStock.text)
+      ..stock.topup = double.parse(_controllerTopUpAmount.text)
+      ..stock.stockInHandBeforeTodayWork = double.parse(_controllerStockInHand.text)
       ..stock.stockTopUpDuringTodayWork = double.parse(_controllerStockTopUp.text)
       ..stock.stockTeamLeaderTakingBackFromByAgent = double.parse(_controllerStockTeamLeader.text)
       ..stock.remainingStockForTomorrowWorkByAgent = double.parse(_controllerRemainStock.text)
@@ -241,6 +241,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..address.province = ""
         ..agentNumber = 1
         ..stock.totalTopup = double.parse(_controllerTopUp.text)
+        ..stock.topUpAmount = double.parse(_controllerTopUpAmount.text)
         ..stock.totalDistribution = double.parse(_controllerSIMDistribution.text)
          ..stock.remainStockAgent = double.parse(_controllerRemainStock.text)
         ..stock.remainStockTeamLeader = double.parse("0.0")
@@ -257,6 +258,7 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
         ..address.province = _dailySummary.address.province
         ..agentNumber = _dailySummary.agentNumber + distribution
         ..stock.totalTopup = double.parse(_controllerTopUp.text) + _dailySummary.stock.totalTopup
+        ..stock.topUpAmount = double.parse(_controllerTopUpAmount.text) + _dailySummary.stock.topUpAmount
         ..stock.totalDistribution = double.parse(_controllerSIMDistribution.text) + _dailySummary.stock.totalDistribution
         ..stock.remainStockAgent = double.parse(_controllerRemainStock.text) + _dailySummary.stock.remainStockAgent
         ..stock.remainStockTeamLeader = 0.0
@@ -374,10 +376,13 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
   }
 
   void _getStockInHand(){
-    _controllerStockInHand.text = "";
+    _controllerStockInHand.text = "0";
     NetworkService.getStockStockInHand(_controllerTeam.text, _txtAgentNo).then((data){
-      _controllerStockInHand.text = data.stock.remainingStockForTomorrowWorkByAgent.toString();
-      _onSetState();
+      if(data != null) {
+        _controllerStockInHand.text =
+            data.stock.remainingStockForTomorrowWorkByAgent.toString();
+        _onSetState();
+      }
     });
   }
 
