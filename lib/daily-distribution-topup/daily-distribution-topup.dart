@@ -105,7 +105,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
                 label: StringRes.agentNo,
                 value: _txtAgentNo,
                 callback: _onTabAgentNo,
-                isEnable: SharedPreferenceUtils.isTeamLeader()
+                isEnable: SharedPreferenceUtils.isTeamLeader(),
+                color: Colors.grey[300]
             ),
           ),
           InputField.buildTextField(
@@ -123,7 +124,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
           InputNumber.buildTextField(
               controller: _controllerSIMDistribution,
               label: StringRes.simDistribution,
-              isEnable: SharedPreferenceUtils.isTeamLeader()
+              isEnable: SharedPreferenceUtils.isTeamLeader(),
+              color: Colors.grey[300]
           ),
           InputNumber.buildTextField(
               controller: _controllerTopUp,
@@ -151,7 +153,8 @@ class _DailyDistributionTopUpState extends State<DailyDistributionTopUp> {
           ),
           InputNumber.buildTextField(
               controller: _controllerRemainStock,
-              label: StringRes.remainingStock
+              label: StringRes.remainingStock,
+              color: Colors.grey[300]
           ),
           InputField.buildTextField(
               controller: _controllerRemark,

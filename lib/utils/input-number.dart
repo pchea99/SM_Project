@@ -6,7 +6,8 @@ class InputNumber{
     TextEditingController controller,
     String label,
     bool isEnable,
-    ValueChanged onChanged
+    ValueChanged onChanged,
+    Color color
   }) {
     return Padding(
       padding: const EdgeInsets.only(top: 12.0),
@@ -25,23 +26,30 @@ class InputNumber{
               ),
             ),
           ),
-          TextField(
-            textAlign: TextAlign.right,
-            keyboardType: TextInputType.number,
-            controller: controller,
-            enabled: isEnable == null ? false : isEnable,
-            style: TextStyle(
-              fontSize: FontSizeRes.normal,
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                color: color
             ),
-            onChanged: onChanged,
-            decoration: InputDecoration(
-//          labelText: label,
-              labelStyle: TextStyle(
+            child: TextField(
+              textAlign: TextAlign.right,
+              keyboardType: TextInputType.number,
+              controller: controller,
+              enabled: isEnable == null ? false : isEnable,
+              style: TextStyle(
                 fontSize: FontSizeRes.normal,
               ),
-              contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
+              onChanged: onChanged,
+              decoration: InputDecoration(
+//          labelText: label,
+                labelStyle: TextStyle(
+                  fontSize: FontSizeRes.normal,
+                ),
+                fillColor: color,
+                contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
             ),
           ),

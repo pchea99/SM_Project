@@ -3,14 +3,19 @@ import 'package:sm_app/res/font-size-res.dart';
 
 class SelectValue{
   static Widget selectView({
-    String label, String value, VoidCallback callback, bool isEnable
+    String label,
+    String value,
+    VoidCallback callback,
+    bool isEnable,
+    Color color
   }){
     return InkWell(
       onTap: isEnable == null || isEnable ? callback : null,
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(color: Colors.black45),
-            borderRadius: BorderRadius.all(Radius.circular(8.0))
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          color: color
         ),
         child: Padding(
           padding: const EdgeInsets.only(
@@ -40,7 +45,7 @@ class SelectValue{
               ),
               Icon(
                 Icons.navigate_next,
-                color: Colors.grey,
+                color: Colors.black45,
               )
             ],
           )

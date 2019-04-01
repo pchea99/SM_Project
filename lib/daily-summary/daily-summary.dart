@@ -71,6 +71,7 @@ class _DailySummaryState extends State<DailySummary> {
             InputNumber.buildTextField(
                 controller: _controllerTotalDistribution,
                 label: StringRes.totalDistribution,
+                color: Colors.grey[300]
             ),
             InputNumber.buildTextField(
                 controller: _controllerTotalTopUp,
