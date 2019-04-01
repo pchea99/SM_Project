@@ -5,6 +5,7 @@ import 'package:sm_app/login/login-presenter.dart';
 import 'package:sm_app/login/login-service.dart';
 import 'package:sm_app/menu/menu.dart';
 import 'package:sm_app/model_dto/user.dart';
+import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/navigate-to.dart';
@@ -29,6 +30,7 @@ class _LoginState extends State<Login> implements LoginView {
   }
 
   void _getUserLogin() async {
+    await NetworkService.getTimeCutOff();
     SharedPreferenceUtils.sharedUser = await SharedPreferenceUtils.getUser();
     if(SharedPreferenceUtils.sharedUser != null){
       _navigateTo();

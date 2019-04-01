@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceUtils{
   static User sharedUser;
+  static String timeCutOff;
 
   static void setUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

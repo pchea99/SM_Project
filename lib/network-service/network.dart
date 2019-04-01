@@ -10,6 +10,7 @@ import 'package:sm_app/model_dao/routePlanDAO.dart';
 import 'package:sm_app/model_dao/stockControlHistoryByAgentDAO.dart';
 import 'package:sm_app/model_dao/stockControlReportByTeamLeaderDAO.dart';
 import 'package:sm_app/model_dto/agent.dart';
+import 'package:sm_app/utils/shared_preferences.dart';
 import 'package:sm_app/utils/string-util.dart';
 
 class NetworkService{
@@ -20,6 +21,7 @@ class NetworkService{
   static final String routePlanDB = "route_plan";
   static final String teamInfoDB = "team_info";
   static final String userDB = "user";
+  static final String timeCutOffDB = "time_cut_off";
   static final String dailySummaryDB = "daily_summary";
   static final String stockControlHistoryByAgentDB = "stock_control_history_by_agent";
   static final String stockControlReportByTeamLeaderDB = "stock_control_report_by_team_leader";
@@ -65,6 +67,25 @@ class NetworkService{
       }
 
       completer.complete(agent);
+    }).catchError((err) {
+      completer.completeError(err);
+    });
+
+    return completer.future;
+  }
+
+  static Future<String> getTimeCutOff() {
+    var completer = new Completer<String>();
+    NetworkService.db.reference()
+        .child(NetworkService.timeCutOffDB+"/"+"time")
+        .once().then((snapshot) {
+          String timeCutOff;
+      if (snapshot != null && snapshot.value != null) {
+        timeCutOff = snapshot.value;
+        SharedPreferenceUtils.timeCutOff = timeCutOff;
+      }
+
+      completer.complete(timeCutOff);
     }).catchError((err) {
       completer.completeError(err);
     });
