@@ -28,24 +28,30 @@ class _MenuState extends State<Menu> {
 
   Location location = new Location();
 
-  List<String> _menusTeamLeader = [
-    StringRes.distributionTopup,
-    StringRes.dailyRetailerMapping,
-    StringRes.dailyFeedback,
-    StringRes.dailySummary,
-    StringRes.stockControlHistoryAgent,
-    StringRes.stockControlReportTeamLeader,
-    StringRes.routePlan,
-    StringRes.marketAuditReport,
-    StringRes.teamInfo,
-  ];
+  Map<String, String> _menusTeamLeader = {
+    StringRes.distributionTopup: SharedPreferenceUtils.sharedUser
+        .dailyDistribution,
+    StringRes.dailyRetailerMapping: SharedPreferenceUtils.sharedUser
+        .dailyRetailer,
+    StringRes.dailyFeedback: SharedPreferenceUtils.sharedUser.dailyFeedbacks,
+    StringRes.dailySummary: SharedPreferenceUtils.sharedUser.dailySummary,
+    StringRes.stockControlHistoryAgent: SharedPreferenceUtils.sharedUser
+        .stockControlAgent,
+    StringRes.stockControlReportTeamLeader: SharedPreferenceUtils.sharedUser
+        .stockControlTeamLeader,
+    StringRes.routePlan: SharedPreferenceUtils.sharedUser.routePlan,
+    StringRes.marketAuditReport: SharedPreferenceUtils.sharedUser.marketAudit,
+    StringRes.teamInfo: SharedPreferenceUtils.sharedUser.teamInfo,
+  };
 
-  List<String> _menusAgent = [
-    StringRes.distributionTopup,
-    StringRes.stockControlHistoryAgent,
-    StringRes.routePlan,
-    StringRes.teamInfo,
-  ];
+  Map<String, String> _menusAgent = {
+    StringRes.distributionTopup: SharedPreferenceUtils.sharedUser
+        .dailyDistribution,
+    StringRes.stockControlHistoryAgent: SharedPreferenceUtils.sharedUser
+        .stockControlAgent,
+    StringRes.routePlan: SharedPreferenceUtils.sharedUser.routePlan,
+    StringRes.teamInfo: SharedPreferenceUtils.sharedUser.teamInfo,
+  };
 
   @override
   void initState() {
@@ -82,50 +88,50 @@ class _MenuState extends State<Menu> {
   }
 
   List<Container> _buildMenuTeamLeader() {
-    return _menusTeamLeader.map((menu) =>
-        Container(
-          decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(
-                      color: Colors.grey[100]
-                  )
+    return _menusTeamLeader.keys.map((key) =>
+    _menusTeamLeader[key].toLowerCase() == 'yes' ? Container(
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+                  color: Colors.grey[100]
               )
-          ),
-          child: ListTile(
-            title: Text(menu),
-            onTap: () {
-              _click(menu);
-            },
-            trailing: Icon(
-              Icons.navigate_next,
-              color: Colors.grey,
-            ),
-          ),
-        )
+          )
+      ),
+      child: ListTile(
+        title: Text(key),
+        onTap: () {
+          _click(key);
+        },
+        trailing: Icon(
+          Icons.navigate_next,
+          color: Colors.grey,
+        ),
+      ),
+    ) : Container()
     ).toList();
   }
 
   List<Container> _buildMenuAgent() {
-    return _menusAgent.map((menu) =>
-        Container(
-          decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(
-                      color: Colors.grey[100]
-                  )
+    return _menusAgent.keys.map((key) =>
+    _menusTeamLeader[key].toLowerCase() == 'yes' ? Container(
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+                  color: Colors.grey[100]
               )
-          ),
-          child: ListTile(
-            title: Text(menu),
-            onTap: () {
-              _click(menu);
-            },
-            trailing: Icon(
-              Icons.navigate_next,
-              color: Colors.grey,
-            ),
-          ),
-        )
+          )
+      ),
+      child: ListTile(
+        title: Text(key),
+        onTap: () {
+          _click(key);
+        },
+        trailing: Icon(
+          Icons.navigate_next,
+          color: Colors.grey,
+        ),
+      ),
+    ) : Container()
     ).toList();
   }
 
@@ -194,7 +200,6 @@ class _MenuState extends State<Menu> {
 
       _currentLocation = null;
     }
-    print("ooooo $_currentLocation");
   }
 }
 

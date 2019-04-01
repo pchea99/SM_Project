@@ -8,6 +8,15 @@ class User{
   String _position;
   String _personalPhone;
   String _password;
+  String dailyDistribution;
+  String dailyRetailer;
+  String dailyFeedbacks;
+  String dailySummary;
+  String stockControlAgent;
+  String stockControlTeamLeader;
+  String routePlan;
+  String marketAudit;
+  String teamInfo;
 
   User();
 
@@ -21,6 +30,15 @@ class User{
     password = json['password'].toString();
     teamNo = json['team_no'];
     agentNo = json['agent_no'];
+    dailyDistribution = json['daily_distribution'];
+    dailyRetailer = json['daily_retailer'];
+    dailyFeedbacks = json['daily_feedbacks'];
+    dailySummary = json['daily_summary'];
+    stockControlAgent = json['stock_control_agent'];
+    stockControlTeamLeader = json['stock_control_team_leader'];
+    routePlan = json['route_plan'];
+    marketAudit = json['market_audit'];
+    teamInfo = json['team_info'];
   }
 
   Map<String, dynamic> toJson() => {
@@ -32,7 +50,16 @@ class User{
     'first_name': firstName,
     'team_no': teamNo,
     'password': password,
-    'agent_no': agentNo
+    'agent_no': agentNo,
+    'daily_distribution': dailyDistribution,
+    'daily_retailer': dailyRetailer,
+    'daily_feedbacks': dailyFeedbacks,
+    'daily_summary': dailySummary,
+    'stock_control_agent': stockControlAgent,
+    'stock_control_team_leader': stockControlTeamLeader,
+    'route_plan': routePlan,
+    'market_audit': marketAudit,
+    'team_info': teamInfo
   };
 
   String get agentNo => _agentNo;
