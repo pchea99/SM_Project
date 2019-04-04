@@ -197,7 +197,6 @@ class _MenuState extends State<Menu> {
       }else if(e.code == 'PERMISSION_DENIED_NEVER_ASK'){
         print("err: PERMISSION_DENIED_NEVER_ASK");
       }
-
       _currentLocation = null;
     }
   }

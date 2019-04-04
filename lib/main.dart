@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sm_app/login/login.dart';
+import 'package:sm_app/splash-screen/splash-screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,10 +15,10 @@ class _MyAppState extends State<MyApp> {
       title: 'Smart Project',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
         fontFamily: 'Nunito',
       ),
-      home: Login(),
+      home: SplashScreen(),
     );
   }
 }

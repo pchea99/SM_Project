@@ -115,6 +115,11 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                     value: _txtProvince,
                   ),
                 ),
+                SelectBox.selectBox(
+                    groupValue: _radioValueFeedback,
+                    onChanged: _handleRadioFeedbackValueChange,
+                    label: StringRes.anotherFeedback
+                ),
                 InputField.buildTextField(
                   controller: _controllerTeamNo,
                   label: StringRes.team,
@@ -152,11 +157,6 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                     controller: _controllerAnotherIssue,
                     label: StringRes.otherIssueRemark,
                     isEnable: true
-                ),
-                SelectBox.selectBox(
-                    groupValue: _radioValueFeedback,
-                    onChanged: _handleRadioFeedbackValueChange,
-                    label: StringRes.anotherFeedback
                 ),
                 SelectBox.selectBox(
                     groupValue: _radioValueIssue,

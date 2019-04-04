@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sm_app/res/font-size-res.dart';
+import 'package:sm_app/utils/string-util.dart';
 
 class SelectValue{
   static Widget selectView({
@@ -10,7 +11,7 @@ class SelectValue{
     Color color
   }){
     return InkWell(
-      onTap: isEnable == null || isEnable ? callback : null,
+      onTap: (isEnable == null || isEnable) && StringUtil.getTimeCutOff() ? callback : null,
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(color: Colors.black45),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sm_app/res/string-res.dart';
+import 'package:sm_app/utils/string-util.dart';
 
 class SelectBox{
   static Widget selectBox({
@@ -34,7 +35,7 @@ class SelectBox{
                     new Radio(
                       value: 0,
                       groupValue: groupValue,
-                      onChanged: isEnable == null || isEnable ? onChanged : null,
+                      onChanged: (isEnable == null || isEnable) && StringUtil.getTimeCutOff() ? onChanged : null,
                     ),
                     Text(StringRes.yes),
                   ],),

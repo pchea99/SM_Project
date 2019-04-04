@@ -81,7 +81,7 @@ class NetworkService{
         .once().then((snapshot) {
           String timeCutOff;
       if (snapshot != null && snapshot.value != null) {
-        timeCutOff = snapshot.value;
+        timeCutOff = snapshot.value['time'];
         SharedPreferenceUtils.timeCutOff = timeCutOff;
       }
 

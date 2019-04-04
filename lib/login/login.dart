@@ -5,7 +5,6 @@ import 'package:sm_app/login/login-presenter.dart';
 import 'package:sm_app/login/login-service.dart';
 import 'package:sm_app/menu/menu.dart';
 import 'package:sm_app/model_dto/user.dart';
-import 'package:sm_app/network-service/network.dart';
 import 'package:sm_app/res/font-size-res.dart';
 import 'package:sm_app/res/string-res.dart';
 import 'package:sm_app/utils/navigate-to.dart';
@@ -26,15 +25,6 @@ class _LoginState extends State<Login> implements LoginView {
   @override
   void initState() {
     super.initState();
-    _getUserLogin();
-  }
-
-  void _getUserLogin() async {
-    await NetworkService.getTimeCutOff();
-    SharedPreferenceUtils.sharedUser = await SharedPreferenceUtils.getUser();
-    if(SharedPreferenceUtils.sharedUser != null){
-      _navigateTo();
-    }
   }
 
   _LoginState(){
@@ -186,8 +176,6 @@ class _LoginState extends State<Login> implements LoginView {
                 txtUsername(),
                 SizedBox(height: 8.0),
                 txtPassword(),
-//          SizedBox(height: 8.0),
-//          txtPosition(),
                 SizedBox(height: 24.0),
                 btnLogin(),
                 lblCopyRight(),
@@ -211,7 +199,7 @@ class _LoginState extends State<Login> implements LoginView {
     SpinnerDialog.onSpinner(context);
     LoginService.getUserLogin(_user.firstName.trim().toLowerCase().replaceAll(" ", '')
         +"-"+_user.password).then((userDB) async {
-      if(/*userDB.position == _user.position &&*/ userDB.password == _user.password){
+      if(userDB.password == _user.password){
         SharedPreferenceUtils.setUser(userDB);
         await _navigateTo();
       }else{

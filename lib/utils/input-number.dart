@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sm_app/res/font-size-res.dart';
+import 'package:sm_app/utils/string-util.dart';
 
 class InputNumber{
   static Widget buildTextField({
@@ -35,7 +36,7 @@ class InputNumber{
               textAlign: TextAlign.right,
               keyboardType: TextInputType.number,
               controller: controller,
-              enabled: isEnable == null ? false : isEnable,
+              enabled: isEnable == null || !StringUtil.getTimeCutOff() ? false : isEnable,
               style: TextStyle(
                 fontSize: FontSizeRes.normal,
               ),
