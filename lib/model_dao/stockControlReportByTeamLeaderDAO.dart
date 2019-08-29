@@ -11,7 +11,6 @@ class StockControlReportByTeamLeaderDAO{
 
   StockControlReportByTeamLeaderDAO.fromJson(Map json){
     stock = new Stock();
-
     team = json['team_no'];
     date = json['date'];
     stock.initialStockInHandForTeamLeader = json['initial_stocks_in_hand_for_team_leader'] + 0.0;
@@ -21,6 +20,19 @@ class StockControlReportByTeamLeaderDAO{
     stock.totalStockAllocatedToAllAgent = json['total_stocks_allocated_to_all_agent'] + 0.0;
     stock.totalStockReturnTeamLeaderTakingBackToday = json['total_stocks_team_leader_taking_back_today'] + 0.0;
     stock.remainStockTeamLeaderForToday = json['remaining_stock_at_team_leader_for_today'] + 0.0;
+  }
+
+  void init(){
+    stock = new Stock();
+    team = "";
+    date = DateTime.now().toUtc().toString();
+    stock.initialStockInHandForTeamLeader = 0.0;
+    stock.remainStockTeamLeaderFromYesterday = 0.0;
+    stock.simStockReceivedByAssistant = 0.0;
+    stock.stockDeliveredBackToAssistant = 0.0;
+    stock.totalStockAllocatedToAllAgent = 0.0;
+    stock.totalStockReturnTeamLeaderTakingBackToday = 0.0;
+    stock.remainStockTeamLeaderForToday = 0.0;
   }
 
   Map toJson() => {

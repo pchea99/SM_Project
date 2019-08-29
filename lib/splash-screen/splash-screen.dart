@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _getTimeCutOff() async {
-    await NetworkService.getTimeCutOff();
+     await NetworkService.getTimeCutOff();
     _getUserLogin();
   }
 

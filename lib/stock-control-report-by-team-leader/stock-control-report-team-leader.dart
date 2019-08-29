@@ -144,9 +144,15 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
       if(data != null){
         _stockCRTL = data;
         _initData();
+      }else{
+        _stockCRTL = new StockControlReportByTeamLeaderDAO();
+        _stockCRTL.init();
       }
 
       _onSetState();
+    }).catchError((e){
+      _stockCRTL = new StockControlReportByTeamLeaderDAO();
+      _stockCRTL.init();
     });
   }
 
@@ -156,7 +162,6 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
     _controllerTotalStockTeamLeaderTakingBackToday.text = _stockCRTL.stock.totalStockReturnTeamLeaderTakingBackToday.toString();
     _controllerSIMStockReceivedByAssistant.text = _stockCRTL.stock.simStockReceivedByAssistant.toString();
     _controllerStockDeliveredBackToAssistant.text = _stockCRTL.stock.stockDeliveredBackToAssistant.toString();
-//    _controllerRemainingStockAtTeamLeaderForToday.text = _stockCRTL.stock.remainStockTeamLeaderForToday.toString();
 
     _remainStockToday();
   }
@@ -234,6 +239,8 @@ class _StockControlReportByTeamLeaderState extends State<StockControlReportByTea
       if(stock != null) {
         _controllerRemainingStockAtTeamLeaderFromYesterday.text =
             stock.stock.remainStockTeamLeaderForToday.toString();
+      }else{
+        _controllerRemainingStockAtTeamLeaderFromYesterday.text = "0";
       }
     }).catchError((e){
       _controllerRemainingStockAtTeamLeaderFromYesterday.text = "0";
